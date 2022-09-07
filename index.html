@@ -1,44 +1,93 @@
 <!doctype html>
 <html lang="en">
-  
+
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1" /> 
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style>
-         
-      body {
-        margin: 0 auto;
-        max-width: 1000px;
-      }
-      
-      h1 {
-        color: midnightblue;
-        font-size: 2em;
-        font-family: Futura, "Gill Sans", "Lucida Sans", Roboto, sans-serif;
-        border-bottom: 1px solid #375e97;
-      }
-      
-      .testdiv {
-        color: black;
-        font-size:1em;
-        font-family: Helvetica, Arial, sans-serif;
-      }
-      
+
+        body {
+            margin: 0 auto;
+            max-width: 1000px;
+            font-size: 1.2em;
+            font-family: Roboto, sans-serif;
+        }
+
+        h1 {
+            color: midnightblue;
+            font-size: 2em;
+            font-family: Futura, "Gill Sans", "Lucida Sans", Roboto, sans-serif;
+            border-bottom: 3px solid midnightblue;
+            margin-bottom: 0px;
+            padding-bottom: 0px;
+        }
+
+        p {
+            padding-top:0px;
+            margin-top: 0px;
+        }
+        .testdiv {
+            color: black;
+            font-size:1em;
+            font-family: Helvetica, Arial, sans-serif;
+        }
+
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: rgb(240, 213, 40);
+        }
+
+        li {
+        float: left;
+        }
+
+        li a {
+            display: block;
+            color: rgb(0, 0, 0);
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        /* Change the link color to #111 (black) on hover */
+        li a:hover {
+            background-color: rgb(255, 244, 94);
+        }
+
+        .videoWrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 */
+            padding-top: 25px;
+            height: 0;
+        }
+        .videoWrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+
     </style>
     <script type="text/javascript" src="https://math.etsu.edu/LaTeXMathML/LaTeXMathML.js"></script>
     <link rel="stylesheet" type="text/css" href="https://math.etsu.edu/LaTeXMathML/LaTeXMathML.standardarticle.css" />
   </head>
-  
+
   <body>
 
     <h1> Thomas Marks </h1>
-    <div class="testdiv">
+
+    <!--<div class="testdiv">
       Here's some math which is not embedded in a LaTeX article:
 	  <div class="LaTeX">
       \[x + y \lt 2\]
 	  </div>
     </div>
-	
+
 	<div class="LaTeX">
 		Here's some more math which is embedded in a LaTeX div but not in an article:
 		\[x + y \le 7\]
@@ -46,18 +95,38 @@
 	\documentclass{article}
 	\usepackage{amsmath}
 	\begin{document}
-	
+
 	Here's an entire LaTeX article embedded into the HTML page
 	\begin{eqnarray*}
 		x + y &\gt& 2\\
 		x + y &\lt& 2\\
 		x + y &=& 2
 	\end{eqnarray*}
-	
+
 	\noindent As you can see, Eq.~\ref{greaterthan} shows that $x + y \gt 2$ and Eq.~\ref{lessthan} shows the opposite
 	\end{document}
-	</div>
+	</div>-->
+
+    <ul>
+        <li><a href="https://github.com/archermarx">Github</a></li>
+        <li><a href="https://twitter.com/long_ziti">Twitter</a></li>
+        <li><a href="https://scholar.google.com/citations?user=IRZavLoAAAAJ&hl=en&oi=sra">Google Scholar</a></li>
+        <li><a href="https://www.linkedin.com/in/thomas-marks-b4866792">LinkedIn</a></li>
+    </ul>
+
+    I am a fifth-year Ph.D. student in the Department of Aerospace Engineering at the University of Michigan. I work in the Plasmadynamics and Electric Propulsion Laboratory (PEPL). My research involves computational modeling of electric propulsion devices, such as magnetic nozzles and Hall thrusters.
+
+    Here's an accessible five-minute video I made which introduces my research in Hall thrusters
+
+    <div class="videoWrapper">
+        <!-- Copy & Pasted from YouTube -->
+        <iframe width="560" height="349" src="https://www.youtube.com/embed/mAfjmGMp43w"" frameborder="0" allowfullscreen></iframe>
+    </div>
+
+
+
+
   </body>
 
-  
+
 </html>
