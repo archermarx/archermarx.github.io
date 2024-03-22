@@ -10,8 +10,12 @@
 :root{
 	--color-main: #1d34a9;
 	--header-text: #d2daf2;
+	--color-body-text: #666;
+	--color-header-text: #555;
+	--color-emph: #707ec3;
 	--header-width: 18em;
 	--font-size: 14pt;
+	--right-pad: 0%;
 }
 
 html, body, div, span, applet, object,
@@ -105,7 +109,7 @@ input, select, textarea {
 		}
 
 	body, input, select, textarea {
-		color: #888;
+		color: var(--color-body-text);
 		font-family: "Lato", sans-serif;
 		font-size: var(--font-size);
 		font-weight: 400;
@@ -128,7 +132,7 @@ input, select, textarea {
 		}
 
 	strong, b {
-		color: #777;
+		color: var(--color-emph);
 		font-weight: 700;
 	}
 
@@ -141,7 +145,7 @@ input, select, textarea {
 	}
 
 	h1, h2, h3, h4, h5, h6 {
-		color: #777;
+		color: var(--color-header-text);
 		font-weight: 700;
 		line-height: 1em;
 		margin: 0 0 0.5625em 0;
@@ -1793,11 +1797,11 @@ input, select, textarea {
 
 	header.major h2 {
 		color: var(--color-main);
-		font-size: 3.5em;
+		font-size: 2.5em;
 	}
 
 		header.major h2 + p {
-			color: #777;
+			color: var(--color-header-text);
 			font-size: 1.75em;
 			font-weight: 700;
 			margin-top: -0.75em;
@@ -1810,7 +1814,7 @@ input, select, textarea {
 	}
 
 	label {
-		color: #777;
+		color: var(--color-header-text);
 		display: block;
 		font-size: 0.9em;
 		font-weight: 700;
@@ -1869,7 +1873,7 @@ input, select, textarea {
 	}
 
 		select option {
-			color: #777;
+			color: var(--color-header-text);
 			background: #fff;
 		}
 
@@ -1909,7 +1913,7 @@ input, select, textarea {
 		input[type="checkbox"] + label,
 		input[type="radio"] + label {
 			text-decoration: none;
-			color: #888;
+			color: var(--color-body-text);
 			cursor: pointer;
 			display: inline-block;
 			font-size: 1em;
@@ -2470,7 +2474,7 @@ input, select, textarea {
 		}
 
 		table th {
-			color: #777;
+			color: var(--color-header-text);
 			font-size: 0.9em;
 			font-weight: 700;
 			padding: 0 0.75em 0.75em 0.75em;
@@ -2596,7 +2600,7 @@ input, select, textarea {
 		.button.alt {
 			background-color: transparent;
 			box-shadow: inset 0 0 0 2px #e4e4e4;
-			color: #777 !important;
+			color: var(--color-header-text) !important;
 		}
 
 			input[type="submit"].alt:hover,
@@ -2604,7 +2608,7 @@ input, select, textarea {
 			input[type="button"].alt:hover,
 			.button.alt:hover {
 				background-color: #f4f4f4;
-				color: #777 !important;
+				color: var(--color-header-text) !important;
 			}
 
 			input[type="submit"].alt:active,
@@ -2650,7 +2654,7 @@ input, select, textarea {
 		input[type="button"]:disabled,
 		.button.disabled,
 		.button:disabled {
-			background-color: #888 !important;
+			background-color: var(--color-body-text) !important;
 			box-shadow: inset 0 -0.15em 0 0 rgba(0, 0, 0, 0.15);
 			color: #fff !important;
 			cursor: default;
@@ -2716,7 +2720,7 @@ input, select, textarea {
 		text-align: center;
 		top: 0;
 		width: var(--header-width);
-		right: 100;
+		right: var(--right-pad);
 	}
 
 		#header h1, #header h2, #header h3, #header h4, #header h5, #header h6 {
@@ -2827,7 +2831,7 @@ input, select, textarea {
 
 	#wrapper {
 		background: #fff;
-		padding-left: var(--header-width);
+		padding-right: var(--header-width);
 	}
 
 /* Main */
@@ -2995,7 +2999,7 @@ input, select, textarea {
 				-webkit-transform: translateX(var(--header-width));
 				-ms-transform: translateX(var(--header-width));
 				transform: translateX(var(--header-width));
-				right: 100;
+				right: var(--right-pad);
 			}
 
 				#header > footer {
