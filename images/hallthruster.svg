@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="53.715115mm"
+   height="53.914776mm"
+   viewBox="0 0 53.715115 53.914776"
+   version="1.1"
+   id="svg587"
+   sodipodi:docname="hallthruster.svg"
+   inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview589"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="3.659624"
+     inkscape:cx="92.905719"
+     inkscape:cy="67.766524"
+     inkscape:window-width="2560"
+     inkscape:window-height="1334"
+     inkscape:window-x="2549"
+     inkscape:window-y="-5"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs584" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-28.667272,-68.475916)">
+    <ellipse
+       style="fill:#808080;fill-opacity:1;stroke:#4d4d4d;stroke-width:0.998112;stroke-opacity:1;paint-order:markers fill stroke;stop-color:#000000"
+       id="circle863"
+       cx="55.52483"
+       cy="95.433304"
+       rx="26.358501"
+       ry="26.458332" />
+    <ellipse
+       style="fill:#9558b2;fill-opacity:1;stroke:none;stroke-width:2.11667;stroke-miterlimit:4;stroke-dasharray:none;paint-order:markers fill stroke;stop-color:#000000"
+       id="ellipse873"
+       cx="55.52483"
+       cy="95.433304"
+       rx="20.215672"
+       ry="20.292236" />
+    <ellipse
+       style="fill:#666666;fill-opacity:1;stroke:none;stroke-width:2.11667;stroke-miterlimit:4;stroke-dasharray:none;paint-order:markers fill stroke;stop-color:#000000"
+       id="ellipse875"
+       cx="55.52483"
+       cy="95.433304"
+       rx="13.649709"
+       ry="13.701406" />
+    <ellipse
+       style="fill:#9558b2;fill-opacity:1;stroke:none;stroke-width:2.11667;stroke-miterlimit:4;stroke-dasharray:none;paint-order:markers fill stroke;stop-color:#000000"
+       id="ellipse877"
+       cx="55.52483"
+       cy="95.433304"
+       rx="3.0431528"
+       ry="3.0546784" />
+    <ellipse
+       style="fill:#aaeeff;fill-opacity:1;stroke:#2ad4ff;stroke-width:2.30338;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers fill stroke;stop-color:#000000"
+       id="ellipse879"
+       cx="55.52483"
+       cy="95.433304"
+       rx="21.995485"
+       ry="22.078791" />
+    <ellipse
+       style="fill:#808080;fill-opacity:1;stroke:#00ccff;stroke-width:2.6247;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers fill stroke;stop-color:#000000"
+       id="ellipse881"
+       cx="55.52483"
+       cy="95.433304"
+       rx="16.92588"
+       ry="16.989986" />
+    <ellipse
+       style="fill:#aaeeff;fill-opacity:1;stroke:#00ccff;stroke-width:0.714901;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers fill stroke;stop-color:#000000"
+       id="ellipse895-5"
+       cx="55.52483"
+       cy="95.433304"
+       rx="2.175554"
+       ry="2.1837938" />
+  </g>
+</svg>
