@@ -1,0 +1,183 @@
+#===================================================================================================================================
+My Journal articles
+#===================================================================================================================================
+
+@phdthesis{Marks_2023_Thesis,
+    doi = {10.7302/22318},
+    url = {https://dx.doi.org/10.7302/22318},
+    author = {Marks, Thomas A.},
+    school = {University of Michigan},
+    year = {2023},
+    title = {Modelling anomalous electron transport in a fluid Hall thruster code}
+}
+
+@article{Marks_2023_Challenges,
+    doi = {10.1088/1361-6595/accd18},
+    url = {https://dx.doi.org/10.1088/1361-6595/accd18},
+    year = {2023},
+    month = {apr},
+    publisher = {IOP Publishing},
+    volume = {32},
+    number = {4},
+    pages = {045016},
+    author = {Marks, Thomas A. and Jorns, Benjamin A.},
+    title = {Challenges with the self-consistent implementation of closure models for anomalous electron transport in fluid simulations of Hall thrusters},
+    journal = {Plasma Sources Science and Technology},
+    abstract = {The performance of closure models for the anomalous electron transport when self-consistently implemented in a fluid model for a Hall effect thruster is investigated. This cross-field transport, which is orders of magnitude higher than classical collisional transport, is represented as an effective collision frequency. The proposed closure models relate this transport coefficient to local fluid properties of the plasma. Before implementation, the models are calibrated against values of the collision frequency inferred empirically from a 9 kW Hall thruster at 300 V and 15 A. It is found that even though closure models match the empirical collision frequency values, they diverge from these values when implemented self-consistently in a Hall thruster code. Possible drivers of this behavior are examined, including the role of non-linearity in the governing equations of the Hall thruster fluid model, artifacts from using time-averaged calibration data, and the non-uniqueness of the empirically-inferred collision frequencies. These results are discussed in the context of their implications for discovering and validating new closures necessary for enabling fully-predictive Hall thruster models.}
+}
+
+@article{Marks_2023_HallThruster_jl, 
+    doi = {10.21105/joss.04672}, 
+    url = {https://doi.org/10.21105/joss.04672},
+    year = {2023},
+    publisher = {The Open Journal},
+    volume = {8},
+    number = {86},
+    pages = {4672},
+    author = {Marks, Thomas A. and Paul Schedler and Benjamin A. Jorns},
+    title = {HallThruster.jl: a {{Julia}} package for 1D Hall thruster discharge simulation},
+    journal = {Journal of Open Source Software}
+} 
+
+@article{Marks_2023_Evaluation,
+    author = {Marks, Thomas A. and Jorns, Benjamin A.},
+    title = "{Evaluation of algebraic models of anomalous transport in a multi-fluid Hall thruster code}",
+    journal = {Journal of Applied Physics},
+    volume = {134},
+    number = {15},
+    pages = {153301},
+    year = {2023},
+    month = {10},
+    abstract = "{The behavior of four algebraic closure models for anomalous electron transport is investigated using a fluid Hall thruster code. The models, which were selected because they have been previously described in the literature, are calibrated against a baseline experimental condition of a 9-kW-class magnetically shielded Hall thruster operating at 300 V and 15 A on xenon propellant. The extensibility of the models is then assessed by using this calibrated model to simulate three additional operating conditions—300 V and 30 A, 600 V and 15 A, and 300 V and 15 A operating on krypton propellant. The quality of the model prediction is quantified by comparing the model outputs to experimental measurements of discharge current, thrust, and ion velocity. It is found that while none of the models can predict the ion acceleration characteristics accurately, some compare favorably in terms of the scaling of thrust and discharge current across operating conditions. The limitations of the models are attributed to the coupling between the functional scaling of the closure models with respect to the local plasma properties and the fluid model. The role of the electron energy balance in this coupling is also highlighted. These results are discussed in the context of motivating improved closure models of the anomalous electron transport in Hall thrusters.}",
+    issn = {0021-8979},
+    doi = {10.1063/5.0171824},
+    url = {https://doi.org/10.1063/5.0171824},
+    eprint = {https://pubs.aip.org/aip/jap/article-pdf/doi/10.1063/5.0171824/18171619/153301\_1\_5.0171824.pdf},
+}
+
+@article{Su_2024_MUSCLE,
+    author = {Su, Leanne L. and Roberts, Parker J. and Gill, Tate M. and Hurley, William J. and Marks, Thomas A. and Sercel, Christopher L. and Allen, Madison G. and Whittaker, Collin B. and Viges, Eric and Jorns, Benjamin A.},
+    title = {High-Current Density Performance of a Magnetically Shielded Hall Thruster},
+    journal = {Journal of Propulsion and Power},
+    year = {2024},
+    pages = {1-18},
+    doi = {10.2514/1.B39324},
+    URL = {https://doi.org/10.2514/1.B39324},
+    abstract = { The performance of a magnetically shielded Hall thruster operating on xenon and krypton is characterized at discharge current densities up to 10 times greater than its nominal level. A thrust stand and far-field probe suite are employed to evaluate operation at 300 V discharge voltage and discharge currents from 15 to 125 A (xenon) and from 15 to 150 A (krypton). The thrust, specific impulse, and anode efficiency at the highest currents are found to be 1650±30  mN, 2309±56  s, and 52.8±2.0\% respectively for xenon, and 1839±18  mN, 2567±48  s, and 55.0±1.6\% for krypton. The thrust density at the highest conditions are shown to be six (xenon) and eight (krypton) times higher than the lowest current condition. A maximum in anode efficiency as a function of discharge current is observed for both gases. This is attributed to a trade between mass utilization, which increases to unity with current, and beam utilization, which gradually decreases with current. The dependence of these efficiency modes on current is discussed in the context of a series of first-principles scaling laws. The observation that efficiency only moderately decreases with current density is examined in the context of high-power electric propulsion development. }
+}
+
+@article{Su_2024_Krypton,
+    author = {Su, Leanne L. and Marks, Thomas A. and Jorns, Benjamin A.},
+    title = {Trends in mass utilization of a magnetically shielded Hall thruster operating on xenon and krypton},
+    journal = {Plasma Sources Science and Technology},
+    volume = {33},
+    number = {6},
+    pages = {065008},
+    year = {2024},
+    doi = {10.1088/1361-6595/ad52be}
+}
+
+#===================================================================================================================================
+My conference papers
+#===================================================================================================================================
+
+@inproceedings{Marks_2024_IEPC_WarpX,
+    title = {Hall thruster simulations in {{WarpX}}},
+    booktitle = {38th {{International Electric Propulsion Conference, Toulouse, France}}},
+    author = {Marks, Thomas A. and Gorodetsky, Alex A.},
+    year = {2024}, month = jun, pages = {409},
+}
+
+@inproceedings{Eckels_2024_IEPC_DMD,
+    title = {Dynamic mode decomposition for particle-in-cell simulations of a Hall thruster and plume},
+    booktitle = {38th {{International Electric Propulsion Conference, Toulouse, France}}},
+    author = {Eckels, Joshua D. and Marks, Thomas A. and Aksoy, Doruk and Vutukury, Sruti and Gorodetsky, Alex A.},
+    year = {2024}, month = jun, pages = {412},
+}
+
+@inproceedings{Aksoy_2024_IEPC_TT,
+    title = {Compressed Analysis of Electric Propulsion Simulations using Low Rank Tensor Networks },
+    booktitle = {38th {{International Electric Propulsion Conference, Toulouse, France}}},
+    author = {Aksoy, Doruk and Vutukury, Sruti and Marks, Thomas A. and Eckels, Joshua D. and Gorodetsky, Alex A.},
+    year = {2024}, month = jun, pages = {795},
+}
+
+@inproceedings{Lipscomb_2024_IEPC_MPIC,
+    title = {Evaluation of H9 Hall Thruster Plume Simulations using Coupled Thruster and Facility Models},
+    booktitle = {38th {{International Electric Propulsion Conference, Toulouse, France}}},
+    author = {Lipscomb, Charles P. and Stasiukevicius, Matthew J. and Boyd, Iain D. and Hansson, Kaelan B. and Marks, Thomas A. and Brick, Declan G. and Jorns, Benjamin A.},
+    year = {2024}, month = jun, pages = {483},
+}
+
+@inproceedings{Allen_2024_Scitech_OED,
+    title = {Evaluation of H9 Hall Thruster Plume Simulations using Coupled Thruster and Facility Models},
+    booktitle = {{{AIAA SciTech 2024 Forum, Orlando, FL, USA}}},
+    author = {Allen, Madison G. and Marks, Thomas A. and Eckels, Joshua D. and Gorodetsky, Alex A. and Jorns, Benjamin A.},
+    year = {2024}, month = jan, pages = {2164}
+}
+
+@inproceedings{Marks_2023_Scitech_Evaluation,
+    title = {Evaluation of several first-principles closure models for Hall thruster anomalous transport},
+    booktitle = {{{AIAA SciTech 2023 Forum, National Harbor, MD, USA}}},
+    author = {Marks, Thomas A. and Jorns, Benjamin A.},
+    year = {2023}, month = jan, pages = {0067}
+}
+
+@inproceedings{Su_2023_Scitech_Ultrahigh,
+    title = {Operation and performance of a magnetically shielded Hall thruster at ultrahigh current densities on xenon and krypton},
+    booktitle = {{{AIAA SciTech 2023 Forum, National Harbor, MD, USA}}},
+    author = {Su, Leanne L. and Roberts, Parker J. and Gill, Tate M. and Hurley, William H. and Marks, Thomas A. and Sercel, Christopher L. and Allen, Madison G. and Whittaker, Collin B. and Byrne, Matthew and Brown, Zachariah and Viges, Eric and Jorns, Benjamin A.},
+    year = {2023}, month = jan, pages = {0842}
+}
+
+@inproceedings{Hurley_2023_Scitech_AirCore,
+    title = {Design of an Air-Core Circuit for a Hall Thruster},
+    booktitle = {{{AIAA SciTech 2023 Forum, National Harbor, MD, USA}}},
+    author = {Hurley, William J. and Marks, Thomas A. and Jorns, Benjamin A.},
+    year = {2023}, month = jan, pages = {0841}
+}
+
+@inproceedings{Marks_2022_IEPC_surrogate,
+    title = {Modeling anomalous electron transport in Hall thrusters using
+surrogate methods},
+    booktitle = {38th {{International Electric Propulsion Conference, Boston, MA, USA}}},
+    author = {Marks, Thomas A. and Jorns, Benjamin A.},
+    year = {2022}, month = jun, pages = {344},
+}
+
+@inproceedings{Su_2022_IEPC_krypton,
+    title = {Investigation into the Efficiency Gap between Krypton and
+Xenon Operation on a Magnetically Shielded Hall Thruste},
+    booktitle = {38th {{International Electric Propulsion Conference, Boston, MA, USA}}},
+    author = {Su, Leanne L. and Marks, Thomas A. and Jorns, Benjamin A.},
+    year = {2022}, month = jun,
+}
+
+@inproceedings{Hurley_2022_IEPC_aircore,
+    title = {Application of Bayesian Inference to Develop an Air-Core
+Magnetic Circuit for a Magnetically Shielded Hall Thruster},
+    booktitle = {38th {{International Electric Propulsion Conference, Boston, MA, USA}}},
+    author = {Hurley, William J. and Marks, Thomas A. and Gorodetsky, Alex A. and Jorns, Benjamin A.},
+    year = {2022}, month = jun,
+}
+
+@inproceedings{Marks_2021_PE_selfconsistent,
+    title = {Self-consistent implementation of a zero-equation transport model into a predictive model for a Hall effect thruster},
+    booktitle = {{{AIAA Propulsion and Energy 2021 Forum}}},
+    author = {Marks, Thomas A. and Lopez Ortega, Alejandro and Mikellides, Ioannis G. and Jorns, Benjamin A.},
+    year = {2021}, month = jul, pages={3424}, doi={10.2514/6.2021-3424}
+}
+
+@inproceedings{Marks_2020_PE_MN,
+    title = {Hall2De Simulations of a Magnetic Nozzle},
+    booktitle = {{{AIAA Propulsion and Energy 2020 Forum}}},
+    author = {Marks, Thomas A. and Lopez Ortega, Alejandro and Mikellides, Ioannis G. and Jorns, Benjamin A.},
+    year = {2020}, month = aug, pages={3642}, doi={10.2514/6.2020-3642}
+}
+
+@inproceedings{Jorns_2020_PE_predictive,
+    title = {A Predictive Hall Thruster Model Enabled by Data-Driven Closure},
+    booktitle = {{{AIAA Propulsion and Energy 2020 Forum}}},
+    author = {Jorns, Benjamin A. and Marks, Thomas A. and Dale, Ethan T.},
+    year = {2020}, month = aug, pages={3622}, doi={10.2514/6.2020-3622}
+}
