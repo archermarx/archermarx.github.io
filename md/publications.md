@@ -13,12 +13,6 @@ citations-hover: true
 
 :::{#cv}
 
-## Ph.D. Thesis
-
----
-
-- [@Marks_2023_Thesis] **[(pdf)](files/marks_phd_thesis_2023.pdf)**
-
 ## Journal articles
 
 ---
@@ -66,6 +60,14 @@ citations-hover: true
 
 - [@Marks_2020_PE_MN] **[(pdf)](files/marks_2020_pe_mn.pdf)**
 - [@Jorns_2020_PE_predictive] **[(pdf)](files/jorns_2020_pe_predictive.pdf)**
+
+
+## Ph.D. thesis
+
+---
+
+- [@Marks_2023_Thesis] **[(pdf)](files/marks_phd_thesis_2023.pdf)**
+
 
 :::
 \
