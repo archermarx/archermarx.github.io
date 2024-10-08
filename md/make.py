@@ -40,8 +40,6 @@ favicon_header = [
     f'    <link rel="icon" type="image/x-icon" href={favicon_path}/>\n'
 ]
 
-header = header[0:title_ind+1] + favicon_header + header[title_ind+1:]
-
 # add "last modified on" footer
 from datetime import datetime
 date = datetime.today().strftime('%b %d, %Y')
