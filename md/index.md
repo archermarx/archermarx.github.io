@@ -5,10 +5,6 @@ given-name-pattern: Thomas
 family-name-pattern: Marks
 ---
 
-<div class="navbar">
-[Publications](publications.html) | [Curriculum Vitae](files/thomas_marks_cv_2024.pdf)
-</div>
-
 # Thomas Marks
 
 <img src="assets/images/headshot.jpg" id="profile_pic"/>

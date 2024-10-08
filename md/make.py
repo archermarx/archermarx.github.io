@@ -50,9 +50,15 @@ footer = f"""\n\\ \n\n\\ \n\n***\n
 *Last updated on {date}. Created using [TSPW](https://github.com/eakbas/TSPW) and [pandoc](http://pandoc.org/).
 </span>"""
 
+# write navbar
+navbar = """<div class="navbar">
+[Home](/index.html) | [Publications](/publications.html) | [Posts](/archive.html) | [Curriculum Vitae](/files/thomas_marks_cv_2024.pdf)
+</div>"""
+
 # write to temporary file
 with open(tempfile, 'w') as file:
     file.writelines(header)
+    file.write(navbar)
     file.writelines(contents)
     file.write(footer)
 

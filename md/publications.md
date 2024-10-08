@@ -7,10 +7,6 @@ link-citations: false
 citations-hover: true
 ---
 
-<div class="navbar">
-[Home](index.html) / Publications
-</div>
-
 :::{#cv}
 
 ## Journal articles

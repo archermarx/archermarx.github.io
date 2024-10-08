@@ -5,7 +5,12 @@ SHELL = /bin/bash
 ASSETDIR = "assets"
 TARGETDIR = ".."
 
-SOURCES = $(wildcard *.md) $(wildcard content/*.md) $(wildcard extras/*.md)
+SOURCES = \
+	$(wildcard *.md) \
+	$(wildcard content/*.md) \
+	$(wildcard p/*.md) \
+	$(wildcard extras/*.md)
+
 HTMLs = $(patsubst %.md,$(TARGETDIR)/%.html,$(SOURCES))
 TEMPFILE = $(TARGETDIR)/tmpfile
 
@@ -18,6 +23,6 @@ $(TARGETDIR)/%.html: %.md
 	@ ./make.py $@ $< $(@D)
 
 clean: 
-	@ rm -rf ../*.html ../content ../extras ../tmpfile
+	@ rm -rf ../*.html ../content ../p ../extras ../tmpfile
 
 remake: clean all
