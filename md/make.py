@@ -16,31 +16,31 @@ reldir = "../" * depth
 with open(mdfile, 'r') as file:
     contents = file.readlines();
 
-# find header bit
+# find YAML header
 div_count = 0
 div_ind = 0
+title_ind = 0
 for (i, l) in enumerate(contents):
+    if l.startswith('Title'):
+        title_ind = i
     if l.strip() == '---':
         div_count += 1
         div_ind = i
     if div_count == 2:
         break
 
-header = contents[:div_ind]
+header = contents[:div_ind+1]
 contents = contents[div_ind+1:]
 
-# add favicon into header
+# add favicon into header after title
 favicon_path = reldir + assets + "/images/favicon.svg"
 
 favicon_header = [
     "header-includes:\n",
-    f'    <link rel="icon" type="image/x-icon" href=favicon.ico/>\n'
+    f'    <link rel="icon" type="image/x-icon" href={favicon_path}/>\n'
 ]
 
-header += favicon_header
-header += ['---\n']
-
-print(header)
+header = header[0:title_ind+1] + favicon_header + header[title_ind+1:]
 
 # add "last modified on" footer
 from datetime import datetime
@@ -55,8 +55,6 @@ with open(tempfile, 'w') as file:
     file.writelines(header)
     file.writelines(contents)
     file.write(footer)
-
-# 
 
 print(htmlfile)
 import subprocess
