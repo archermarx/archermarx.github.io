@@ -33,12 +33,14 @@ header = contents[:div_ind+1]
 contents = contents[div_ind+1:]
 
 # add favicon into header after title
-favicon_path = reldir + assets + "/images/favicon.svg"
+favicon_path = "/favicon.ico"
 
 favicon_header = [
     "header-includes:\n",
     f'    <link rel="icon" type="image/x-icon" href={favicon_path}/>\n'
 ]
+
+header = header[0:title_ind+1] + favicon_header + header[title_ind+1:]
 
 # add "last modified on" footer
 from datetime import datetime
