@@ -19,6 +19,7 @@ citations-hover: true
 
 ### 2024
 
+- [@Eckels_2024_Multidisciplinary] **[(pdf)](files/eckels_2024_multidisciplinary.pdf)**
 - [@Su_2024_Krypton] **[(pdf)](files/su_et_al_psst_2024_krypton.pdf)**
 - [@Su_2024_MUSCLE] **[(pdf)](files/su_et_al_aiaa_2024_muscle.pdf)**
 
