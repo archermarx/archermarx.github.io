@@ -14,7 +14,33 @@ reldir = "../" * depth
 
 # read contents of file
 with open(mdfile, 'r') as file:
-    contents = file.read();
+    contents = file.readlines();
+
+# find header bit
+div_count = 0
+div_ind = 0
+for (i, l) in enumerate(contents):
+    if l.strip() == '---':
+        div_count += 1
+        div_ind = i
+    if div_count == 2:
+        break
+
+header = contents[:div_ind]
+contents = contents[div_ind+1:]
+
+# add favicon into header
+favicon_path = reldir + assets + "/images/favicon.svg"
+
+favicon_header = [
+    "header-includes:\n",
+    f'    <link rel="icon" type="image/x-icon" href=favicon.ico/>\n'
+]
+
+header += favicon_header
+header += ['---\n']
+
+print(header)
 
 # add "last modified on" footer
 from datetime import datetime
@@ -23,11 +49,14 @@ footer = f"""\n\\ \n\n\\ \n\n***\n
 <span class="footer">
 *Last updated on {date}. Created using [TSPW](https://github.com/eakbas/TSPW) and [pandoc](http://pandoc.org/).
 </span>"""
-contents += footer
 
 # write to temporary file
 with open(tempfile, 'w') as file:
-    file.write(contents)
+    file.writelines(header)
+    file.writelines(contents)
+    file.write(footer)
+
+# 
 
 print(htmlfile)
 import subprocess
