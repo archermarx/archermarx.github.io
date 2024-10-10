@@ -9,4 +9,4 @@ citations-hover: true
 
 # Post archive
 
-Nothing yet, stay tuned!
+Nothing yet. Stay tuned!

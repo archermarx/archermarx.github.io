@@ -7,10 +7,6 @@ link-citations: true
 citations-hover: true
 ---
 
-<div class="navbar">
-[Home](../index.html) / WebGL test 
-</div>
-
 # WebGL test
 <canvas id = "canvas" width = 400, height = 400</canvas>
 <script src = "../scripts/webgl.js"></script>
