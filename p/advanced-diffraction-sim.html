@@ -64,8 +64,8 @@ simulation</h1>
 <p></label></p>
 </div>
 <div>
-<input type="range" id="rays_input" min="4" max="200" value="50" step="1" autocomplete="off"/>
-<label for="rays_input">Rays/pixel:
+<input type="range" id="rays_input" min="1" max="20" value="10" step="1" autocomplete="off"/>
+<label for="rays_input">Rays/slit/pixel:
 <output id="rays_output"/>
 <p></label></p>
 </div>
@@ -126,49 +126,49 @@ float wave_amplitude(vec2 pos, vec2 sourcePos, float t) {
 }
 
 float cast_rays(vec2 pos, vec2 sourcePos) {
-    float amplitude = 0.0;
-
     float x = pos.x;
     float y = pos.y;
     float w = 0.5 * slit_width * spacing / float(num_slits - 1); 
     float dy = y - grating_y*height;
-    float dx_min = pos.x - (centers[0] - w) * width;
-    float dx_max = pos.x - (max_x + w) * width;
-    float theta_min = atan(dy, -dx_max);
-    float theta_max = atan(dy, -dx_min);
 
-   // float theta_min = 0.0;
-   // float theta_max = PI;
-    float dtheta = (theta_max - theta_min) / float(num_rays);
-    float frac = (theta_max - theta_min) / PI;
+    float amplitude = 0.0;
 
+    // iterate over slits
     float num_hits = 0.0;
+    float total_angle = 0.0;
 
-    for (int i = 0; i < MAX_RAYS; i++) {
-        if (i >= num_rays) {break;}
-        float theta = theta_min + (float(i)+0.5) * dtheta;
-        // check here for sign convention
-        vec2 ray = vec2(cos(theta), sin(theta));
-
-        // find intercept location 
-        float t = dy / ray.y;
-        float ix = (pos.x + ray.x*t)/width;
+    for (int i = 0; i < MAX_SLITS; i++) {
+        if (i >= num_slits) {break;}
         
-        // determine if there is a slit there
-        for (int i = 0; i < MAX_SLITS; i++) {
-            if (i >= num_slits) {break;}
-            if (ix > centers[i] - w && ix < centers[i] + w) {
-                vec2 rayPos = vec2(ix*width, grating_y*height);
-                float dist = distance(rayPos, pos);
-                float group_vel = 1.0 / (2.0 * PI * wavenumber / width);
-                float time_delay = dist / group_vel;
-                amplitude += wave_amplitude(rayPos, sourcePos, time - time_delay);
-                num_hits += 1.0;
-                break;
-            }
+        float dx_min = pos.x - (centers[i] - w) * width;
+        float dx_max = pos.x - (centers[i] + w) * width;
+        float theta_min = atan(dy, -dx_max);
+        float theta_max = atan(dy, -dx_min);
+        float angle_frac = theta_max - theta_min;
+        total_angle += angle_frac;
+        float dtheta = angle_frac / float(num_rays);
+
+        for (int i = 0; i < MAX_RAYS; i++) {
+            if (i >= num_rays) {break;}
+            float theta = theta_min + (float(i)+0.5) * dtheta;
+            // check here for sign convention
+            vec2 ray = vec2(cos(theta), sin(theta));
+
+            // find intercept location 
+            float t = dy / ray.y;
+            float ix = (pos.x + ray.x*t)/width;
+                
+            // Get wave amplitude here
+            vec2 rayPos = vec2(ix*width, grating_y*height);
+            float dist = distance(rayPos, pos);
+            float group_vel = 1.0 / (2.0 * PI * wavenumber / width);
+            float time_delay = dist / group_vel;
+            float a = wave_amplitude(rayPos, sourcePos, time - time_delay);
+            amplitude += a * dtheta;
         }
     }
-    return amplitude / float(num_hits);
+
+    return amplitude / total_angle;
 }
 
 vec3 wave_color(float amplitude) {
