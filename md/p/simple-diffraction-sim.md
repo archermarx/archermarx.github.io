@@ -52,7 +52,7 @@ void main() {
 
 // fragment shader
 var fshader = `
-precision mediump float;
+precision highp float;
 
 uniform float width;
 uniform float height;
