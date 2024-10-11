@@ -31,7 +31,11 @@ citations-hover: true
 <div class = "controls">
 <div>
 <input type="range" id="sourcedist_input" min="0.15" max="5" value="2.5" step="any" autocomplete="off"/>
-<label for="sourcedist_input">Source distance: <output id="sourcedist_output"/></label>
+<label for="sourcedist_input">Source dist: <output id="sourcedist_output"/></label>
+</div>
+<div>
+<input type="range" id="rays_input" min="4" max="200" value="50" step="1" autocomplete="off"/>
+<label for="rays_input">Rays/pixel: <output id="rays_output"/></label>
 </div>
 </div>
 
@@ -82,7 +86,8 @@ uniform float slit_width;
 uniform float wavenumber;
 uniform float source_distance;
 
-#define MAX_RAYS 100
+#define MAX_RAYS 200
+uniform int num_rays;
 
 float wave_amplitude(vec2 pos, vec2 sourcePos, float t) {
     float r = distance(pos, sourcePos) / width;
@@ -103,12 +108,13 @@ float cast_rays(vec2 pos, vec2 sourcePos) {
 
    // float theta_min = 0.0;
    // float theta_max = PI;
-    float dtheta = (theta_max - theta_min) / float(MAX_RAYS);
+    float dtheta = (theta_max - theta_min) / float(num_rays);
     float frac = (theta_max - theta_min) / PI;
 
     float num_hits = 0.0;
 
     for (int i = 0; i < MAX_RAYS; i++) {
+        if (i >= num_rays) {break;}
         float theta = theta_min + (float(i)+0.5) * dtheta;
         // check here for sign convention
         vec2 ray = vec2(cos(theta), sin(theta));
@@ -254,12 +260,21 @@ set_sourcedist = (val) => {
 }
 sourcedist_input.addEventListener("input", (event) => {set_sourcedist(event.target.value)});
 
+var rays_input = document.querySelector("#rays_input");
+var rays_output = document.querySelector("#rays_output");
+set_rays = (val) => {
+    rays_output.textContent = val;
+    gl.uniform1i(gl.getUniformLocation(program, 'num_rays'), val);
+}
+rays_input.addEventListener("input", (event) => {set_rays(event.target.value)});
+
 // initialize controls
 set_spacing(spacing_input.value);
 set_slitwidth(slitwidth_input.value);
 set_wavenumber(wavenumber_input.value);
 set_sources(sources_input.value);
 set_sourcedist(sourcedist_input.value);
+set_rays(rays_input.value);
 
 // Define vertices and colors
 var verticesColors = new Float32Array([
