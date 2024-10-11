@@ -36,7 +36,7 @@ simulation</h1>
 <div class="centered-block">
 <div class="controls">
 <div>
-<input type="range" id="sources_input" min="1" max="16" value="3" step="1" autocomplete="off"/>
+<input type="range" id="sources_input" min="2" max="16" value="3" step="1" autocomplete="off"/>
 <label for="sources_input">Slits:
 <output id="sources_output"/>
 <p></label></p>
@@ -53,6 +53,14 @@ simulation</h1>
 <input type="range" id="wavenumber_input" min="1" max="64" value="16" step="any" autocomplete="off"/>
 <label for="wavenumber_input">Wavenumber:
 <output id="wavenumber_output"/>
+<p></label></p>
+</div>
+</div>
+<div class="controls">
+<div>
+<input type="range" id="sourcedist_input" min="0.15" max="5" value="2.5" step="any" autocomplete="off"/>
+<label for="sourcedist_input">Source distance:
+<output id="sourcedist_output"/>
 <p></label></p>
 </div>
 </div>
@@ -101,7 +109,7 @@ uniform int num_slits;
 uniform float spacing;
 uniform float slit_width;
 uniform float wavenumber;
-float source_distance = 2.0;
+uniform float source_distance;
 
 #define MAX_RAYS 100
 
@@ -152,7 +160,7 @@ float cast_rays(vec2 pos, vec2 sourcePos) {
             }
         }
     }
-    return 1.2 * (frac * (amplitude / float(num_hits)));
+    return amplitude / float(num_hits);
 }
 
 vec3 wave_color(float amplitude) {
@@ -215,7 +223,7 @@ void main () {
     }
 
     vec2 pos = gl_FragCoord.xy - vec2(width/2.0, height/2.0);
-    vec2 sourcePos = vec2(0.0, -source_distance * width);
+    vec2 sourcePos = vec2(0.0, -source_distance * width + grating_y * height);
 
     vec3 color = draw_grate(draw_base(pos, sourcePos), pos);   
     gl_FragColor = vec4(color, 1.0);
@@ -267,11 +275,20 @@ set_sources = (val) => {
 }
 sources_input.addEventListener("input", (event) => {set_sources(event.target.value)});
 
+var sourcedist_input = document.querySelector("#sourcedist_input");
+var sourcedist_output = document.querySelector("#sourcedist_output");
+set_sourcedist = (val) => {
+    sourcedist_output.textContent = Math.round(100*val)/100;
+    gl.uniform1f(gl.getUniformLocation(program, 'source_distance'), val);
+}
+sourcedist_input.addEventListener("input", (event) => {set_sourcedist(event.target.value)});
+
 // initialize controls
 set_spacing(spacing_input.value);
 set_slitwidth(slitwidth_input.value);
 set_wavenumber(wavenumber_input.value);
 set_sources(sources_input.value);
+set_sourcedist(sourcedist_input.value);
 
 // Define vertices and colors
 var verticesColors = new Float32Array([
