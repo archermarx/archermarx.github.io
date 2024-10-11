@@ -94,6 +94,7 @@ uniform float time;
 
 #define MAX_SLITS 16
 float centers[MAX_SLITS];
+float max_x;
 float grating_y = -0.25;
 
 uniform int num_slits;
@@ -101,6 +102,47 @@ uniform float spacing;
 uniform float slit_width;
 uniform float wavenumber;
 float source_distance = 2.0;
+
+#define MAX_RAYS 50
+
+float wave_amplitude(vec2 pos, vec2 sourcePos) {
+    float r = distance(pos, sourcePos) / width;
+    return sin(2.0*PI * wavenumber * r - time);
+}
+
+float cast_rays(vec2 pos, vec2 sourcePos) {
+    float amplitude = 0.0;
+    const float dtheta = PI / float(MAX_RAYS);
+
+    float x = pos.x;
+    float y = pos.y;
+    float w = 0.5 * slit_width * spacing / float(num_slits - 1); 
+    float dy = y - grating_y*height;
+
+    for (int i = 0; i < MAX_RAYS; i++) {
+        float theta = (float(i)+0.5) * dtheta;
+        // check here for sign convention
+        vec2 ray = vec2(cos(theta), sin(theta));
+
+        // find intercept location 
+        float t = dy / ray.y;
+        float ix = (pos.x + ray.x*t)/width;
+
+        //if (ix > centers[0]-w && ix < max_x + w) {
+        //    amplitude += 1.0;
+        //}
+        
+        // determine if there is a slit there
+        for (int i = 0; i < MAX_SLITS; i++) {
+            if (i >= num_slits) {break;}
+            if (ix > centers[i] - w && ix < centers[i] + w) {
+                amplitude += 1.0;
+                break;
+            }
+        }
+    }
+    return amplitude / float(MAX_RAYS);
+}
 
 vec3 wave_color(float amplitude) {
     vec3 color;
@@ -141,12 +183,10 @@ vec3 draw_base(vec2 pos, vec2 sourcePos) {
 
     // draw region downstream of grating
     if (y > grating_y) {
-        return BLACK;
+        return wave_color(cast_rays(pos, sourcePos));
     }
 
-    float r = distance(pos, sourcePos) / width;
-    float wave_amplitude =  sin(2.0*PI * wavenumber * r - time);
-    vec3 color = wave_color(wave_amplitude);
+    vec3 color = wave_color(wave_amplitude(pos, sourcePos));
     return color;
 }
 
@@ -159,6 +199,7 @@ void main () {
         for (int i = 0; i < MAX_SLITS; i++) {
             if (i >= num_slits) {break;}
             centers[i] = -0.5 * spacing + float(i)*increment;
+            max_x = centers[i];
         }
     }
 
