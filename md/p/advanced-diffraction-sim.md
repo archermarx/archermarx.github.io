@@ -37,6 +37,10 @@ citations-hover: true
 <input type="range" id="rays_input" min="1" max="20" value="10" step="1" autocomplete="off"/>
 <label for="rays_input">Rays/slit/pixel: <output id="rays_output"/></label>
 </div>
+<div>
+<input type="checkbox" id="brightness_input" value = "brightness" autocomplete="off"/>
+<label for="brightness_input">Show intensity</label>
+</div>
 </div>
 
 <canvas id="canvas" width=1000 height=1200></canvas>
@@ -78,13 +82,14 @@ uniform float time;
 #define MAX_SLITS 16
 float centers[MAX_SLITS];
 float max_x;
-float grating_y = -0.25;
+float grating_y = -0.3;
 
 uniform int num_slits;
 uniform float spacing;
 uniform float slit_width;
 uniform float wavenumber;
 uniform float source_distance;
+uniform bool show_brightness;
 
 #define MAX_RAYS 200
 uniform int num_rays;
@@ -136,6 +141,8 @@ float cast_rays(vec2 pos, vec2 sourcePos) {
             amplitude += a * dtheta;
         }
     }
+    
+    if (show_brightness) total_angle = PI;
 
     return amplitude / total_angle;
 }
@@ -267,6 +274,12 @@ set_rays = (val) => {
     gl.uniform1i(gl.getUniformLocation(program, 'num_rays'), val);
 }
 rays_input.addEventListener("input", (event) => {set_rays(event.target.value)});
+
+var brightness_input = document.querySelector("#brightness_input");
+set_brightness = (val) => {
+    gl.uniform1i(gl.getUniformLocation(program, 'show_brightness'), brightness_input.checked);
+}
+brightness_input.addEventListener("input", (event) => {set_brightness(event.target.value)});
 
 // initialize controls
 set_spacing(spacing_input.value);
