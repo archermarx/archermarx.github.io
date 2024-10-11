@@ -103,21 +103,24 @@ uniform float slit_width;
 uniform float wavenumber;
 float source_distance = 2.0;
 
-#define MAX_RAYS 50
+#define MAX_RAYS 100
 
-float wave_amplitude(vec2 pos, vec2 sourcePos) {
+float wave_amplitude(vec2 pos, vec2 sourcePos, float t) {
     float r = distance(pos, sourcePos) / width;
-    return sin(2.0*PI * wavenumber * r - time);
+    return sin(t - 2.0*PI * wavenumber * r);
 }
 
 float cast_rays(vec2 pos, vec2 sourcePos) {
     float amplitude = 0.0;
-    const float dtheta = PI / float(MAX_RAYS);
 
     float x = pos.x;
     float y = pos.y;
     float w = 0.5 * slit_width * spacing / float(num_slits - 1); 
     float dy = y - grating_y*height;
+
+    const float dtheta = PI / float(MAX_RAYS);
+
+    float num_hits = 0.0;
 
     for (int i = 0; i < MAX_RAYS; i++) {
         float theta = (float(i)+0.5) * dtheta;
@@ -127,21 +130,22 @@ float cast_rays(vec2 pos, vec2 sourcePos) {
         // find intercept location 
         float t = dy / ray.y;
         float ix = (pos.x + ray.x*t)/width;
-
-        //if (ix > centers[0]-w && ix < max_x + w) {
-        //    amplitude += 1.0;
-        //}
         
         // determine if there is a slit there
         for (int i = 0; i < MAX_SLITS; i++) {
             if (i >= num_slits) {break;}
             if (ix > centers[i] - w && ix < centers[i] + w) {
-                amplitude += 1.0;
+                vec2 rayPos = vec2(ix*width, grating_y*height);
+                float dist = distance(rayPos, pos);
+                float group_vel = 1.0 / (2.0 * PI * wavenumber / width);
+                float time_delay = dist / group_vel;
+                amplitude += wave_amplitude(rayPos, sourcePos, time - time_delay);
+                num_hits += 1.0;
                 break;
             }
         }
     }
-    return amplitude / float(MAX_RAYS);
+    return amplitude / float(num_hits);
 }
 
 vec3 wave_color(float amplitude) {
@@ -186,7 +190,7 @@ vec3 draw_base(vec2 pos, vec2 sourcePos) {
         return wave_color(cast_rays(pos, sourcePos));
     }
 
-    vec3 color = wave_color(wave_amplitude(pos, sourcePos));
+    vec3 color = wave_color(wave_amplitude(pos, sourcePos, time));
     return color;
 }
 
