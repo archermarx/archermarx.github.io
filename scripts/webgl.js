@@ -24,10 +24,20 @@ compile = (gl, vshader, fshader) => {
     return program;
 }
 
-buffer = (gl, data, program, attribute, size, type) => {
+createBuffer = (gl, data) => {
     gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
     gl.bufferData(gl.ARRAY_BUFFER, data, gl.STATIC_DRAW);
-    var a = gl.getAttribLocation(program, attribute);
-    gl.vertexAttribPointer(a, size, type, false, 0, 0);
-    gl.enableVertexAttribArray(a);
+}
+
+setAttrib = (gl, program, attribute, size, type, stride, offset) => {
+    var attr = gl.getAttribLocation(program, attribute);
+    gl.vertexAttribPointer(
+      attr,     // target
+      size,     // interleaved data size
+      gl.FLOAT, // type
+      false,    // normalize
+      stride,   // stride (chunk size)
+      offset    // offset (position of interleaved data in chunk) 
+    );
+    gl.enableVertexAttribArray(attr);
 }

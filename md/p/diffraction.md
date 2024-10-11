@@ -1,0 +1,190 @@
+---
+pagetitle: Diffraction simulation
+bibliography: '../assets/bib/references.bib'
+csl: '../assets/csl/iop-style.csl'
+suppress-bibliography: false
+link-citations: true
+citations-hover: true
+---
+
+# Diffraction simulation
+<div>
+<input type="range" id="sources_input" min="1" max="16" value="3" step="1" autocomplete="off"/>
+<label for="sources_input">Sources: <output id="sources_output"/></label>
+</div>
+
+<div>
+<input type="range" id="spacing_input" min="0" max="1" value="0.5" step="any" autocomplete="off"/>
+<label for="spacing_input">Spacing</label>
+</div>
+
+<div>
+<input type="range" id="wavenumber_input" min="1" max="64" value="32" step="any" autocomplete="off"/>
+<label for="wavenumber_input">Wavenumber: <output id="wavenumber_output"/></label>
+</div>
+
+<canvas id="canvas" width=500 height=800></canvas>
+<script src = "../scripts/webgl.js?v=2"></script>
+<script>
+// Get the webgl rendering context
+var gl = canvas.getContext('webgl');
+
+
+// vertex shader
+var vshader = `
+attribute vec4 position;
+void main() {
+    gl_Position = position;
+}
+`;
+
+// fragment shader
+var fshader = `
+precision mediump float;
+
+uniform float width;
+uniform float height;
+#define PI 3.141592653589
+float timefreq = 100.0;
+uniform float time;
+
+#define RED vec3(162., 30., 37.) / 256.0;
+#define BLUE vec3(11., 102., 188.) / 256.0;
+#define WHITE vec3(1.0, 1.0, 1.0)
+#define MIN_DIST 0.0125
+#define BLUR_RADIUS 1.05
+#define SLIT_HEIGHT 0.02
+
+#define MAX_SOURCES 16
+vec2 positions[16];
+
+uniform int num_slits;
+uniform float spacing;
+uniform float wavenumber;
+float slit_width = 0.01;
+
+void main () {
+
+    // position sources
+    if (num_slits == 1) {
+        positions[0] = vec2(0, -0.5);
+    } else {
+        float increment = spacing / float(num_slits-1);
+        for (int i = 0; i < MAX_SOURCES; i++) {
+            if (i >= num_slits) {break;}
+            positions[i].x = -0.5 * spacing + float(i)*increment;
+            positions[i].y = -0.5;
+        }
+    }
+
+    vec4 pos = (gl_FragCoord - vec4(width/2.0, height/2.0, 0.0, 0.0));
+    float f = 0.0;
+
+    float min_distance = width * height;
+    for (int i = 0; i < MAX_SOURCES; i++) {
+        if (i >= num_slits) {break;}
+        float dx = pos.x - positions[i].x * width;
+        float dy = pos.y - positions[i].y * height;
+        float r = sqrt(dx*dx + dy*dy) / width;
+        min_distance = min(min_distance, r);
+        f += sin(2.0*PI * wavenumber * r - time);
+    }
+    f /= float(num_slits);
+
+    vec3 color;
+    if (f > 0.0) {
+        color = RED;
+    } else {
+        color = BLUE;
+    }
+    float t = clamp(pow(abs(f), 2.2) * 1.2, 0.0, 1.0);
+    color *= t;
+    float cutoff = BLUR_RADIUS * MIN_DIST;
+    if (min_distance < MIN_DIST) {
+        color = WHITE;
+    } else if (min_distance < cutoff) {
+        t = (min_distance - MIN_DIST) / (cutoff - MIN_DIST);
+        color = (1.0 - t) * WHITE + t * color;
+    }
+    gl_FragColor = vec4(color, 1.0);
+}
+`;
+
+// Controls
+var time = 0.0;
+var dt = 0.1;
+
+// Compile program
+var program = compile(gl, vshader, fshader);
+
+// Send canvas size to shader
+var width = canvas.width;
+var height = canvas.height;
+var widthLoc = gl.getUniformLocation(program, 'width');
+var heightLoc = gl.getUniformLocation(program, 'height');
+var timeLoc = gl.getUniformLocation(program, 'time');
+gl.uniform1f(widthLoc, width);
+gl.uniform1f(heightLoc, height);
+
+// Set controls
+var spacing_input = document.querySelector("#spacing_input");
+set_spacing = (val) => {
+    gl.uniform1f(gl.getUniformLocation(program, 'spacing'), val);
+}
+spacing_input.addEventListener("input", (event) => {set_spacing(event.target.value)});
+set_spacing(spacing_input.value);
+
+var wavenumber_input = document.querySelector("#wavenumber_input");
+var wavenumber_output = document.querySelector("#wavenumber_output");
+set_wavenumber = (val) => {
+    wavenumber_output.textContent = Math.round(10*val)/10;
+    gl.uniform1f(gl.getUniformLocation(program, 'wavenumber'), val);
+}
+wavenumber_input.addEventListener("input", (event) => {set_wavenumber(event.target.value)});
+set_wavenumber(wavenumber_input.value);
+
+var sources_input = document.querySelector("#sources_input");
+var sources_output = document.querySelector("#sources_output");
+set_sources = (val) => {
+    sources_output.textContent = val;
+    gl.uniform1i(gl.getUniformLocation(program, 'num_slits'), val);
+}
+sources_input.addEventListener("input", (event) => {set_sources(event.target.value)});
+set_sources(sources_input.value);
+
+// Define vertices and colors
+var verticesColors = new Float32Array([
+   //x ,  y,    z,  
+    -1.0, -1.0, 0.0, 
+    -1.0,  1.0, 0.0, 
+     1.0,  1.0, 0.0, 
+     1.0, -1.0, 0.0,
+]);
+  
+// Save the number of vertices (3)
+var n = 4;
+
+// Get the size of each float in bytes (4)
+var fsize = verticesColors.BYTES_PER_ELEMENT;
+var stride = 3 * fsize;
+
+// Create a buffer object
+createBuffer(gl, verticesColors);
+
+// Bind the attribute position to the 1st, 2nd and 3rd floats in every chunk of 6 floats in the buffer
+setAttrib(gl, program, 'position', 3, gl.FLOAT, stride, 0);
+
+const interval = setInterval(() => {
+    // Set the clear color
+    gl.clearColor(0.0, 0.0, 0.0, 1.0);
+
+    // Clear canvas
+    gl.clear(gl.COLOR_BUFFER_BIT);
+
+    // Update time and draw
+    time += dt;
+    gl.uniform1f(timeLoc, time);
+    gl.drawArrays(gl.TRIANGLE_FAN, 0, n);
+}, 10);
+
+</script>

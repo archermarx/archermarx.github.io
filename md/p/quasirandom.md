@@ -18,8 +18,8 @@ This widget allows you to play around with a few different quasi-random sampling
 </select>
 <button type = "button" id = "generate">Generate</button>
 
-<canvas id = "canvas" width = 550, height = 550</canvas>
-<script src = "../scripts/webgl.js"></script>
+<canvas id="canvas" width=500 height=500></canvas>
+<script src = "../scripts/webgl.js?v=2"></script>
 <script>
 
 // Create listener for the dropdown box
@@ -89,7 +89,7 @@ var size = gl.getAttribLocation(program, "size");
 var color = gl.getUniformLocation(program, "color");
 
 // Set point size
-gl.vertexAttrib1f(size, 10);
+gl.vertexAttrib1f(size, 6);
 
 // Set point color
 gl.uniform4f(color, randomColor[0], randomColor[1], randomColor[2], 1.0);
