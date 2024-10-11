@@ -41,6 +41,7 @@ from each slit. You can control the number of sources, the spacing
 between them, and the wavenumber of the incoming plane wave using the
 controls below.</p>
 <div class="centered-block">
+<div class="controls">
 <div>
 <input type="range" id="sources_input" min="1" max="16" value="3" step="1" autocomplete="off"/>
 <label for="sources_input">Sources:
@@ -57,7 +58,8 @@ controls below.</p>
 <output id="wavenumber_output"/>
 <p></label></p>
 </div>
-<canvas id="canvas" width="500" height="700">
+</div>
+<canvas id="canvas" width="1000" height="1200">
 </canvas>
 </div>
 <script src = "../scripts/webgl.js"></script>

@@ -15,22 +15,22 @@ The field intensity (red for positive and blue for negative) is then just comput
 You can control the number of sources, the spacing between them, and the wavenumber of the incoming plane wave using the controls below.
 
 <div class="centered-block">
+<div class="controls">
 <div>
 <input type="range" id="sources_input" min="1" max="16" value="3" step="1" autocomplete="off"/>
 <label for="sources_input">Sources: <output id="sources_output"/></label>
 </div>
-
 <div>
 <input type="range" id="spacing_input" min="0" max="1" value="0.5" step="any" autocomplete="off"/>
 <label for="spacing_input">Spacing</label>
 </div>
-
 <div>
 <input type="range" id="wavenumber_input" min="1" max="64" value="16" step="any" autocomplete="off"/>
 <label for="wavenumber_input">Wavenumber: <output id="wavenumber_output"/></label>
 </div>
+</div>
 
-<canvas id="canvas" width=500 height=700></canvas>
+<canvas id="canvas" width=1000 height=1200></canvas>
 </div>
 
 <script src = "../scripts/webgl.js"></script>

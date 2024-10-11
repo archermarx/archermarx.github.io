@@ -19,7 +19,7 @@ This widget allows you to play around with a few different quasi-random sampling
 </select>
 <button type = "button" id = "generate">Generate</button>
 
-<canvas id="canvas" width=500 height=500></canvas>
+<canvas id="canvas" width=1000 height=1000></canvas>
 </div>
 
 <script src = "../scripts/webgl.js"></script>
