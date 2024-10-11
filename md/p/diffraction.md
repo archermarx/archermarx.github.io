@@ -1,5 +1,5 @@
 ---
-pagetitle: Diffraction simulation
+pagetitle: Simple diffraction simulation
 bibliography: '../assets/bib/references.bib'
 csl: '../assets/csl/iop-style.csl'
 suppress-bibliography: false
@@ -7,7 +7,14 @@ link-citations: true
 citations-hover: true
 ---
 
-# Diffraction simulation
+# Simple diffraction grating simulation
+
+The simulation below models diffraction of a plane wave through a number of slits.
+We assume the slits are infinitely thin, which allows us to model them as point sources.
+The field intensity (red for positive and blue for negative) is then just computed by summing the contribution from each slit.
+You can control the number of sources, the spacing between them, and the wavenumber of the incoming plane wave using the controls below.
+
+<div class="centered-block">
 <div>
 <input type="range" id="sources_input" min="1" max="16" value="3" step="1" autocomplete="off"/>
 <label for="sources_input">Sources: <output id="sources_output"/></label>
@@ -19,11 +26,15 @@ citations-hover: true
 </div>
 
 <div>
-<input type="range" id="wavenumber_input" min="1" max="64" value="32" step="any" autocomplete="off"/>
+<input type="range" id="wavenumber_input" min="1" max="64" value="16" step="any" autocomplete="off"/>
 <label for="wavenumber_input">Wavenumber: <output id="wavenumber_output"/></label>
 </div>
+</div>
 
-<canvas id="canvas" width=500 height=800></canvas>
+<div class="centered-block">
+<canvas id="canvas" width=500 height=700></canvas>
+</div>
+
 <script src = "../scripts/webgl.js?v=2"></script>
 <script>
 // Get the webgl rendering context

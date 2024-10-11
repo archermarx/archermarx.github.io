@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>Diffraction simulation</title>
+  <title>Simple diffraction simulation</title>
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -31,7 +31,16 @@ href="/publications.html">Publications</a> | <a
 href="/archive.html">Posts</a> | <a
 href="/files/thomas_marks_cv_2024.pdf">Curriculum Vitae</a></p>
 </div>
-<h1 id="diffraction-simulation">Diffraction simulation</h1>
+<h1 id="simple-diffraction-grating-simulation">Simple diffraction
+grating simulation</h1>
+<p>The simulation below models diffraction of a plane wave through a
+number of slits. We assume the slits are infinitely thin, which allows
+us to model them as point sources. The field intensity (red for positive
+and blue for negative) is then just computed by summing the contribution
+from each slit. You can control the number of sources, the spacing
+between them, and the wavenumber of the incoming plane wave using the
+controls below.</p>
+<div class="centered-block">
 <div>
 <input type="range" id="sources_input" min="1" max="16" value="3" step="1" autocomplete="off"/>
 <label for="sources_input">Sources:
@@ -43,13 +52,16 @@ href="/files/thomas_marks_cv_2024.pdf">Curriculum Vitae</a></p>
 <label for="spacing_input">Spacing</label></p>
 </div>
 <div>
-<input type="range" id="wavenumber_input" min="1" max="64" value="32" step="any" autocomplete="off"/>
+<input type="range" id="wavenumber_input" min="1" max="64" value="16" step="any" autocomplete="off"/>
 <label for="wavenumber_input">Wavenumber:
 <output id="wavenumber_output"/>
 <p></label></p>
 </div>
-<canvas id="canvas" width="500" height="800">
+</div>
+<div class="centered-block">
+<canvas id="canvas" width="500" height="700">
 </canvas>
+</div>
 <script src = "../scripts/webgl.js?v=2"></script>
 <script>
 // Get the webgl rendering context
