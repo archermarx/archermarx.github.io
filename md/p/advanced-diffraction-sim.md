@@ -67,7 +67,7 @@ uniform float time;
 
 #define MAX_SLITS 16
 float centers[MAX_SLITS];
-float grating_y = 0.25;
+float grating_y = -0.25;
 
 uniform int num_slits;
 uniform float spacing;
@@ -88,29 +88,39 @@ vec3 wave_color(float amplitude) {
     return color;
 }
 
-vec3 draw_grating(vec3 color, vec2 pos, vec2 sourcePos) {
-    float grating_thickness = 0.01;
-
+vec3 draw_grate(vec3 base, vec2 pos) {
     float x = pos.x / width;
     float y = pos.y / height;
-
-    if (y > -grating_y + grating_thickness / 2.0 ||
-        y < -grating_y - grating_thickness / 2.0) {
-        return color;
-    }
-    
-    vec3 c = WHITE;
     float w = 0.5 * slit_width * spacing / float(num_slits - 1); 
+    float grating_thickness = 0.01;
+
+    if (y < (grating_y - grating_thickness / 2.0) ||
+        y > (grating_y + grating_thickness / 2.0)) {
+        return base;
+    }
 
     for (int i = 0; i <= MAX_SLITS; i++) {
         if (i >= num_slits) {break;}
         if (x >= centers[i] - w && x <= centers[i] + w) {
-            c = color;
-            break;
+            return base;
         }  
     }
+    return WHITE;
+}
 
-    return c;
+vec3 draw_base(vec2 pos, vec2 sourcePos) {
+    float x = pos.x / width;
+    float y = pos.y / height;
+
+    // draw region downstream of grating
+    if (y > grating_y) {
+        return BLACK;
+    }
+
+    float r = distance(pos, sourcePos) / width;
+    float wave_amplitude =  sin(2.0*PI * wavenumber * r - time);
+    vec3 color = wave_color(wave_amplitude);
+    return color;
 }
 
 void main () {
@@ -127,11 +137,9 @@ void main () {
 
     vec2 pos = gl_FragCoord.xy - vec2(width/2.0, height/2.0);
     vec2 sourcePos = vec2(0.0, -source_distance * width);
-    float r = distance(pos, sourcePos) / width;
-    float wave_amplitude =  sin(2.0*PI * wavenumber * r - time);
 
-    vec3 color = wave_color(wave_amplitude);
-    gl_FragColor = vec4(draw_grating(color, pos, sourcePos), 1.0);
+    vec3 color = draw_grate(draw_base(pos, sourcePos), pos);   
+    gl_FragColor = vec4(color, 1.0);
 }
 `;
 
