@@ -127,7 +127,7 @@ vec3 draw_grating(vec3 color, vec2 pos, vec2 sourcePos) {
     }
     
     vec3 c = WHITE;
-    float w = 0.5 * slit_width; 
+    float w = 0.5 * slit_width * spacing / float(num_slits - 1); 
 
     for (int i = 0; i <= MAX_SLITS; i++) {
         if (i >= num_slits) {break;}
@@ -182,13 +182,12 @@ gl.uniform1f(heightLoc, height);
 var spacing_input = document.querySelector("#spacing_input");
 set_spacing = (val) => {
     gl.uniform1f(gl.getUniformLocation(program, 'spacing'), val);
-    set_slitwidth(slitwidth_input.value);
 }
 spacing_input.addEventListener("input", (event) => {set_spacing(event.target.value)});
 
 var slitwidth_input = document.querySelector("#slitwidth_input");
 set_slitwidth = (val) => {
-    gl.uniform1f(gl.getUniformLocation(program, 'slit_width'), 0.5 * val * spacing_input.value);
+    gl.uniform1f(gl.getUniformLocation(program, 'slit_width'), val);
 }
 slitwidth_input.addEventListener("input", (event) => {set_slitwidth(event.target.value)});
 
