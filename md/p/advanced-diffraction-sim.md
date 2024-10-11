@@ -90,13 +90,20 @@ float cast_rays(vec2 pos, vec2 sourcePos) {
     float y = pos.y;
     float w = 0.5 * slit_width * spacing / float(num_slits - 1); 
     float dy = y - grating_y*height;
+    float dx_min = pos.x - (centers[0] - w) * width;
+    float dx_max = pos.x - (max_x + w) * width;
+    float theta_min = atan(dy, -dx_max);
+    float theta_max = atan(dy, -dx_min);
 
-    const float dtheta = PI / float(MAX_RAYS);
+   // float theta_min = 0.0;
+   // float theta_max = PI;
+    float dtheta = (theta_max - theta_min) / float(MAX_RAYS);
+    float frac = (theta_max - theta_min) / PI;
 
     float num_hits = 0.0;
 
     for (int i = 0; i < MAX_RAYS; i++) {
-        float theta = (float(i)+0.5) * dtheta;
+        float theta = theta_min + (float(i)+0.5) * dtheta;
         // check here for sign convention
         vec2 ray = vec2(cos(theta), sin(theta));
 
@@ -118,7 +125,7 @@ float cast_rays(vec2 pos, vec2 sourcePos) {
             }
         }
     }
-    return amplitude / float(num_hits);
+    return 1.2 * (frac * (amplitude / float(num_hits)));
 }
 
 vec3 wave_color(float amplitude) {
