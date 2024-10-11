@@ -34,6 +34,7 @@ href="/files/thomas_marks_cv_2024.pdf">Curriculum Vitae</a></p>
 <h1 id="quasi-random-sampling-widget">Quasi-random sampling widget</h1>
 <p>This widget allows you to play around with a few different
 quasi-random sampling methods</p>
+<div class="centered-block">
 <p><label for="method">Generation method:</label>
 <select name = "Method" id = "method" autocomplete="off">
 <option value = "random" selected>Random</option>
@@ -41,7 +42,8 @@ quasi-random sampling methods</p>
 <button type = "button" id = "generate">Generate</button></p>
 <canvas id="canvas" width="500" height="500">
 </canvas>
-<script src = "../scripts/webgl.js?v=2"></script>
+</div>
+<script src = "../scripts/webgl.js"></script>
 <script>
 
 // Create listener for the dropdown box

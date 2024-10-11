@@ -29,13 +29,11 @@ You can control the number of sources, the spacing between them, and the wavenum
 <input type="range" id="wavenumber_input" min="1" max="64" value="16" step="any" autocomplete="off"/>
 <label for="wavenumber_input">Wavenumber: <output id="wavenumber_output"/></label>
 </div>
-</div>
 
-<div class="centered-block">
 <canvas id="canvas" width=500 height=700></canvas>
 </div>
 
-<script src = "../scripts/webgl.js?v=2"></script>
+<script src = "../scripts/webgl.js"></script>
 <script>
 // Get the webgl rendering context
 var gl = canvas.getContext('webgl');

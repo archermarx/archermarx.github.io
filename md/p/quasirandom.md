@@ -11,6 +11,7 @@ citations-hover: true
 
 This widget allows you to play around with a few different quasi-random sampling methods
 
+<div class = "centered-block">
 <label for="method">Generation method:</label> 
 <select name = "Method" id = "method" autocomplete="off">
     <option value = "random" selected>Random</option>
@@ -19,7 +20,9 @@ This widget allows you to play around with a few different quasi-random sampling
 <button type = "button" id = "generate">Generate</button>
 
 <canvas id="canvas" width=500 height=500></canvas>
-<script src = "../scripts/webgl.js?v=2"></script>
+</div>
+
+<script src = "../scripts/webgl.js"></script>
 <script>
 
 // Create listener for the dropdown box
