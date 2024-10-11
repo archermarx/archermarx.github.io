@@ -209,10 +209,10 @@ li {
 }
 
 .controls {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: row;
+    display: grid;
+    height: 100%;
+    min-height: 200px;
+    grid-template-columns: 1fr 1fr 1fr;
 }
 
 .centered-block{

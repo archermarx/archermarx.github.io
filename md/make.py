@@ -66,7 +66,8 @@ print(htmlfile)
 import subprocess
 args = [
     "pandoc",
-    "--from=markdown",
+    "--from",
+    "markdown-markdown_in_html_blocks+raw_html",
     "--mathml",
     "--citeproc",
     f"--lua-filter=../{assets}/lua/bold-name.lua",

@@ -16,18 +16,21 @@ You can control the number of sources, the spacing between them, and the wavenum
 
 <div class="centered-block">
 <div class="controls">
-<div>
-<input type="range" id="sources_input" min="1" max="16" value="3" step="1" autocomplete="off"/>
-<label for="sources_input">Sources: <output id="sources_output"/></label>
-</div>
-<div>
-<input type="range" id="spacing_input" min="0" max="1" value="0.5" step="any" autocomplete="off"/>
-<label for="spacing_input">Spacing</label>
-</div>
-<div>
-<input type="range" id="wavenumber_input" min="1" max="64" value="16" step="any" autocomplete="off"/>
-<label for="wavenumber_input">Wavenumber: <output id="wavenumber_output"/></label>
-</div>
+<fieldset>
+    <legend><b>Controls</b></legend>
+    <div>
+        <label for="sources_input">Sources: <output id="sources_output"/></label>
+        <input type="range" id="sources_input" min="1" max="16" value="3" step="1" autocomplete="off"/>
+    </div>
+    <div>
+        <label for="spacing_input">Spacing</label>
+        <input type="range" id="spacing_input" min="0" max="1" value="0.5" step="any" autocomplete="off"/>
+    </div>
+    <div>
+        <label for="wavenumber_input">Wavenumber: <output id="wavenumber_output"/></label>
+        <input type="range" id="wavenumber_input" min="1" max="64" value="8" step="any" autocomplete="off"/>
+    </div>
+</fieldset>
 </div>
 
 <canvas id="canvas" width=1000 height=1200></canvas>
@@ -70,33 +73,34 @@ vec2 positions[16];
 uniform int num_slits;
 uniform float spacing;
 uniform float wavenumber;
-float slit_width = 0.01;
+
+float wave_amplitude(vec2 pos, vec2 sourcePos, float t) {
+    float r = distance(pos, sourcePos) / width;
+    return sin(t - 2.0*PI * wavenumber * r);
+}
 
 void main () {
 
     // position sources
     if (num_slits == 1) {
-        positions[0] = vec2(0, -0.5);
+        positions[0] = vec2(0, -0.5 * height);
     } else {
         float increment = spacing / float(num_slits-1);
         for (int i = 0; i < MAX_SOURCES; i++) {
             if (i >= num_slits) {break;}
-            positions[i].x = -0.5 * spacing + float(i)*increment;
-            positions[i].y = -0.5;
+            positions[i].x = (-0.5 * spacing + float(i)*increment) * width;
+            positions[i].y = -0.5 * height;
         }
     }
 
-    vec4 pos = (gl_FragCoord - vec4(width/2.0, height/2.0, 0.0, 0.0));
+    vec2 pos = gl_FragCoord.xy - vec2(width/2.0, height/2.0);
     float f = 0.0;
 
     float min_distance = width * height;
     for (int i = 0; i < MAX_SOURCES; i++) {
         if (i >= num_slits) {break;}
-        float dx = pos.x - positions[i].x * width;
-        float dy = pos.y - positions[i].y * height;
-        float r = sqrt(dx*dx + dy*dy) / width;
-        min_distance = min(min_distance, r);
-        f += sin(2.0*PI * wavenumber * r - time);
+        f += wave_amplitude(pos, positions[i], time);
+        min_distance = min(min_distance, distance(pos, positions[i])/width);
     }
     f /= float(num_slits);
 

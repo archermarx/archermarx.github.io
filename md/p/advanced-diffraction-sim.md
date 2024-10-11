@@ -9,38 +9,56 @@ citations-hover: true
 
 # Diffraction grating simulation
 
+Below is a simulation of a linearly-polarized point wave emanating from a point passing through a diffraction grating.
+You can vary several parameters to see how the interference pattern on the other end of the grating changes.
+
 <div class="centered-block">
 <div class="controls">
-<div>
-<input type="range" id="sources_input" min="2" max="16" value="3" step="1" autocomplete="off"/>
-<label for="sources_input">Slits: <output id="sources_output"/></label>
-</div>
-<div>
-<input type="range" id="spacing_input" min="0" max="1" value="0.5" step="any" autocomplete="off"/>
-<label for="spacing_input">Slit spacing</label>
-</div>
-<div>
-<input type="range" id="slitwidth_input" min="0.05" max="0.95" value="0.5" step="any" autocomplete="off"/>
-<label for="slitwidth_input">Slit width</label>
-</div>
-<div>
-<input type="range" id="wavenumber_input" min="1" max="64" value="16" step="any" autocomplete="off"/>
-<label for="wavenumber_input">Wavenumber: <output id="wavenumber_output"/></label>
-</div>
-</div>
-<div class = "controls">
-<div>
-<input type="range" id="sourcedist_input" min="0.15" max="5" value="2.5" step="any" autocomplete="off"/>
-<label for="sourcedist_input">Source dist: <output id="sourcedist_output"/></label>
-</div>
-<div>
-<input type="range" id="rays_input" min="1" max="20" value="10" step="1" autocomplete="off"/>
-<label for="rays_input">Rays/slit/pixel: <output id="rays_output"/></label>
-</div>
-<div>
-<input type="checkbox" id="brightness_input" value = "brightness" autocomplete="off"/>
-<label for="brightness_input">Show intensity</label>
-</div>
+<fieldset>
+    <legend><b>Source</b></legend>
+    <div>
+        <label for="sourcedist_input">Distance: <output id="sourcedist_output"/></label>
+        <input type="range" id="sourcedist_input" min="0.15" max="8" value="2.5" step="any" autocomplete="off"/>
+    </div>
+    <div>
+        <label for="wavenumber_input">Wavenumber: <output id="wavenumber_output"/></label>
+        <input type="range" id="wavenumber_input" min="1" max="64" value="8" step="any" autocomplete="off"/>
+    </div>
+</fieldset>
+<fieldset>
+    <legend><b>Grating</b></legend>
+    <div>
+        <label for="numslits_input">Slits: <output id="numslits_output"/></label>
+        <input type="range" id="numslits_input" min="2" max="16" value="3" step="1" autocomplete="off"/>
+    </div>
+    <div>
+        <label for="slitwidth_input">Slit width</label>
+        <input type="range" id="slitwidth_input" min="0.02" max="0.95" value="0.5" step="any" autocomplete="off"/>
+    </div>
+    <div>
+        <label for="spacing_input">Spacing</label>
+        <input type="range" id="spacing_input" min="0" max="1" value="0.5" step="any" autocomplete="off"/>
+    </div>
+    <div>
+        <label for="position_input">Position: <output id="position_output"/></label>
+        <input type="range" id="position_input" min="-0.5" max="0.0" value="-0.3" step="any" autocomplete="off"/>
+    </div>
+</fieldset>
+<fieldset>
+    <legend><b>Other</b></legend>
+    <div>
+        <label for="rays_input">Rays/slit/pixel: <output id="rays_output"/></label>
+        <input type="range" id="rays_input" min="1" max="25" value="10" step="1" autocomplete="off"/>
+    </div>
+    <div>
+        <label for="use_brightness_input">Show intensity</label>
+        <input type="checkbox" id="use_brightness_input" value = "use_brightness" autocomplete="off"/>
+    </div>
+    <div>
+        <label for="brightness_input">Brightness</label>
+        <input type="range" id="brightness_input" min="1.0" max="5.0" value="1.0" step="any" autocomplete="off"/>
+    </div>
+</fieldset>
 </div>
 
 <canvas id="canvas" width=1000 height=1200></canvas>
@@ -81,15 +99,15 @@ uniform float time;
 
 #define MAX_SLITS 16
 float centers[MAX_SLITS];
-float max_x;
-float grating_y = -0.3;
 
+uniform float grating_y;
 uniform int num_slits;
 uniform float spacing;
 uniform float slit_width;
 uniform float wavenumber;
 uniform float source_distance;
-uniform bool show_brightness;
+uniform bool use_brightness;
+uniform float brightness;
 
 #define MAX_RAYS 200
 uniform int num_rays;
@@ -142,7 +160,9 @@ float cast_rays(vec2 pos, vec2 sourcePos) {
         }
     }
     
-    if (show_brightness) total_angle = PI;
+    if (use_brightness) {
+        return brightness * amplitude / PI;
+    }
 
     return amplitude / total_angle;
 }
@@ -202,7 +222,6 @@ void main () {
         for (int i = 0; i < MAX_SLITS; i++) {
             if (i >= num_slits) {break;}
             centers[i] = -0.5 * spacing + float(i)*increment;
-            max_x = centers[i];
         }
     }
 
@@ -251,13 +270,13 @@ set_wavenumber = (val) => {
 }
 wavenumber_input.addEventListener("input", (event) => {set_wavenumber(event.target.value)});
 
-var sources_input = document.querySelector("#sources_input");
-var sources_output = document.querySelector("#sources_output");
-set_sources = (val) => {
-    sources_output.textContent = val;
+var numslits_input = document.querySelector("#numslits_input");
+var numslits_output = document.querySelector("#numslits_output");
+set_numslits = (val) => {
+    numslits_output.textContent = val;
     gl.uniform1i(gl.getUniformLocation(program, 'num_slits'), val);
 }
-sources_input.addEventListener("input", (event) => {set_sources(event.target.value)});
+numslits_input.addEventListener("input", (event) => {set_numslits(event.target.value)});
 
 var sourcedist_input = document.querySelector("#sourcedist_input");
 var sourcedist_output = document.querySelector("#sourcedist_output");
@@ -275,9 +294,23 @@ set_rays = (val) => {
 }
 rays_input.addEventListener("input", (event) => {set_rays(event.target.value)});
 
+var use_brightness_input = document.querySelector("#use_brightness_input");
+set_use_brightness = (val) => {
+    gl.uniform1i(gl.getUniformLocation(program, 'use_brightness'), use_brightness_input.checked);
+}
+use_brightness_input.addEventListener("input", (event) => {set_use_brightness(event.target.value)});
+
+var position_input = document.querySelector("#position_input");
+var position_output = document.querySelector("#position_output");
+set_position = (val) => {
+    position_output.textContent = Math.round(10*val)/10;
+    gl.uniform1f(gl.getUniformLocation(program, 'grating_y'), val);
+}
+position_input.addEventListener("input", (event) => {set_position(event.target.value)});
+
 var brightness_input = document.querySelector("#brightness_input");
 set_brightness = (val) => {
-    gl.uniform1i(gl.getUniformLocation(program, 'show_brightness'), brightness_input.checked);
+    gl.uniform1f(gl.getUniformLocation(program, 'brightness'), val);
 }
 brightness_input.addEventListener("input", (event) => {set_brightness(event.target.value)});
 
@@ -285,9 +318,11 @@ brightness_input.addEventListener("input", (event) => {set_brightness(event.targ
 set_spacing(spacing_input.value);
 set_slitwidth(slitwidth_input.value);
 set_wavenumber(wavenumber_input.value);
-set_sources(sources_input.value);
+set_numslits(numslits_input.value);
 set_sourcedist(sourcedist_input.value);
 set_rays(rays_input.value);
+set_position(position_input.value);
+set_brightness(brightness_input.value);
 
 // Define vertices and colors
 var verticesColors = new Float32Array([
