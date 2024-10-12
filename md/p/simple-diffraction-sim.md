@@ -75,7 +75,7 @@ uniform float spacing;
 uniform float wavenumber;
 
 float wave_amplitude(vec2 pos, vec2 sourcePos, float t) {
-    float r = distance(pos, sourcePos) / width;
+    float r = distance(pos, sourcePos);
     return sin(t - 2.0*PI * wavenumber * r);
 }
 
@@ -88,19 +88,19 @@ void main () {
         float increment = spacing / float(num_slits-1);
         for (int i = 0; i < MAX_SOURCES; i++) {
             if (i >= num_slits) {break;}
-            positions[i].x = (-0.5 * spacing + float(i)*increment) * width;
-            positions[i].y = -0.5 * height;
+            positions[i].x = (-0.5 * spacing + float(i)*increment);
+            positions[i].y = -0.5 * height / width;
         }
     }
 
-    vec2 pos = gl_FragCoord.xy - vec2(width/2.0, height/2.0);
+    vec2 pos = gl_FragCoord.xy - vec2(width/2.0, height/2.0) / width;
     float f = 0.0;
 
     float min_distance = width * height;
     for (int i = 0; i < MAX_SOURCES; i++) {
         if (i >= num_slits) {break;}
         f += wave_amplitude(pos, positions[i], time);
-        min_distance = min(min_distance, distance(pos, positions[i])/width);
+        min_distance = min(min_distance, distance(pos, positions[i]));
     }
     f /= float(num_slits);
 
