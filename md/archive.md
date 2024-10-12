@@ -9,4 +9,6 @@ citations-hover: true
 
 # Post archive
 
-Nothing yet. Stay tuned!
+October 11, 2024 - [Advanced diffraction grating simulation](/p/advanced-diffraction-sim.html)
+
+October 11, 2024 - [Simple diffraction grating simulation](/p/simple-diffraction-sim.html)
