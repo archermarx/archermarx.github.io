@@ -10,7 +10,7 @@ citations-hover: true
 # Phased array simulation
 
 The simulation below models the wave pattern created by several point sources next to each other.
-By increasing the number of sources and reducing the spacing, these spherical waves can be made to interfere with each other in such a way that they form a focused beam.
+By increasing the number of sources and reducing the spacing, these waves can be made to interfere with each other in such a way that they form a focused beam.
 The beam can be steered by tuning the phase delay.
 This arrangement of point sources used to generate a tuneable beam is known as a [phased array](https://en.wikipedia.org/wiki/Phased_array), and is widely used across many areas of technology.
 
@@ -18,7 +18,7 @@ This simulation also works as simple model of diffraction of a plane wave throug
 We assume the slits are infinitely thin, which allows us to model them as point sources.
 The field amplitude is then just computed by summing the contribution from each slit.
 This is most accurate at large distances from the point sources, and gets less accurate as we get closer to the "slits" and the point-like approximation breaks down.
-For a more accurate simulation of wave propagation through a diffraction grating, see the [full diffraction grating simulation](/p/advanced-diffraction-grating) page.
+For a more accurate simulation of wave propagation through a diffraction grating, see the [full diffraction grating simulation](/p/advanced-diffraction-sim) page.
 
 <div class="centered-block">
 <div class="controls">
@@ -29,7 +29,7 @@ For a more accurate simulation of wave propagation through a diffraction grating
         <input type="range" id="sources_input" min="1" max="16" value="2" step="1" autocomplete="off"/>
     </div>
     <div class="input-container">
-        <label for="spacing_input">Spacing</label>
+        <label for="spacing_input">Spacing: <output id = "spacing_output"></output> wavelengths</label>
         <input type="range" id="spacing_input" min="0" max="1" value="0.5" step="any" autocomplete="off"/>
     </div>
     <div class="input-container">
@@ -37,8 +37,8 @@ For a more accurate simulation of wave propagation through a diffraction grating
         <input type="range" id="wavenumber_input" min="1" max="64" value="8" step="1" autocomplete="off"/>
     </div>
     <div class="input-container">
-        <label for="phase_input">Phase delay: <output id="phase_output"/></label>
-        <input type="range" id="phase_input" min="-12" max="12" value="0" step="0.1" autocomplete="off"/>
+        <label for="phase_input">Phase delay [deg]: <output id="phase_output"/></label>
+        <input type="range" id="phase_input" min="-180" max="180" value="0" step="1.0" autocomplete="off"/>
     </div>
 </fieldset>
 <fieldset>
@@ -222,7 +222,7 @@ void main () {
         for (int i = 0; i < MAX_SOURCES; i++) {
             if (i >= num_sources) {break;}
             positions[i].x = (-0.5 * spacing + float(i)*increment) * width;
-            positions[i].y = -0.5 * height;
+            positions[i].y = -0.45 * height;
         }
     }
 
@@ -233,7 +233,7 @@ void main () {
     float distances[MAX_SOURCES];
     for (int i = 0; i < MAX_SOURCES; i++) {
         if (i >= num_sources) {break;}
-        float phi = float(i) / float(num_sources) * phase_delay;
+        float phi = float(i) * phase_delay * PI/180.0;
         distances[i] = distance(pos, positions[i]) / width;
         min_distance = min(min_distance,distances[i]);
         f += wave_amplitude(1.0, wavenumber, phi, distances[i], time) / float(num_sources);
@@ -245,7 +245,7 @@ void main () {
             float a = 0.0;
             for (int i = 0; i < MAX_SOURCES; i++) {
                 if (i >= num_sources) {break;}
-                float phi = float(i) / float(num_sources) * phase_delay;
+                float phi = float(i) * phase_delay * PI/180.0;
                 a += wave_amplitude(1.0, wavenumber, phi+phase, distances[i], time) / float(num_sources);
             }
             f += a*a;
@@ -288,42 +288,49 @@ gl.uniform1f(widthLoc, width);
 gl.uniform1f(heightLoc, height);
 
 // Set controls
-var spacing_input = document.querySelector("#spacing_input");
-set_spacing = (val) => {
-    gl.uniform1f(gl.getUniformLocation(program, 'spacing'), val);
+var spacing_output = document.querySelector("#spacing_output");
+const set_spacing_output = () => {
+    let wavelength = 1.0 / wavenumber_input.value;
+    let increment = spacing_input.value / (sources_input.value - 1);
+    let spacing_wavelengths = increment / wavelength;
+    spacing_output.textContent = Math.round(10*spacing_wavelengths)/10;
 }
-spacing_input.addEventListener("input", (event) => {set_spacing(event.target.value)});
-set_spacing(spacing_input.value);
+
+var sources_input = document.querySelector("#sources_input");
+var sources_output = document.querySelector("#sources_output");
+const set_sources = (val) => {
+    sources_output.textContent = val;
+    gl.uniform1i(gl.getUniformLocation(program, 'num_sources'), val);
+    set_spacing_output();
+}
+sources_input.addEventListener("input", (event) => {set_sources(event.target.value)});
 
 var wavenumber_input = document.querySelector("#wavenumber_input");
 var wavenumber_output = document.querySelector("#wavenumber_output");
-set_wavenumber = (val) => {
+const set_wavenumber = (val) => {
     wavenumber_output.textContent = Math.round(10*val)/10;
     gl.uniform1f(gl.getUniformLocation(program, 'wavenumber'), val);
+    set_spacing_output();
 }
 wavenumber_input.addEventListener("input", (event) => {set_wavenumber(event.target.value)});
-set_wavenumber(wavenumber_input.value);
+
+var spacing_input = document.querySelector("#spacing_input");
+const set_spacing = (val) => {
+    gl.uniform1f(gl.getUniformLocation(program, 'spacing'), val);
+    set_spacing_output();
+}
+spacing_input.addEventListener("input", (event) => {set_spacing(event.target.value)});
 
 var phase_input = document.querySelector("#phase_input");
 var phase_output = document.querySelector("#phase_output");
-set_phase = (val) => {
+const set_phase = (val) => {
     phase_output.textContent = Math.round(10*val)/10;
     gl.uniform1f(gl.getUniformLocation(program, 'phase_delay'), val);
 }
 phase_input.addEventListener("input", (event) => {set_phase(event.target.value)});
-set_phase(phase_input.value);
-
-var sources_input = document.querySelector("#sources_input");
-var sources_output = document.querySelector("#sources_output");
-set_sources = (val) => {
-    sources_output.textContent = val;
-    gl.uniform1i(gl.getUniformLocation(program, 'num_sources'), val);
-}
-sources_input.addEventListener("input", (event) => {set_sources(event.target.value)});
-set_sources(sources_input.value);
 
 var display_input = document.querySelector("#display_input");
-set_display_type = (val) => {
+const set_display_type = (val) => {
     if (val === 'display-amplitude') {
         gl.uniform1i(gl.getUniformLocation(program, 'display_type'), 1);
     } else {
@@ -331,14 +338,18 @@ set_display_type = (val) => {
     }
 }
 display_input.addEventListener("input", (event) => {set_display_type(event.target.value)});
-set_display_type(display_input.value);
 
 var phase_average_input = document.querySelector("#phase_average_input");
-set_phase_average = (val) => {
+const set_phase_average = (val) => {
     gl.uniform1i(gl.getUniformLocation(program, 'phase_average'), phase_average_input.checked);
 }
 phase_average_input.addEventListener("input", (event) => {set_phase_average(event.target.value)});
 
+set_sources(sources_input.value);
+set_display_type(display_input.value);
+set_phase(phase_input.value);
+set_spacing(spacing_input.value);
+set_wavenumber(wavenumber_input.value);
 
 // Define vertices and colors
 var verticesColors = new Float32Array([

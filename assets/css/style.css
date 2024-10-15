@@ -229,7 +229,7 @@ li {
 }
 
 canvas {
-    width: max(35vw, 420px);
+    width: max(35vw, 360px);
     display: block;
     flex: 1;
 }
