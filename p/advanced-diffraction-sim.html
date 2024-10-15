@@ -58,18 +58,18 @@ end of the grating changes.</p>
     <legend><b>Grating</b></legend>
     <div class = "input-container">
         <label for="numslits_input">Slits: <output id="numslits_output"/></label>
-        <input type="range" id="numslits_input" min="2" max="16" value="2" step="1" autocomplete="off"/>
+        <input type="range" id="numslits_input" min="1" max="16" value="2" step="1" autocomplete="off"/>
     </div>
     <div class = "input-container">
-        <label for="slitwidth_input">Slit width</label>
-        <input type="range" id="slitwidth_input" min="0.02" max="0.95" value="0.02" step="any" autocomplete="off"/>
+        <label for="slitwidth_input">Slit width: <output id = "slitwidth_output"/></label>
+        <input type="range" id="slitwidth_input" min="0.02" max="0.95" value="0.02" step="0.01" autocomplete="off"/>
     </div>
     <div class = "input-container">
-        <label for="spacing_input">Spacing</label>
-        <input type="range" id="spacing_input" min="0" max="1" value="0.5" step="any" autocomplete="off"/>
+        <label for="spacing_input">Spacing: <output id = "spacing_output"/></label>
+        <input type="range" id="spacing_input" min="0" max="1" value="0.5" step="0.01" autocomplete="off"/>
     </div>
     <div class = "input-container">
-        <label for="position_input">Position: <output id="position_output"/></label>
+        <label for="position_input">Y position: <output id="position_output"/></label>
         <input type="range" id="position_input" min="-0.5" max="0.0" value="-0.3" step="any" autocomplete="off"/>
     </div>
 </fieldset>
@@ -390,15 +390,47 @@ gl.uniform1f(widthLoc, width);
 gl.uniform1f(heightLoc, height);
 
 // Set controls
+var spacing_output = document.querySelector("#spacing_output");
+const set_spacing_output = () => {
+    let n = numslits_input.value;
+    if (n > 1 ) {
+        let wavelength = 1.0 / wavenumber_input.value;
+        let increment = spacing_input.value / Math.max(numslits_input.value - 1, 1);
+        let spacing_wavelengths = increment / wavelength;
+        spacing_wavelengths = Math.round(10*spacing_wavelengths)/10;
+        let s = spacing_wavelengths == 1 ? '' : 's';
+        spacing_output.textContent = `${spacing_wavelengths} wavelength${s}`;
+    } else {
+        spacing_output.textContent = "n/a";
+    }
+}
+
+var slitwidth_output = document.querySelector("#slitwidth_output");
+const set_slitwidth_output = () => {
+    let n = numslits_input.value;
+    let wavelength = 1.0 / wavenumber_input.value;
+    let increment = slitwidth_input.value;
+    if (n > 1) {
+        increment = spacing_input.value * slitwidth_input.value / (n-1);
+    }
+    let spacing_wavelengths = increment / wavelength;
+    spacing_wavelengths = Math.round(20*spacing_wavelengths)/20;
+    let s = spacing_wavelengths == 1 ? '' : 's';
+    slitwidth_output.textContent = `${spacing_wavelengths} wavelength${s}`
+;
+}
+
 var spacing_input = document.querySelector("#spacing_input");
 set_spacing = (val) => {
     gl.uniform1f(gl.getUniformLocation(program, 'spacing'), val);
+    set_spacing_output();
 }
 spacing_input.addEventListener("input", (event) => {set_spacing(event.target.value)});
 
 var slitwidth_input = document.querySelector("#slitwidth_input");
 set_slitwidth = (val) => {
     gl.uniform1f(gl.getUniformLocation(program, 'slit_width'), val);
+    set_slitwidth_output();
 }
 slitwidth_input.addEventListener("input", (event) => {set_slitwidth(event.target.value)});
 
@@ -407,6 +439,8 @@ var wavenumber_output = document.querySelector("#wavenumber_output");
 set_wavenumber = (val) => {
     wavenumber_output.textContent = Math.round(10*val)/10;
     gl.uniform1f(gl.getUniformLocation(program, 'wavenumber'), val);
+    set_spacing_output();
+    set_slitwidth_output();
 }
 wavenumber_input.addEventListener("input", (event) => {set_wavenumber(event.target.value)});
 
@@ -415,6 +449,7 @@ var numslits_output = document.querySelector("#numslits_output");
 set_numslits = (val) => {
     numslits_output.textContent = val;
     gl.uniform1i(gl.getUniformLocation(program, 'num_slits'), val);
+    set_spacing_output();
 }
 numslits_input.addEventListener("input", (event) => {set_numslits(event.target.value)});
 

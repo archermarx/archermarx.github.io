@@ -59,7 +59,7 @@ simulation</a> page.</p>
         <input type="range" id="sources_input" min="1" max="16" value="2" step="1" autocomplete="off"/>
     </div>
     <div class="input-container">
-        <label for="spacing_input">Spacing: <output id = "spacing_output"></output> wavelengths</label>
+        <label for="spacing_input">Spacing: <output id = "spacing_output"/></label>
         <input type="range" id="spacing_input" min="0" max="1" value="0.5" step="any" autocomplete="off"/>
     </div>
     <div class="input-container">
@@ -67,8 +67,8 @@ simulation</a> page.</p>
         <input type="range" id="wavenumber_input" min="1" max="64" value="8" step="1" autocomplete="off"/>
     </div>
     <div class="input-container">
-        <label for="phase_input">Phase delay [deg]: <output id="phase_output"/></label>
-        <input type="range" id="phase_input" min="-180" max="180" value="0" step="1.0" autocomplete="off"/>
+        <label for="phase_input">Phase delay: <output id="phase_output"/></label>
+        <input type="range" id="phase_input" min="-180" max="180" value="0" step="2" autocomplete="off"/>
     </div>
 </fieldset>
 <fieldset>
@@ -320,12 +320,18 @@ gl.uniform1f(heightLoc, height);
 // Set controls
 var spacing_output = document.querySelector("#spacing_output");
 const set_spacing_output = () => {
-    let wavelength = 1.0 / wavenumber_input.value;
-    let increment = spacing_input.value / (sources_input.value - 1);
-    let spacing_wavelengths = increment / wavelength;
-    spacing_output.textContent = Math.round(10*spacing_wavelengths)/10;
+    let n = sources_input.value;
+    if (n > 1) {
+        let wavelength = 1.0 / wavenumber_input.value;
+        let increment = spacing_input.value / (n - 1);
+        let spacing_wavelengths = increment / wavelength;
+        spacing_wavelengths = Math.round(10*spacing_wavelengths)/10;
+        let s = spacing_wavelengths == 1 ? '' : 's';
+        spacing_output.textContent = `${spacing_wavelengths} wavelength${s}`;
+    } else {
+        spacing_output.textContent = 'n/a';
+    }
 }
-
 var sources_input = document.querySelector("#sources_input");
 var sources_output = document.querySelector("#sources_output");
 const set_sources = (val) => {
@@ -354,7 +360,7 @@ spacing_input.addEventListener("input", (event) => {set_spacing(event.target.val
 var phase_input = document.querySelector("#phase_input");
 var phase_output = document.querySelector("#phase_output");
 const set_phase = (val) => {
-    phase_output.textContent = Math.round(10*val)/10;
+    phase_output.textContent = `${Math.round(10*val)/10} deg`;
     gl.uniform1f(gl.getUniformLocation(program, 'phase_delay'), val);
 }
 phase_input.addEventListener("input", (event) => {set_phase(event.target.value)});
