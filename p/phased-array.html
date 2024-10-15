@@ -42,21 +42,21 @@ href="https://en.wikipedia.org/wiki/Phased_array">phased array</a>, and
 is widely used across many areas of technology.</p>
 <p>This simulation also works as simple model of diffraction of a plane
 wave through a number of slits. We assume the slits are infinitely thin,
-which allows us to model them as point sources. The field amplitude (red
-for positive and blue for negative) is then just computed by summing the
-contribution from each slit. This is most accurate at large distances
-from the point sources, and gets less accurate as we get closer to the
-“slits” and the point-like approximation breaks down. For a more
-accurate simulation of wave propagation through a diffraction grating,
-see the <a href="/p/advanced-diffraction-grating">full diffraction
-grating simulation</a> page.</p>
+which allows us to model them as point sources. The field amplitude is
+then just computed by summing the contribution from each slit. This is
+most accurate at large distances from the point sources, and gets less
+accurate as we get closer to the “slits” and the point-like
+approximation breaks down. For a more accurate simulation of wave
+propagation through a diffraction grating, see the <a
+href="/p/advanced-diffraction-grating">full diffraction grating
+simulation</a> page.</p>
 <div class="centered-block">
 <div class="controls">
 <fieldset>
     <legend><b>Controls</b></legend>
     <div class="input-container">
         <label for="sources_input">Sources: <output id="sources_output"/></label>
-        <input type="range" id="sources_input" min="1" max="16" value="3" step="1" autocomplete="off"/>
+        <input type="range" id="sources_input" min="1" max="16" value="2" step="1" autocomplete="off"/>
     </div>
     <div class="input-container">
         <label for="spacing_input">Spacing</label>
@@ -69,6 +69,16 @@ grating simulation</a> page.</p>
     <div class="input-container">
         <label for="phase_input">Phase delay: <output id="phase_output"/></label>
         <input type="range" id="phase_input" min="-10" max="10" value="0" step="any" autocomplete="off"/>
+    </div>
+</fieldset>
+<fieldset>
+    <legend><b>Display</b></legend>
+    <div class = "input-container">
+        <label for ="display_input">Field to display:</label>
+        <select name="display_input" id="display_input" autocomplete = "off">
+            <option value="display-power" selected>Power</option>
+            <option value="display-amplitude">Amplitude</option>
+        </select>
     </div>
 </fieldset>
 </div>
@@ -112,9 +122,86 @@ vec2 positions[16];
 uniform int num_sources;
 uniform float spacing;
 uniform float wavenumber;
+uniform int display_type;
+float colormap_f1(float x) {
+    return -510.0 * x + 255.0;
+}
+
+float colormap_f2(float x) {
+    return (-1891.7 * x + 217.46) * x + 255.0;
+}
+
+float colormap_f3(float x) {
+    return 9.26643676359015e1 * sin((x - 4.83450094847127e-1) * 9.93) + 1.35940451627965e2;
+}
+
+float colormap_f4(float x) {
+    return -510.0 * x + 510.0;
+}
+
+float colormap_f5(float x) {
+    float xx = x - 197169.0 / 251000.0;
+    return (2510.0 * xx - 538.31) * xx;
+}
+
+float colormap_red(float x) {
+    if (x < 0.0) {
+        return 1.0;
+    } else if (x < 10873.0 / 94585.0) {
+        float xx = colormap_f2(x);
+        if (xx > 255.0) {
+            return (510.0 - xx) / 255.0;
+        } else {
+            return xx / 255.0;
+        }
+    } else if (x < 0.5) {
+        return 1.0;
+    } else if (x < 146169.0 / 251000.0) {
+        return colormap_f4(x) / 255.0;
+    } else if (x < 197169.0 / 251000.0) {
+        return colormap_f5(x) / 255.0;
+    } else {
+        return 0.0;
+    }
+}
+
+float colormap_green(float x) {
+    if (x < 10873.0 / 94585.0) {
+        return 1.0;
+    } else if (x < 36373.0 / 94585.0) {
+        return colormap_f2(x) / 255.0;
+    } else if (x < 0.5) {
+        return colormap_f1(x) / 255.0;
+    } else if (x < 197169.0 / 251000.0) {
+        return 0.0;
+    } else if (x <= 1.0) {
+        return abs(colormap_f5(x)) / 255.0;
+    } else {
+        return 0.0;
+    }
+}
+
+float colormap_blue(float x) {
+    if (x < 0.0) {
+        return 0.0;
+    } else if (x < 36373.0 / 94585.0) {
+        return colormap_f1(x) / 255.0;
+    } else if (x < 146169.0 / 251000.0) {
+        return colormap_f3(x) / 255.0;
+    } else if (x <= 1.0) {
+        return colormap_f4(x) / 255.0;
+    } else {
+        return 0.0;
+    }
+}
+
+vec3 colormap(float x) {
+    return vec3(colormap_red(x), colormap_green(x), colormap_blue(x));
+}
 
 const float r0 = 1.0;
 const float vg = 1.0 / (16.0 * PI);
+const float inv_log10 = 1.0 / log(10.0);
 
 float wave_amplitude(vec2 pos, vec2 sourcePos, float A, float k, float phi, float t) {
     float x = distance(pos, sourcePos) / width;
@@ -122,6 +209,10 @@ float wave_amplitude(vec2 pos, vec2 sourcePos, float A, float k, float phi, floa
     float w = k1 * vg;
     
     return A * cos(k1*x - w*t + w*phi) / x;
+}
+
+float log10(float x) {
+    return inv_log10 * log(x);
 }
 
 vec3 color_amplitude(float amplitude) {
@@ -135,6 +226,17 @@ vec3 color_amplitude(float amplitude) {
     s = clamp(s, 0.0, 1.0); // clamp to [0,1]
     color *= s;
     return color;
+}
+
+float rescale(float x, float min, float max) {
+    return (x - min) / (max - min);
+}
+
+vec3 color_power(float amplitude) {
+    float floor = 1e-1;
+    float power = amplitude*amplitude + floor;
+    float power_db = rescale(log10(power), log10(floor), 2.0);
+    return colormap(1.0 - power_db);
 }
 
 void main () {
@@ -163,18 +265,17 @@ void main () {
     f /= float(num_sources);
 
     vec3 color;
-    if (f > 0.0) {
-        color = RED;
+    if (display_type == 1) {
+        color = color_amplitude(f);
     } else {
-        color = BLUE;
+        color = color_power(f);
     }
-    float t = clamp(pow(abs(f), 2.2) * 1.2, 0.0, 1.0);
-    color *= t;
+
     float cutoff = BLUR_RADIUS * MIN_DIST;
     if (min_distance < MIN_DIST) {
         color = WHITE;
     } else if (min_distance < cutoff) {
-        t = (min_distance - MIN_DIST) / (cutoff - MIN_DIST);
+        float t = (min_distance - MIN_DIST) / (cutoff - MIN_DIST);
         color = (1.0 - t) * WHITE + t * color;
     }
     gl_FragColor = vec4(color, 1.0);
@@ -231,6 +332,18 @@ set_sources = (val) => {
 }
 sources_input.addEventListener("input", (event) => {set_sources(event.target.value)});
 set_sources(sources_input.value);
+
+var display_input = document.querySelector("#display_input");
+set_display_type = (val) => {
+    if (val === 'display-amplitude') {
+        gl.uniform1i(gl.getUniformLocation(program, 'display_type'), 1);
+    } else {
+        gl.uniform1i(gl.getUniformLocation(program, 'display_type'), 0);
+    }
+}
+display_input.addEventListener("input", (event) => {set_display_type(event.target.value)});
+set_display_type(display_input.value);
+
 
 // Define vertices and colors
 var verticesColors = new Float32Array([

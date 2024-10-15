@@ -217,7 +217,6 @@ li {
     flex-wrap: wrap;
     flex:1;
     column-gap:2rem;
-    width: max(40vw, 420px);
 }
 
 .centered-block{
@@ -249,5 +248,6 @@ input {
 
 .input-container {
   flex: 1;
+  width: max(10vw, 220px);
 }
 
