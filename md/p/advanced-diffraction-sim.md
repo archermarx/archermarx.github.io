@@ -51,6 +51,10 @@ You can vary several parameters to see how the interference pattern on the other
 <fieldset>
     <legend><b>Display</b></legend>
     <div class = "input-container">
+        <label for="gain_input">Gain: <output id="gain_output"/></label>
+        <input type="range" id="gain_input" min="0.5" max="10" value="1" step="0.1" autocomplete="off"/>
+    </div>
+    <div class = "input-container">
         <label for="rays_input">Rays/slit/pixel: <output id="rays_output"/></label>
         <input type="range" id="rays_input" min="1" max="25" value="5" step="1" autocomplete="off"/>
     </div>
@@ -114,6 +118,7 @@ uniform float slit_width;
 uniform float wavenumber;
 uniform float source_x;
 uniform float source_y;
+uniform float gain;
 uniform int display_type;
 
 uniform bool phase_average;
@@ -127,7 +132,7 @@ float wave_amplitude(vec2 pos, vec2 sourcePos, float k, float t, float phi, floa
     const float vg = 1.0 / (16.0 * PI);
     float w = k1 * vg;
 
-    float A = 2.0 * abs(sourcePos.y/height - grating_y);
+    float A = gain * 2.0 * abs(sourcePos.y/height - grating_y);
 
     return A * cos(k1*x - w*t + phi) / x;
 }
@@ -430,6 +435,16 @@ set_wavenumber = (val) => {
 }
 wavenumber_input.addEventListener("input", (event) => {set_wavenumber(event.target.value)});
 
+var gain_input = document.querySelector("#gain_input");
+var gain_output = document.querySelector("#gain_output");
+set_gain = (val) => {
+    gain_output.textContent = Math.round(10*val)/10;
+    gl.uniform1f(gl.getUniformLocation(program, 'gain'), val);
+    set_spacing_output();
+    set_slitwidth_output();
+}
+gain_input.addEventListener("input", (event) => {set_gain(event.target.value)});
+
 var numslits_input = document.querySelector("#numslits_input");
 var numslits_output = document.querySelector("#numslits_output");
 set_numslits = (val) => {
@@ -492,6 +507,7 @@ phase_average_input.addEventListener("input", (event) => {set_phase_average(even
 set_spacing(spacing_input.value);
 set_slitwidth(slitwidth_input.value);
 set_wavenumber(wavenumber_input.value);
+set_gain(gain_input.value);
 set_numslits(numslits_input.value);
 set_source_x(source_x_input.value);
 set_source_y(source_y_input.value);
