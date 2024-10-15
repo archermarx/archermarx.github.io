@@ -1,5 +1,5 @@
 ---
-pagetitle: Simple diffraction simulation
+pagetitle: Phased array simulation
 bibliography: '../assets/bib/references.bib'
 csl: '../assets/csl/iop-style.csl'
 suppress-bibliography: false
@@ -7,39 +7,43 @@ link-citations: true
 citations-hover: true
 ---
 
-# Simple diffraction grating simulation
+# Phased array simulation
 
-The simulation below is a simple model of diffraction of a plane wave through a number of slits.
+The simulation below models the wave pattern created by several point sources next to each other.
+By increasing the number of sources and reducing the spacing, these spherical waves can be made to interfere with each other in such a way that they form a focused beam.
+The beam can be steered by tuning the phase delay.
+This arrangement of point sources used to generate a tuneable beam is known as a [phased array](https://en.wikipedia.org/wiki/Phased_array), and is widely used across many areas of technology.
+
+This simulation also works as simple model of diffraction of a plane wave through a number of slits.
 We assume the slits are infinitely thin, which allows us to model them as point sources.
-The field intensity (red for positive and blue for negative) is then just computed by summing the contribution from each slit.
+The field amplitude (red for positive and blue for negative) is then just computed by summing the contribution from each slit.
 This is most accurate at large distances from the point sources, and gets less accurate as we get closer to the "slits" and the point-like approximation breaks down.
-For a more accurate simulation, see the [full diffraction grating simulation](/p/advanced-diffraction-grating) page.
-
-You can control the number of sources, the spacing between them, and the wavenumber of the incoming plane wave using the controls below.
-
+For a more accurate simulation of wave propagation through a diffraction grating, see the [full diffraction grating simulation](/p/advanced-diffraction-grating) page.
 
 <div class="centered-block">
 <div class="controls">
 <fieldset>
     <legend><b>Controls</b></legend>
-    <div>
+    <div class="input-container">
         <label for="sources_input">Sources: <output id="sources_output"/></label>
         <input type="range" id="sources_input" min="1" max="16" value="3" step="1" autocomplete="off"/>
     </div>
-    <div>
+    <div class="input-container">
         <label for="spacing_input">Spacing</label>
         <input type="range" id="spacing_input" min="0" max="1" value="0.5" step="any" autocomplete="off"/>
     </div>
-    <div>
+    <div class="input-container">
         <label for="wavenumber_input">Wavenumber: <output id="wavenumber_output"/></label>
         <input type="range" id="wavenumber_input" min="1" max="64" value="8" step="any" autocomplete="off"/>
     </div>
+    <div class="input-container">
+        <label for="phase_input">Phase delay: <output id="phase_output"/></label>
+        <input type="range" id="phase_input" min="-10" max="10" value="0" step="any" autocomplete="off"/>
+    </div>
 </fieldset>
 </div>
-
 <canvas id="canvas" width=1000 height=1200></canvas>
 </div>
-
 <script src = "../scripts/webgl.js"></script>
 <script>
 // Get the webgl rendering context
@@ -63,6 +67,7 @@ uniform float height;
 #define PI 3.141592653589
 float timefreq = 100.0;
 uniform float time;
+uniform float phase_delay;
 
 #define RED vec3(162., 30., 37.) / 256.0;
 #define BLUE vec3(11., 102., 188.) / 256.0;
@@ -74,24 +79,42 @@ uniform float time;
 #define MAX_SOURCES 16
 vec2 positions[16];
 
-uniform int num_slits;
+uniform int num_sources;
 uniform float spacing;
 uniform float wavenumber;
 
-float wave_amplitude(vec2 pos, vec2 sourcePos, float t) {
-    float r = distance(pos, sourcePos) / width;
-    return sin(t - 2.0*PI * wavenumber * r);
+const float r0 = 1.0;
+const float vg = 1.0 / (16.0 * PI);
+
+float wave_amplitude(vec2 pos, vec2 sourcePos, float A, float k, float phi, float t) {
+    float x = distance(pos, sourcePos) / width;
+    float k1 = 2.0 * PI * wavenumber;
+    float w = k1 * vg;
+    
+    return A * cos(k1*x - w*t + w*phi) / x;
+}
+
+vec3 color_amplitude(float amplitude) {
+    vec3 color;
+    if (amplitude > 0.0) {
+        color = RED;
+    } else {
+        color = BLUE;
+    }
+    float s = pow(abs(amplitude), 1.2) * 1.2; // gamma correction and scaling
+    s = clamp(s, 0.0, 1.0); // clamp to [0,1]
+    color *= s;
+    return color;
 }
 
 void main () {
-
     // position sources
-    if (num_slits == 1) {
+    if (num_sources == 1) {
         positions[0] = vec2(0, -0.5 * height);
     } else {
-        float increment = spacing / float(num_slits-1);
+        float increment = spacing / float(num_sources-1);
         for (int i = 0; i < MAX_SOURCES; i++) {
-            if (i >= num_slits) {break;}
+            if (i >= num_sources) {break;}
             positions[i].x = (-0.5 * spacing + float(i)*increment) * width;
             positions[i].y = -0.5 * height;
         }
@@ -102,11 +125,12 @@ void main () {
 
     float min_distance = width * height;
     for (int i = 0; i < MAX_SOURCES; i++) {
-        if (i >= num_slits) {break;}
-        f += wave_amplitude(pos, positions[i], time);
+        if (i >= num_sources) {break;}
+        float phi = float(i) / float(num_sources) * phase_delay;
+        f += wave_amplitude(pos, positions[i], 1.0, wavenumber, phi, time);
         min_distance = min(min_distance, distance(pos, positions[i])/width);
     }
-    f /= float(num_slits);
+    f /= float(num_sources);
 
     vec3 color;
     if (f > 0.0) {
@@ -160,11 +184,20 @@ set_wavenumber = (val) => {
 wavenumber_input.addEventListener("input", (event) => {set_wavenumber(event.target.value)});
 set_wavenumber(wavenumber_input.value);
 
+var phase_input = document.querySelector("#phase_input");
+var phase_output = document.querySelector("#phase_output");
+set_phase = (val) => {
+    phase_output.textContent = Math.round(10*val)/10;
+    gl.uniform1f(gl.getUniformLocation(program, 'phase_delay'), val);
+}
+phase_input.addEventListener("input", (event) => {set_phase(event.target.value)});
+set_phase(phase_input.value);
+
 var sources_input = document.querySelector("#sources_input");
 var sources_output = document.querySelector("#sources_output");
 set_sources = (val) => {
     sources_output.textContent = val;
-    gl.uniform1i(gl.getUniformLocation(program, 'num_slits'), val);
+    gl.uniform1i(gl.getUniformLocation(program, 'num_sources'), val);
 }
 sources_input.addEventListener("input", (event) => {set_sources(event.target.value)});
 set_sources(sources_input.value);
