@@ -37,7 +37,7 @@ You can vary several parameters to see how the interference pattern on the other
     </div>
     <div class = "input-container">
         <label for="slitwidth_input">Slit width: <output id = "slitwidth_output"/></label>
-        <input type="range" id="slitwidth_input" min="0.02" max="0.95" value="0.02" step="0.01" autocomplete="off"/>
+        <input type="range" id="slitwidth_input" min="0.01" max="0.95" value="0.02" step="0.005" autocomplete="off"/>
     </div>
     <div class = "input-container">
         <label for="spacing_input">Spacing: <output id = "spacing_output"/></label>
@@ -246,6 +246,15 @@ vec3 wave_color(float amplitude) {
     }
 }
 
+float get_width() {
+    if (num_slits > 1) {
+        return 0.5 * slit_width * spacing / float(num_slits - 1);
+    } else {
+        return 0.5 * slit_width;
+    }
+}
+
+
 float cast_rays(vec2 pos, vec2 sourcePos, float phi) {
     float x = pos.x;
     float y = pos.y;
@@ -254,7 +263,7 @@ float cast_rays(vec2 pos, vec2 sourcePos, float phi) {
         return wave_amplitude(pos, sourcePos, wavenumber, time, phi, 0.0);
     }
 
-    float w = 0.5 * slit_width * spacing / float(num_slits - 1); 
+    float w = get_width();
     float dy = y - grating_y*height;
 
     float amplitude = 0.0;
@@ -299,7 +308,7 @@ float cast_rays(vec2 pos, vec2 sourcePos, float phi) {
 vec3 draw_grate(vec3 base, vec2 pos) {
     float x = pos.x / width;
     float y = pos.y / height;
-    float w = 0.5 * slit_width * spacing / float(num_slits - 1); 
+    float w = get_width(); 
     float grating_thickness = 0.01;
 
     if (y < (grating_y - grating_thickness / 2.0) ||
