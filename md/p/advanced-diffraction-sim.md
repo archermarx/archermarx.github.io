@@ -9,7 +9,7 @@ citations-hover: true
 
 # Diffraction grating simulation
 
-Below is a simulation of a linearly-polarized point wave emanating from a point passing through a diffraction grating.
+Below is a simulation of a linearly-polarized wave emanating from a point source at (X, Y) passing through a diffraction grating.
 You can vary several parameters to see how the interference pattern on the other end of the grating changes.
 
 <div class="centered-block">
