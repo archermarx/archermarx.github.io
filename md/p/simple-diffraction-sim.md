@@ -9,10 +9,14 @@ citations-hover: true
 
 # Simple diffraction grating simulation
 
-The simulation below models diffraction of a plane wave through a number of slits.
+The simulation below is a simple model of diffraction of a plane wave through a number of slits.
 We assume the slits are infinitely thin, which allows us to model them as point sources.
 The field intensity (red for positive and blue for negative) is then just computed by summing the contribution from each slit.
+This is most accurate at large distances from the point sources, and gets less accurate as we get closer to the "slits" and the point-like approximation breaks down.
+For a more accurate simulation, see the [full diffraction grating simulation](/p/advanced-diffraction-grating) page.
+
 You can control the number of sources, the spacing between them, and the wavenumber of the incoming plane wave using the controls below.
+
 
 <div class="centered-block">
 <div class="controls">
