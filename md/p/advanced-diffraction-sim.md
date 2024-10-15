@@ -16,47 +16,54 @@ You can vary several parameters to see how the interference pattern on the other
 <div class="controls">
 <fieldset>
     <legend><b>Source</b></legend>
-    <div>
-        <label for="sourcedist_input">Distance: <output id="sourcedist_output"/></label>
-        <input type="range" id="sourcedist_input" min="0.15" max="8" value="2.5" step="any" autocomplete="off"/>
+    <div class = "input-container">
+        <label for="source_x_input">X position: <output id="source_x_output"/></label>
+        <input type="range" id="source_x_input" min="-8" max="8" value="0" step="0.1" autocomplete="off"/>
     </div>
-    <div>
+        <div class = "input-container">
+        <label for="source_y_input">Y position: <output id="source_y_output"/></label>
+        <input type="range" id="source_y_input" min="-10" max="-0.1" value="-3" step="0.1" autocomplete="off"/>
+    </div>
+    <div class = "input-container">
         <label for="wavenumber_input">Wavenumber: <output id="wavenumber_output"/></label>
-        <input type="range" id="wavenumber_input" min="1" max="64" value="8" step="any" autocomplete="off"/>
+        <input type="range" id="wavenumber_input" min="1" max="64" value="8" step="1" autocomplete="off"/>
     </div>
 </fieldset>
 <fieldset>
     <legend><b>Grating</b></legend>
-    <div>
+    <div class = "input-container">
         <label for="numslits_input">Slits: <output id="numslits_output"/></label>
-        <input type="range" id="numslits_input" min="2" max="16" value="3" step="1" autocomplete="off"/>
+        <input type="range" id="numslits_input" min="2" max="16" value="2" step="1" autocomplete="off"/>
     </div>
-    <div>
+    <div class = "input-container">
         <label for="slitwidth_input">Slit width</label>
-        <input type="range" id="slitwidth_input" min="0.02" max="0.95" value="0.5" step="any" autocomplete="off"/>
+        <input type="range" id="slitwidth_input" min="0.02" max="0.95" value="0.02" step="any" autocomplete="off"/>
     </div>
-    <div>
+    <div class = "input-container">
         <label for="spacing_input">Spacing</label>
         <input type="range" id="spacing_input" min="0" max="1" value="0.5" step="any" autocomplete="off"/>
     </div>
-    <div>
+    <div class = "input-container">
         <label for="position_input">Position: <output id="position_output"/></label>
         <input type="range" id="position_input" min="-0.5" max="0.0" value="-0.3" step="any" autocomplete="off"/>
     </div>
 </fieldset>
 <fieldset>
-    <legend><b>Other</b></legend>
-    <div>
+    <legend><b>Display</b></legend>
+    <div class = "input-container">
         <label for="rays_input">Rays/slit/pixel: <output id="rays_output"/></label>
-        <input type="range" id="rays_input" min="1" max="25" value="10" step="1" autocomplete="off"/>
+        <input type="range" id="rays_input" min="1" max="25" value="5" step="1" autocomplete="off"/>
     </div>
-    <div>
-        <label for="use_brightness_input">Show intensity</label>
-        <input type="checkbox" id="use_brightness_input" value = "use_brightness" autocomplete="off"/>
+    <div class = "input-container">
+        <label for ="display_input">Field to display:</label>
+        <select name="display_input" id="display_input" autocomplete = "off">
+            <option value="display-power" selected>Power</option>
+            <option value="display-amplitude">Amplitude</option>
+        </select>
     </div>
-    <div>
-        <label for="brightness_input">Brightness</label>
-        <input type="range" id="brightness_input" min="1.0" max="5.0" value="1.0" step="any" autocomplete="off"/>
+    <div class = "input-container">
+        <label for="phase_average_input" style="float:left">Phase average:</label>
+        <input type="checkbox" id="phase_average_input" value = "phase_average" autocomplete="off"/>
     </div>
 </fieldset>
 </div>
@@ -105,21 +112,148 @@ uniform int num_slits;
 uniform float spacing;
 uniform float slit_width;
 uniform float wavenumber;
-uniform float source_distance;
-uniform bool use_brightness;
-uniform float brightness;
+uniform float source_x;
+uniform float source_y;
+uniform int display_type;
+
+uniform bool phase_average;
 
 #define MAX_RAYS 200
 uniform int num_rays;
 
-float wave_amplitude(vec2 pos, vec2 sourcePos, float t) {
-    float r = distance(pos, sourcePos) / width;
-    return sin(t - 2.0*PI * wavenumber * r);
+float wave_amplitude(vec2 pos, vec2 sourcePos, float k, float t, float phi, float dist) {
+    float x = (distance(pos, sourcePos) + dist) / width;
+    float k1 = 2.0 * PI * wavenumber;
+    const float vg = 1.0 / (16.0 * PI);
+    float w = k1 * vg;
+
+    float A = 2.0 * abs(sourcePos.y/height - grating_y);
+
+    return A * cos(k1*x - w*t + phi) / x;
 }
 
-float cast_rays(vec2 pos, vec2 sourcePos) {
+vec3 color_amplitude(float amplitude) {
+    vec3 color;
+    if (amplitude > 0.0) {
+        color = RED;
+    } else {
+        color = BLUE;
+    }
+    float s = pow(abs(amplitude), 1.2) * 1.2; // gamma correction and scaling
+    s = clamp(s, 0.0, 1.0); // clamp to [0,1]
+    color *= s;
+    return color;
+}
+
+float colormap_f1(float x) {
+    return -510.0 * x + 255.0;
+}
+
+float colormap_f2(float x) {
+    return (-1891.7 * x + 217.46) * x + 255.0;
+}
+
+float colormap_f3(float x) {
+    return 9.26643676359015e1 * sin((x - 4.83450094847127e-1) * 9.93) + 1.35940451627965e2;
+}
+
+float colormap_f4(float x) {
+    return -510.0 * x + 510.0;
+}
+
+float colormap_f5(float x) {
+    float xx = x - 197169.0 / 251000.0;
+    return (2510.0 * xx - 538.31) * xx;
+}
+
+float colormap_red(float x) {
+    if (x < 0.0) {
+        return 1.0;
+    } else if (x < 10873.0 / 94585.0) {
+        float xx = colormap_f2(x);
+        if (xx > 255.0) {
+            return (510.0 - xx) / 255.0;
+        } else {
+            return xx / 255.0;
+        }
+    } else if (x < 0.5) {
+        return 1.0;
+    } else if (x < 146169.0 / 251000.0) {
+        return colormap_f4(x) / 255.0;
+    } else if (x < 197169.0 / 251000.0) {
+        return colormap_f5(x) / 255.0;
+    } else {
+        return 0.0;
+    }
+}
+
+float colormap_green(float x) {
+    if (x < 10873.0 / 94585.0) {
+        return 1.0;
+    } else if (x < 36373.0 / 94585.0) {
+        return colormap_f2(x) / 255.0;
+    } else if (x < 0.5) {
+        return colormap_f1(x) / 255.0;
+    } else if (x < 197169.0 / 251000.0) {
+        return 0.0;
+    } else if (x <= 1.0) {
+        return abs(colormap_f5(x)) / 255.0;
+    } else {
+        return 0.0;
+    }
+}
+
+float colormap_blue(float x) {
+    if (x < 0.0) {
+        return 0.0;
+    } else if (x < 36373.0 / 94585.0) {
+        return colormap_f1(x) / 255.0;
+    } else if (x < 146169.0 / 251000.0) {
+        return colormap_f3(x) / 255.0;
+    } else if (x <= 1.0) {
+        return colormap_f4(x) / 255.0;
+    } else {
+        return 0.0;
+    }
+}
+
+vec3 colormap(float x) {
+    return vec3(colormap_red(x), colormap_green(x), colormap_blue(x));
+}
+
+const float inv_log10 = 1.0 / log(10.0);
+float log10(float x) {
+    return inv_log10 * log(x);
+}
+
+float rescale(float x, float min, float max) {
+    return (x - min) / (max - min);
+}
+
+vec3 color_power(float amplitude) {
+    float power = amplitude*amplitude;
+    float max_color = phase_average ? 0.5 : 0.75;
+    float min_color = phase_average ? -1.5: -0.5;
+    float power_db = rescale(log10(power), min_color, max_color);
+    return colormap(1.0 - power_db);
+}
+
+vec3 wave_color(float amplitude) {
+    if (display_type == 1) {
+        return color_amplitude(amplitude);
+    } else {
+        return color_power(amplitude);
+    }
+}
+
+float cast_rays(vec2 pos, vec2 sourcePos, float phi) {
     float x = pos.x;
     float y = pos.y;
+
+    if (y/height < grating_y) {
+        return wave_amplitude(pos, sourcePos, wavenumber, time, phi, 0.0);
+    }
+
     float w = 0.5 * slit_width * spacing / float(num_slits - 1); 
     float dy = y - grating_y*height;
 
@@ -153,32 +287,14 @@ float cast_rays(vec2 pos, vec2 sourcePos) {
             // Get wave amplitude here
             vec2 rayPos = vec2(ix*width, grating_y*height);
             float dist = distance(rayPos, pos);
-            float group_vel = 1.0 / (2.0 * PI * wavenumber / width);
-            float time_delay = dist / group_vel;
-            float a = wave_amplitude(rayPos, sourcePos, time - time_delay);
+            float a = wave_amplitude(rayPos, sourcePos, wavenumber, time, phi, dist);
             amplitude += a * dtheta;
         }
-    }
-    
-    if (use_brightness) {
-        return brightness * amplitude / PI;
     }
 
     return amplitude / total_angle;
 }
 
-vec3 wave_color(float amplitude) {
-    vec3 color;
-    if (amplitude > 0.0) {
-        color = RED;
-    } else {
-        color = BLUE;
-    }
-    float s = pow(abs(amplitude), 1.2) * 1.2; // gamma correction and scaling
-    s = clamp(s, 0.0, 1.0); // clamp to [0,1]
-    color *= s;
-    return color;
-}
 
 vec3 draw_grate(vec3 base, vec2 pos) {
     float x = pos.x / width;
@@ -201,16 +317,17 @@ vec3 draw_grate(vec3 base, vec2 pos) {
 }
 
 vec3 draw_base(vec2 pos, vec2 sourcePos) {
-    float x = pos.x / width;
-    float y = pos.y / height;
-
-    // draw region downstream of grating
-    if (y > grating_y) {
-        return wave_color(cast_rays(pos, sourcePos));
+    float amplitude = cast_rays(pos, sourcePos, 0.0);
+    if (phase_average) {
+        amplitude *= amplitude;
+        for (int i = 1; i < 4; i++) {
+            float a = cast_rays(pos, sourcePos, 2.0 * PI * float(i) / 4.0);
+            amplitude += a*a;
+        }
+        amplitude = sqrt(amplitude/4.0);
     }
 
-    vec3 color = wave_color(wave_amplitude(pos, sourcePos, time));
-    return color;
+    return wave_color(amplitude);
 }
 
 void main () {
@@ -226,7 +343,7 @@ void main () {
     }
 
     vec2 pos = gl_FragCoord.xy - vec2(width/2.0, height/2.0);
-    vec2 sourcePos = vec2(0.0, -source_distance * width + grating_y * height);
+    vec2 sourcePos = vec2(source_x * width, source_y * width + grating_y * height);
 
     vec3 color = draw_grate(draw_base(pos, sourcePos), pos);   
     gl_FragColor = vec4(color, 1.0);
@@ -278,13 +395,21 @@ set_numslits = (val) => {
 }
 numslits_input.addEventListener("input", (event) => {set_numslits(event.target.value)});
 
-var sourcedist_input = document.querySelector("#sourcedist_input");
-var sourcedist_output = document.querySelector("#sourcedist_output");
-set_sourcedist = (val) => {
-    sourcedist_output.textContent = Math.round(100*val)/100;
-    gl.uniform1f(gl.getUniformLocation(program, 'source_distance'), val);
+var source_x_input = document.querySelector("#source_x_input");
+var source_x_output = document.querySelector("#source_x_output");
+set_source_x = (val) => {
+    source_x_output.textContent = Math.round(100*val)/100;
+    gl.uniform1f(gl.getUniformLocation(program, 'source_x'), val);
 }
-sourcedist_input.addEventListener("input", (event) => {set_sourcedist(event.target.value)});
+source_x_input.addEventListener("input", (event) => {set_source_x(event.target.value)});
+
+var source_y_input = document.querySelector("#source_y_input");
+var source_y_output = document.querySelector("#source_y_output");
+set_source_y = (val) => {
+    source_y_output.textContent = Math.round(100*val)/100;
+    gl.uniform1f(gl.getUniformLocation(program, 'source_y'), val);
+}
+source_y_input.addEventListener("input", (event) => {set_source_y(event.target.value)});
 
 var rays_input = document.querySelector("#rays_input");
 var rays_output = document.querySelector("#rays_output");
@@ -294,12 +419,6 @@ set_rays = (val) => {
 }
 rays_input.addEventListener("input", (event) => {set_rays(event.target.value)});
 
-var use_brightness_input = document.querySelector("#use_brightness_input");
-set_use_brightness = (val) => {
-    gl.uniform1i(gl.getUniformLocation(program, 'use_brightness'), use_brightness_input.checked);
-}
-use_brightness_input.addEventListener("input", (event) => {set_use_brightness(event.target.value)});
-
 var position_input = document.querySelector("#position_input");
 var position_output = document.querySelector("#position_output");
 set_position = (val) => {
@@ -308,21 +427,32 @@ set_position = (val) => {
 }
 position_input.addEventListener("input", (event) => {set_position(event.target.value)});
 
-var brightness_input = document.querySelector("#brightness_input");
-set_brightness = (val) => {
-    gl.uniform1f(gl.getUniformLocation(program, 'brightness'), val);
+var display_input = document.querySelector("#display_input");
+set_display_type = (val) => {
+    if (val === 'display-amplitude') {
+        gl.uniform1i(gl.getUniformLocation(program, 'display_type'), 1);
+    } else {
+        gl.uniform1i(gl.getUniformLocation(program, 'display_type'), 0);
+    }
 }
-brightness_input.addEventListener("input", (event) => {set_brightness(event.target.value)});
+display_input.addEventListener("input", (event) => {set_display_type(event.target.value)});
+set_display_type(display_input.value);
+
+var phase_average_input = document.querySelector("#phase_average_input");
+set_phase_average = (val) => {
+    gl.uniform1i(gl.getUniformLocation(program, 'phase_average'), phase_average_input.checked);
+}
+phase_average_input.addEventListener("input", (event) => {set_phase_average(event.target.value)});
 
 // initialize controls
 set_spacing(spacing_input.value);
 set_slitwidth(slitwidth_input.value);
 set_wavenumber(wavenumber_input.value);
 set_numslits(numslits_input.value);
-set_sourcedist(sourcedist_input.value);
+set_source_x(source_x_input.value);
+set_source_y(source_y_input.value);
 set_rays(rays_input.value);
 set_position(position_input.value);
-set_brightness(brightness_input.value);
 
 // Define vertices and colors
 var verticesColors = new Float32Array([
