@@ -237,7 +237,7 @@ canvas {
 input[type=checkbox], input[type=radio] {
   vertical-align: middle;
   position: relative;
-  bottom: 1px;
+  bottom: 0.8em;
 }
 
 .fieldset {
