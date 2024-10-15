@@ -234,10 +234,10 @@ canvas {
     flex: 1;
 }
 
-input {
-    display: block;
-    width: 100%;
-    flex: 1;
+input[type=checkbox], input[type=radio] {
+  vertical-align: middle;
+  position: relative;
+  bottom: 1px;
 }
 
 .fieldset {
