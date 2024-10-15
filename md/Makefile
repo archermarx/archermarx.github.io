@@ -1,28 +1,22 @@
-STRING1 = "Last updated on "
-STRING2 = "Created using [TSPW]\(https://github.com/eakbas/TSPW\) and [pandoc]\(http://pandoc.org/\)."
-SHELL = /bin/bash
+TARGETDIR=..
 
-ASSETDIR = "assets"
-TARGETDIR = ".."
-
-SOURCES = \
+md-files := \
 	$(wildcard *.md) \
 	$(wildcard content/*.md) \
 	$(wildcard p/*.md) \
 	$(wildcard extras/*.md)
 
-HTMLs = $(patsubst %.md,$(TARGETDIR)/%.html,$(SOURCES))
-TEMPFILE = $(TARGETDIR)/tmpfile
+html-files := $(md-files:%.md=$(TARGETDIR)/%.html)
 
-all: mkdir $(HTMLs)
-
-mkdir:
-	@ mkdir -p $(TARGETDIR)
+.PHONY: all clean debug
+all: $(html-files)
 
 $(TARGETDIR)/%.html: %.md
 	@ ./make.py $@ $< $(@D)
 
 clean: 
-	@ rm -rf ../*.html ../content ../p ../extras ../tmpfile
+	@ rm -rf ../*.html ../content ../p ../extras
 
-remake: clean all
+debug:
+	@ echo $(html-files)
+	@ echo $(md-files)
