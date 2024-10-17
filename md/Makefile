@@ -1,3 +1,5 @@
+SHELL = /bin/bash
+
 TARGETDIR=..
 
 md-files := \
@@ -15,7 +17,7 @@ $(TARGETDIR)/%.html: %.md
 	@ ./make.py $@ $< $(@D)
 
 clean: 
-	@ rm -rf ../*.html ../content ../p ../extras
+	@ rm -rf ../*.html ../content ../p ../extras http.log pidfile
 
 debug:
 	@ echo $(html-files)

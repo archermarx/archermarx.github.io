@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Implementation of the DSMC method</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="..//assets/css/style.css" />
+  <link rel="icon" type="image/x-icon" href=/favicon.ico/>
+</head>
+<body>
+<div class="navbar">
+<p><a href="/index.html">Home</a> | <a
+href="/publications.html">Publications</a> | <a
+href="/archive.html">Posts</a> | <a
+href="/files/thomas_marks_cv_2024.pdf">Curriculum Vitae</a></p>
+</div>
+<h1 id="tutorial---the-direct-simulation-monte-carlo-method">Tutorial -
+the Direct simulation Monte Carlo method</h1>
+<p>The <a
+href="https://en.wikipedia.org/wiki/Direct_simulation_Monte_Carlo">direct
+simulation Monte Carlo (DSMC)</a> method is a powerful tool for
+simulating rarified flows. Throughout this article, we’ll use Julia to
+implement the method to solve the problem of a cloud of particles in a
+2D box.</p>
+<h2 id="initialization">Initialization</h2>
+<p>We’ll start out with
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>N</mi><annotation encoding="application/x-tex">N</annotation></semantics></math>
+particles uniformly-distributed throughout our box, with a gas
+temperature of 300 K. To begin, we need a struct to hold our particle
+positions and velocities.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode julia"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> Particles{T}</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    x<span class="op">::</span><span class="dt">Vector{T}</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    y<span class="op">::</span><span class="dt">Vector{T}</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    vx<span class="op">::</span><span class="dt">Vector{T}</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    vy<span class="op">::</span><span class="dt">Vector{T}</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code></pre></div>
+<p>The positions can be straightforwardly sampled from a 2D uniform
+distribution.</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>𝐱</mi><mi>𝐣</mi></msub><mo>∼</mo><msup><mi>𝒰</mi><mn>2</mn></msup><mrow><mo stretchy="true" form="prefix">(</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">
+\mathbf{x_j} \sim \mathcal{U}^2(0, 1)
+</annotation></semantics></math></p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode julia"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">initialize</span>(num_particles)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> <span class="fu">rand</span>(num_particles)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> <span class="fu">rand</span>(num_particles)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">...</span></span></code></pre></div>
+<p>We will draw particle velocities from the appropriate <a
+href="https://en.wikipedia.org/wiki/Maxwell%E2%80%93Boltzmann_distribution">Maxwell-Boltzmann
+distribution</a>. This is a Gaussian (normal) distribution with standard
+deviation proportional to the square root of the temperature;</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>v</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>∝</mo><mo>exp</mo><mrow><mo stretchy="true" form="prefix">[</mo><mi>−</mi><mfrac><mrow><mi>m</mi><msup><mi>v</mi><mn>2</mn></msup></mrow><mrow><mn>2</mn><msub><mi>k</mi><mi>B</mi></msub><msub><mi>T</mi><mn>0</mn></msub></mrow></mfrac><mo stretchy="true" form="postfix">]</mo></mrow></mrow><annotation encoding="application/x-tex">
+f(v) \propto \exp\left[-\frac{m v^2}{2 k_B T_0}\right]
+</annotation></semantics></math></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⟹</mo><msub><mi>v</mi><mi>j</mi></msub><mo>∼</mo><msup><mi>𝒩</mi><mn>2</mn></msup><mrow><mo stretchy="true" form="prefix">(</mo><mn>0</mn><mo>,</mo><msqrt><mrow><msub><mi>k</mi><mi>B</mi></msub><msub><mi>T</mi><mn>0</mn></msub><mi>/</mi><mi>m</mi></mrow></msqrt><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">
+\implies v_j \sim \mathcal{N}^2(0, \sqrt{k_B T_0 / m})
+</annotation></semantics></math></p>
+<p>Here,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>v</mi><mi>j</mi></msub><annotation encoding="application/x-tex">v_j</annotation></semantics></math>
+is the velocity of the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>j</mi><annotation encoding="application/x-tex">j</annotation></semantics></math>-th
+particle,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>k</mi><mi>B</mi></msub><annotation encoding="application/x-tex">k_B</annotation></semantics></math>
+is the <a
+href="https://en.wikipedia.org/wiki/Boltzmann_constant">Boltzmann
+constant</a>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>T</mi><mn>0</mn></msub><mo>=</mo><mn>300</mn></mrow><annotation encoding="application/x-tex">T_0 = 300</annotation></semantics></math>
+K is the gas temperature and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>m</mi><annotation encoding="application/x-tex">m</annotation></semantics></math>
+is the particle mass. For this work, we’ll choose argon as our gas, so
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>m</mi><mo>=</mo><mn>39.948</mn></mrow><annotation encoding="application/x-tex">m = 39.948</annotation></semantics></math>
+amu
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>×</mi><mn>1.660</mn><mo>×</mo><msup><mn>10</mn><mrow><mi>−</mi><mn>27</mn></mrow></msup></mrow><annotation encoding="application/x-tex">\times 1.660\times10^{-27}</annotation></semantics></math>
+kg/amu.</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode julia"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> argon_mass <span class="op">=</span> <span class="fl">39.948</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> atomic_mass_unit <span class="op">=</span> <span class="fl">1.66053906892e-27</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> k_B <span class="op">=</span> <span class="fl">1.380649</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">initialize</span>(num_particles, gas_temp, mass)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> <span class="fu">rand</span>(num_particles)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> <span class="fu">rand</span>(num_particles)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    thermal_speed <span class="op">=</span> <span class="fu">sqrt</span>(k_B <span class="op">*</span> gas_temp <span class="op">/</span> (mass <span class="op">*</span> atomic_mass_unit))</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    vx <span class="op">=</span> <span class="fu">randn</span>(num_particles) <span class="op">*</span> thermal_speed</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    vy <span class="op">=</span> <span class="fu">randn</span>(num_particles) <span class="op">*</span> thermal_speed</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="fu">Particles</span>(x, y, vx, vy)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code></pre></div>
+<p>Once we have completed the initialization, we proceed to the main
+computational loop, which consists of three main steps.</p>
+<ol type="1">
+<li>Drift - move particles in space</li>
+<li>Boundaries - check for interactions with boundaries</li>
+<li>Collide - collide particles with each other</li>
+</ol>
+<p>Next, we’ll go through each of these steps and implement them.</p>
+<h2 id="drift">Drift</h2>
+<p>First, we move the particles to new positions based on their present
+velocities. There are no external forces in our simulation, so the
+velocities are constant at this step. We’ll just use a simple forward
+Euler integration at this stage.</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mi>x</mi><mi>j</mi><mrow><mi>n</mi><mo>+</mo><mn>1</mn></mrow></msubsup><mo>=</mo><msubsup><mi>x</mi><mi>j</mi><mi>n</mi></msubsup><mo>+</mo><mi>Δ</mi><mi>t</mi><msubsup><mi>v</mi><mi>j</mi><mi>n</mi></msubsup></mrow><annotation encoding="application/x-tex">
+x_j^{n+1} = x_j^n + \Delta t v_j^n
+</annotation></semantics></math></p>
+<p>Below is a basic Julia implementation of the drift stage, which uses
+multithreading to move each particle in parallel.</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode julia"><code class="sourceCode julia"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">drift!</span>(particles, timestep)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">Threads</span>.<span class="pp">@threads</span> <span class="cf">for</span> j <span class="kw">in</span> <span class="fu">eachindex</span>(particles.x)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>        particles.x[j] <span class="op">+=</span> dt <span class="op">*</span> particles.v[j]</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code></pre></div>
+<h2 id="boundaries">Boundaries</h2>
+<p>In this step, we account for particle interactions with the
+simulation boundaries. In the present simulation, we’ll consider solid
+boundaries at a temperature of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>T</mi><mi>w</mi></msub><mo>=</mo><mn>500</mn></mrow><annotation encoding="application/x-tex">T_w = 500</annotation></semantics></math>
+K. When particles hit a wall, there are a number of things that can
+happen. If the surface is very smooth, the particle might reflect
+<em>specularly</em>. When this happens, the particle’s velocity normal
+to the wall is reversed, while the velocity tangential to the wall is
+retained. In specular reflection, we assume that the amount of energy
+transferred to the particle from the wall is negligible.</p>
+<p>More commonly, if there is some surface roughness, the particle will
+reflect <em>diffusely</em>. Diffuse reflection can be thought of as the
+particle hitting the surface and bouncing around amongst the hills and
+valleys of the surface microstructure before finally escaping. Each
+reflection is specular, but at each the particle absorbs/transfers a
+tiny amount of energy from/to the wall. When it finally emerges, the
+particle has an effectively random orientation and a speed drawn from a
+Maxwellian distribution at the surface’s temperature. The particle is
+then said to have “thermally accomodated” to the surface.</p>
+<p>The <em>accomodation coefficient</em> of a surface,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>,
+describes the fraction of particles that reflect diffusely. A surface
+with an
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\alpha = 1</annotation></semantics></math>
+is a rough surface that reflects all particles diffusely, while one with
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\alpha = 0</annotation></semantics></math>
+is extremely smooth and mirror-like. Most real surfaces have
+accomodation coefficients close to one, so in this article we’ll
+consider diffuse reflection only.</p>
+<p>Here’s a basic diffuse reflection function, <a
+href="https://www.particleincell.com/2015/cosine-distribution/">adapted
+from one written by Lubos Breida</a> For each particle, we first check
+whether we have left the domain, and if so by which boundary. Then, we
+get the tangent vector and inward-facing normal vector of that boundary
+surface.</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode julia"><code class="sourceCode julia"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">reflect</span>(particles, dt)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">Threads</span>.<span class="pp">@threads</span> <span class="cf">for</span> j <span class="kw">in</span> <span class="fu">eachindex</span>(particles.x)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>        <span class="co"># loop over all particles</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> particles.x[j]</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>        y <span class="op">=</span> particles.y[j]</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>        vx <span class="op">=</span> particles.vx[j]</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>        vy <span class="op">=</span> particles.vy[j]</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>        <span class="co"># boundary surface normal</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>        norm_x <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>        norm_y <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>        <span class="co"># boundary surface tangent</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>        tang_x <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>        tang_y <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>        <span class="co"># fraction of last step since particle hit boundary</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>        inbounds <span class="op">=</span> <span class="cn">false</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>        <span class="co"># check each boundary to determine which one we left, if any</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> x <span class="op">&lt;</span> <span class="fl">0</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>            norm_x <span class="op">=</span> <span class="fl">1.0</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>            tang_y <span class="op">=</span> <span class="op">-</span><span class="fl">1.0</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span> <span class="cf">if</span> x <span class="op">&gt;</span> <span class="fl">1</span> </span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>            norm_x <span class="op">=</span> <span class="op">-</span><span class="fl">1.0</span></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>            tang_y <span class="op">=</span> <span class="fl">1.0</span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span> <span class="cf">if</span> y <span class="op">&lt;</span> <span class="fl">0</span></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>            norm_y <span class="op">=</span> <span class="fl">1.0</span></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>            tang_x <span class="op">=</span> <span class="fl">1.0</span></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span> <span class="cf">if</span> y <span class="op">&gt;</span> <span class="fl">1</span></span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>            norm_y <span class="op">=</span> <span class="op">-</span><span class="fl">1.0</span></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>            tang_x <span class="op">=</span> <span class="op">-</span><span class="fl">1.0</span></span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span></span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>            inbounds <span class="op">=</span> <span class="cn">true</span></span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> inbounds</span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>            <span class="cf">continue</span> <span class="co"># skip this particle -- it is not out of bounds</span></span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>    <span class="op">...</span></span></code></pre></div>
+<p>We next sample the normal component of the velocity unit vector from
+a cosine distribution, and the tangential component from a uniform on
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">[</mo><mn>0</mn><mo>,</mo><mn>2</mn><mi>π</mi><mo stretchy="true" form="postfix">]</mo></mrow><annotation encoding="application/x-tex">[0, 2\pi]</annotation></semantics></math>.</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode julia"><code class="sourceCode julia"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">reflect!</span>()</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code></pre></div>
+<h2 id="collide">Collide</h2>
+<p> </p>
+<hr />
+<p><span class="footer"> *Last updated on Oct 15, 2024. Created using <a
+href="http://pandoc.org/">pandoc</a>. </span></p>
+</body>
+</html>
