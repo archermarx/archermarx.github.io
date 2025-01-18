@@ -209,9 +209,6 @@ li {
 }
 
 .controls {
-    /* display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    */
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
@@ -250,3 +247,24 @@ input[type=checkbox], input[type=radio] {
   width: max(10vw, 220px);
 }
 
+.textarea{
+	width: 95%; /* extend the width of the grid item */
+	box-sizing: border-box; /* including padding / border in width */
+}
+
+.btn-group button {
+  padding: 10px 24px; /* Some padding */
+  cursor: pointer; /* Pointer/hand icon */
+  float: left; /* Float the buttons side by side */
+}
+
+.btn-group button:not(:last-child) {
+  border-right: none; /* Prevent double borders */
+}
+
+/* Clear floats (clearfix hack) */
+.btn-group:after {
+  content: "";
+  clear: both;
+  display: table;
+}

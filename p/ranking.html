@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>List sortedness</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="..//assets/css/style.css" />
+  <link rel="icon" type="image/x-icon" href=/favicon.ico/>
+</head>
+<body>
+<div class="navbar">
+<p><a href="/index.html">Home</a> | <a
+href="/publications.html">Publications</a> | <a
+href="/archive.html">Posts</a> | <a
+href="/files/thomas_marks_cv_2024.pdf">Curriculum Vitae</a></p>
+</div>
+<h1 id="ranking-rankings">Ranking rankings</h1>
+<p>Enter your list below. The list elements can be separated by commas,
+spaces, or new lines.</p>
+<textarea id="list-input" cols=80 rows=4 autocorrect=off autocapitalize=off spellcheck=off>
+</textarea>
+<p>Click “Calculate” to see how sorted the list is according to several
+different metrics. </br>I go into more details about the methods used to
+compute these scores below.</p>
+<p><b></b> <!-- This is load-bearing for some reason -->
+<button id = "clear">Clear</button>
+<button id = "calculate">Calculate</button></p>
+<div id="answer-list" data-visibility="hidden">
+<ul>
+<li>Spearman correlation: <b id="spearman-ans"></b></li>
+</ul>
+</div>
+<script>
+
+
+function clearInput() {
+    document.getElementById("list-input").value = ""
+    document.getElementById("answer-list").style.visibility="hidden"
+}
+
+document.getElementById("clear").addEventListener("click", clearInput)
+
+function sortperm(arr) {
+    let len = arr.length;
+    let indices = new Array(len)
+    for (let i = 0; i < len; i++) {indices[i] = i}
+    indices.sort((a, b) => arr[a] - arr[b])
+    return indices
+}
+
+function spearman(rank) {
+    let n = rank.length
+    let sum_d_squared = 0;
+    for (let i = 0; i < n; i++) {
+        let d = i - rank[i]
+        sum_d_squared += d*d
+    }
+
+    let rho = 1 - 6 * sum_d_squared / (n * (n*n - 1))
+    return rho
+}
+
+function toPercent(num) {
+   return (Math.floor(num * 1000) / 10).toString() + "%" 
+}
+
+function onClick() {
+    const input = document.getElementById("list-input")
+
+    // Do nothing on empty list
+    if (input.value === "") {
+        return
+    }
+
+    // Form list
+    let items = input.value.trim().split(/[\s,;]+/).map(Number)
+    console.log("items: ", items)
+    
+    let rank = sortperm(items)
+    console.log("rank: ", rank)
+    console.log("spearman: ", spearman(rank))
+
+    document.getElementById("answer-list").style.visibility="visible"
+
+
+    document.getElementById("spearman-ans").innerHTML = toPercent(spearman(rank))
+}
+
+document.getElementById("calculate").addEventListener("click", onClick)
+
+clearInput()
+
+</script>
+<p> </p>
+<hr />
+<p><span class="footer"> *Last updated on Jan 18, 2025. Created using <a
+href="http://pandoc.org/">pandoc</a>. </span></p>
+</body>
+</html>
