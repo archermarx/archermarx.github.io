@@ -3,7 +3,7 @@
 @import url("https://fonts.googleapis.com/css?family=Lato:400,400italic,700,700italic|Source+Code+Pro:400|EB+Garamond:400,400italic,700,700italic");
 
 /* Variable definitions */
-:root {
+* {
     --black: #000000;
     --blue: #0074d9;
     --dark-blue: #1D2B53;
@@ -177,7 +177,7 @@ a:visited{
 
 #profile_pic {
     float:right;
-    margin:0em;
+    margin:0 em;
     height: auto;
     width: auto;
     max-width: 250px;
