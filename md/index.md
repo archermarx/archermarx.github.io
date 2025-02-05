@@ -8,8 +8,8 @@ family-name-pattern: Marks
 
 # Thomas Marks
 
-<div class=columns>
-<div class=column>
+<div class="centered-block">
+<div class="column">
 | Postdoctoral Researcher, Department of Aerospace Engineering 
 | University of Michigan
 | [Computational Autonomy Group](https://www.alexgorodetsky.com/index.html)
@@ -21,9 +21,8 @@ family-name-pattern: Marks
 | <a href="https://orcid.org/0000-0003-3614-6127" class="ai ai-orcid-square"> ORCID</a>
 | <a href="https://www.linkedin.com/in/thomas-marks-b4866792/" class="icon brands fa-linkedin"> LinkedIn </a>
 </div>
-<div class = column>
 <img src="assets/images/headshot.jpg" id="profile_pic"/>
-</div>
+
 </div>
 
 <hr>

@@ -71,7 +71,7 @@ navbar = f"""
 <li><a {is_home} href="/index.html">Home</a></li>
 <li><a {is_pubs} href="/publications.html">Publications</a></li>
 <li><a {is_posts} href="/archive.html">Posts</a></li>
-<li style="float:right"><a href="/files/cv.pdf">Curriculum Vitae</a></li>
+<li><a href="/files/cv.pdf">Curriculum Vitae</a></li>
 </ul>
 </div>
 """

@@ -19,7 +19,7 @@
     --line-height: 2px;
     --header-font: Lato;
     --body-font: EB Garamond;
-    --width: 800px;
+    --width: 70%;
     --color-primary: var(--blue);
     --color-background: var(--white);
     --color-text: var(--black);
@@ -43,6 +43,30 @@
     }
 }
 
+@media (min-width: 1000px) { 
+   :root{
+      --width: 800px;
+   }
+}
+
+@media (max-width: 1000px) { 
+   :root{
+      --width: 80%;
+   }
+}
+
+/* Use horizontal navbar when screen > 600px */
+@media (min-width: 600px) {
+    .navbar {
+        margin-bottom:2em;
+        li {
+            float: left;
+        }
+        ul {
+            position: fixed;
+        }
+    }
+}
 
 /* Color of name in CV */
 #cv {
@@ -72,6 +96,7 @@ h1, h2, h3, h4, h5, h6 {
     line-height: 1em;
     font-family: var(--header-font);
     color: var(--color-primary);
+    width: var(--width);
 }
 
 h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
@@ -87,7 +112,6 @@ h1 {
     font-size: 1.7em;
     padding-bottom: 0.31em;
     margin-bottom: .31em;
-    margin-top: 1.4em;
 }
 
 h2 {
@@ -146,18 +170,14 @@ a:visited{
     background: var(--color-background);
     margin-bottom:3.5em;
     ul {
+        background-color: inherit;
         list-style-type: none;
         margin: 0;
         padding: 0;
-        top: 0;
         overflow: hidden;
-        background-color: inherit;
-        position: fixed;
         width: var(--width);
         border-bottom: 1px solid var(--color-primary);
-    }
-    li {
-        float: left;
+        top: 0;
     }
     li:last-child {
         border-right: none;
