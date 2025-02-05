@@ -65,14 +65,13 @@ You can vary several parameters to see how the interference pattern on the other
             <option value="display-amplitude">Amplitude</option>
         </select>
     </div>
-    </br>
     <div class = "input-container">
         <label>Phase average: <input type="checkbox" id="phase_average_input" value = "phase_average" autocomplete="off"></label>
     </div>
 </fieldset>
 </div>
 
-<canvas id="canvas" width=1000 height=1200></canvas>
+<canvas id="canvas" width=800 height=1000></canvas>
 </div>
 
 <script src = "../scripts/webgl.js"></script>

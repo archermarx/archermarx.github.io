@@ -1,62 +1,80 @@
 #!/usr/bin/env python3
 import sys
 import os
+from pathlib import Path
 
 htmlfile = sys.argv[1]
 mdfile = sys.argv[2]
 dir = sys.argv[3]
 tempfile = "../tmpfile"
-assets = "assets";
+assets = "assets"
 
 os.makedirs(dir, exist_ok=True)
 depth = dir.count("/")
 reldir = "../" * depth
 
 # read contents of file
-with open(mdfile, 'r') as file:
-    contents = file.readlines();
+with open(mdfile, "r") as file:
+    contents = file.readlines()
 
 # find YAML header
 div_count = 0
 div_ind = 0
 title_ind = 0
-for (i, l) in enumerate(contents):
-    if l.startswith('Title'):
+for i, l in enumerate(contents):
+    if l.startswith("Title"):
         title_ind = i
-    if l.strip() == '---':
+    if l.strip() == "---":
         div_count += 1
         div_ind = i
     if div_count == 2:
         break
 
-header = contents[:div_ind+1]
-contents = contents[div_ind+1:]
+header = contents[: div_ind + 1]
+contents = contents[div_ind + 1 :]
 
 # add favicon into header after title
 favicon_path = "/favicon.ico"
 
 favicon_header = [
     "header-includes:\n",
-    f'    <link rel="icon" type="image/x-icon" href={favicon_path}/>\n'
+    f'    <link rel="icon" type="image/x-icon" href={favicon_path}/>\n',
 ]
 
-header = header[0:title_ind+1] + favicon_header + header[title_ind+1:]
+header = header[0 : title_ind + 1] + favicon_header + header[title_ind + 1 :]
 
 # add "last modified on" footer
 from datetime import datetime
-date = datetime.today().strftime('%b %d, %Y')
+
+date = datetime.today().strftime("%b %d, %Y")
 footer = f"""\n\n\\ \n\n***\n
 <span class="footer">
 *Last updated on {date}. Created using [pandoc](http://pandoc.org/).
 </span>"""
 
 # write navbar
-navbar = """<div class="navbar">
-[Home](/index.html) | [Publications](/publications.html) | [Posts](/archive.html) | [Curriculum Vitae](/files/thomas_marks_cv_2024.pdf)
-</div>"""
+active = 'class="active"'
+is_home = active if mdfile == "index.md" else ""
+is_pubs = active if mdfile == "publications.md" else ""
+if mdfile == "archive.md" or Path(mdfile).parent == Path("p"):
+    is_posts = active
+else:
+    is_posts = ""
+
+
+navbar = f"""
+<div class="navbar">
+<ul>
+<li><a {is_home} href="/index.html">Home</a></li>
+<li><a {is_pubs} href="/publications.html">Publications</a></li>
+<li><a {is_posts} href="/archive.html">Posts</a></li>
+<li style="float:right"><a href="/files/cv.pdf">Curriculum Vitae</a></li>
+</ul>
+</div>
+"""
 
 # write to temporary file
-with open(tempfile, 'w') as file:
+with open(tempfile, "w") as file:
     file.writelines(header)
     file.write(navbar)
     file.writelines(contents)
@@ -64,6 +82,7 @@ with open(tempfile, 'w') as file:
 
 print(htmlfile)
 import subprocess
+
 args = [
     "pandoc",
     "--from",
@@ -78,8 +97,8 @@ args = [
     f"{reldir}/{assets}/css/style.css",
     tempfile,
     "-o",
-    htmlfile
-] 
+    htmlfile,
+]
 proc = subprocess.run(args)
 
 os.remove(tempfile)

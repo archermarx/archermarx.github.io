@@ -56,7 +56,7 @@ For a more accurate simulation of wave propagation through a diffraction grating
     </div>
 </fieldset>
 </div>
-<canvas id="canvas" width=1000 height=1200></canvas>
+<canvas id="canvas" width=800 height=1000></canvas>
 </div>
 <script src = "../scripts/webgl.js"></script>
 <script>
@@ -281,6 +281,8 @@ var program = compile(gl, vshader, fshader);
 // Send canvas size to shader
 var width = canvas.width;
 var height = canvas.height;
+console.log(width)
+console.log(height)
 var widthLoc = gl.getUniformLocation(program, 'width');
 var heightLoc = gl.getUniformLocation(program, 'height');
 var timeLoc = gl.getUniformLocation(program, 'time');

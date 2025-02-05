@@ -9,9 +9,10 @@ citations-hover: true
 
 :::{#cv}
 
-## Journal articles
 
----
+# Publications
+
+## Journal Articles
 
 ### 2024
 
@@ -25,9 +26,7 @@ citations-hover: true
 - [@Marks_2023_Challenges] **[(pdf)](files/marks_jorns_2023_psst_challenges.pdf)**
 - [@Marks_2023_HallThruster_jl] **[(pdf)](files/marks_schedler_jorns_2023_hallthruster_jl.pdf)**
 
-## Conference papers
-
----
+## Conference Papers
 
 ### 2024
 
@@ -61,9 +60,7 @@ citations-hover: true
 
 ## Ph.D. thesis
 
----
-
-- [@Marks_2023_Thesis] **[(pdf)](files/marks_phd_thesis_2023.pdf)**
+- [@Marks_2023_Thesis] **[(pdf)](files/marks_phd_thesis.pdf)**
 
 
 :::

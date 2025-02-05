@@ -1,27 +1,32 @@
 ---
 pagetitle: Thomas Marks
 bibliography: '../assets/bib/cv_refs.bib'
+csl: '../assets/csl/iop-style.csl'
 given-name-pattern: Thomas
 family-name-pattern: Marks
 ---
 
 # Thomas Marks
 
+<div class=columns>
+<div class=column>
+| Postdoctoral Researcher, Department of Aerospace Engineering 
+| University of Michigan
+| [Computational Autonomy Group](https://www.alexgorodetsky.com/index.html)
+<br>
+
+| <a href="mailto:marksta@umich.edu" class="icon solid fa-envelope">  marksta@umich.edu </a>
+| <a href="http://github.com/archermarx" class="icon brands fa-github"> Github </a>
+| <a href="https://scholar.google.com/citations?hl=en&user=IRZavLoAAAAJ" class="icon brands fa-google-scholar"> Google Scholar </a>
+| <a href="https://orcid.org/0000-0003-3614-6127" class="ai ai-orcid-square"> ORCID</a>
+| <a href="https://www.linkedin.com/in/thomas-marks-b4866792/" class="icon brands fa-linkedin"> LinkedIn </a>
+</div>
+<div class = column>
 <img src="assets/images/headshot.jpg" id="profile_pic"/>
+</div>
+</div>
 
-| Postdoctoral Researcher, University of Michigan
-| Department of Aerospace Engineering
-
-[Computational Autonomy Group](https://www.alexgorodetsky.com/index.html)
- 
-| <a href="mailto:marksta@umich.edu" class="icon solid fa-envelope"></a>  marksta@umich.edu
-| <a href="http://github.com/archermarx" class="icon brands fa-github"></a> Github
-| <a href="https://scholar.google.com/citations?user=7gQdqvQAAAAJ&hl=en" class="fa-brands fa-google-scholar"></a> Google Scholar
-| <a href="https://orcid.org/0000-0003-3614-6127" class="ai ai-orcid-square"></a> ORCID
-| <a href="https://www.linkedin.com/in/thomas-marks-b4866792/" class="icon brands fa-linkedin"></a> LinkedIn
-| <a href="https://twitter.com/long_ziti" class="icon brands fa-twitter"><span class="label"></a> Twitter
-
----
+<hr>
 
 ## About
 

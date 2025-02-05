@@ -7,7 +7,7 @@ link-citations: true
 citations-hover: true
 ---
 
-# Post archive
+# POST ARCHIVE
 
 2024-10-11 - [Diffraction grating simulation](/p/advanced-diffraction-sim.html)
 

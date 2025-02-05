@@ -1,224 +1,262 @@
 @import url("academicons.min.css");
 @import url("fontawesome-all.min.css");
-@import url("https://fonts.googleapis.com/css?family=Lato:400,400italic,700,700italic|Source+Code+Pro:400");
+@import url("https://fonts.googleapis.com/css?family=Lato:400,400italic,700,700italic|Source+Code+Pro:400|EB+Garamond:400,400italic,700,700italic");
 
+/* Variable definitions */
+* {
+    --blue: #0074d9;
+    --dark-blue: #1D2B53;
+    --dark-magenta: #7E2553;
+    --yellow: #FFEC27;
+    --white: #FFFFFF;
+    --orange: #FFA300;
+    --grey: #C2C3C7;
+    --line-color: silver;
+    --line-height: 2px;
+    --line: 3px dotted var(--blue);
+    --highlight-color: var(--dark-magenta);
+    --header-font: Lato;
+    --body-font: EB Garamond;
+    --width: 800px;
+}
+
+/* Color of name in CV */
+#cv {
+    strong {
+        color: var(--highlight-color);
+    }
+}
+
+/* General document properties */
 body {
-  font-family:  sans-serif;
-  font-size: 1.1rem;
-  background: floralwhite;
-  align-items: center;
-  max-width: 1000px;
-  margin-inline: auto;
-  padding: 1em;
+    font-family: var(--body-font);
+    font-size: 1.2rem;
+    align-items: center;
+    max-width: var(--width);
+    margin-inline: auto;
+    background-color: white;
 }
 
 hr {
-  height: 2px;
-  background-color: silver;
-  border: none;
+    border-top: var(--line);
+    border-bottom: 0px;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  color: var(--color-header-text);
-  font-weight: 700;
-  line-height: 1em;
-  margin: 0 0 0.5625em 0;
+    font-weight: 700;
+    line-height: 1em;
+    font-family: var(--header-font);
+    color: var(--blue);
 }
 
 h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
-  border: 0;
-  color: inherit;
-  text-decoration: none;
+    border: 0;
+    color: inherit;
+    text-decoration: none;
 }
 
 h1 {
-  border-bottom: 2px solid silver;
-  line-height: 1em;
-  font-size: 1.5em;
-  margin-bottom: .31em;
+    border-bottom: var(--line);
+    text-transform: uppercase;
+    line-height: 1em;
+    font-size: 1.7em;
+    margin-bottom: .31em;
+    margin-top: 1.4em;
 }
 
 h2 {
-  font-size: 1.25em;
-  line-height: 1.25em;
+    text-transform: uppercase;
+    font-size: 1.25em;
+    line-height: 1.25em;
 }
 
 h3 {
-  font-size: 1.1em;
-  line-height: 1.1em;
+    font-size: 1.1em;
+    line-height: 1.1em;
 }
 
 h4 {
-  font-size: 1em;
-  line-height: 1em;
+    font-size: 1em;
+    line-height: 1em;
 }
 
 h5 {
-  font-size: 0.9em;
-  line-height: 1.5em;
+    font-size: 0.9em;
+    line-height: 1.5em;
 }
 
 h6 {
-  font-size: 0.7em;
-  line-height: 1.5em;
+    font-size: 0.7em;
+    line-height: 1.5em;
 }
 
 sub {
-  font-size: 0.8em;
-  position: relative;
-  top: 0.5em;
+    font-size: 0.8em;
+    position: relative;
+    top: 0.5em;
 }
 
 sup {
-  font-size: 0.8em;
-  position: relative;
-  top: -0.5em;
+    font-size: 0.8em;
+    position: relative;
+    top: -0.5em;
 }
 
 a {
-  text-decoration: none;
+    text-decoration: none;
+    color: var(--blue);
 }
 
 a:hover {
-  text-decoration: underline;
-}
-a:visited{
-  color: #0066cc;
+    text-decoration: underline;
 }
 
+a:visited{
+    color: var(--blue);
+}
+
+/* Style navbar, based on https://www.w3schools.com/css/css_navbar_horizontal.asp*/
 .navbar {
-background: #f0f0f0;
-padding: 0.001em;
-margin-bottom:1em;
+    background: var(--white);
+    margin-bottom:3.5em;
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        top: 0;
+        overflow: hidden;
+        background-color: inherit;
+        position: fixed;
+        width: var(--width);
+        border-bottom: 1px solid var(--blue);
+    }
+    li {
+        float: left;
+    }
+    li:last-child {
+        border-right: none;
+    }
+    li a {
+        display: block;
+        color: var(--blue);
+        text-align: left;
+        padding: 12px 16px;
+        text-decoration: none;
+        font-family: var(--header-font);
+    }
+    li a:hover:not(.active) {
+        background-color: var(--grey);
+    }
+    .active {
+        background-color: var(--blue);
+        color: var(--white);
+    }
 }
 
 #figure {
-  display: flex;
-  width: 75%;
-  img {
-    align-items: center;
-    display: block;
-    width: 100%;
-    margin-inline: auto;
-  }
+    display: flex;
+    width: 75%;
+    img {
+        align-items: center;
+        display: block;
+        width: 100%;
+        margin-inline: auto;
+    }
 }
 
 #profile_pic {
-  float:right;
-  margin:0em 0em 1em 1em;
-  height: auto;
-  width: auto;
-  max-width: 250px;
-  max-height: 250px;
-  }
+    float:right;
+    margin:0 em;
+    height: auto;
+    width: auto;
+    max-width: 250px;
+    max-height: 250px;
+}
 
 .footer {
-  font-size: .8em;
-}
-
-.icon {
-  text-decoration: none;
-  border-bottom: none;
-  position: relative;
-}
-
-.icon:before {
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  display: inline-block;
-  font-style: normal;
-  font-variant: normal;
-  text-rendering: auto;
-  line-height: 1;
-  text-transform: none !important;
-  font-family: 'Font Awesome 6 Free';
-  font-weight: 400;
-}
-
-.icon > .label {
-  display: none;
-}
-
-.icon:before {
-  line-height: inherit;
+    font-size: .8em;
 }
 
 .icon.solid:before {
-  font-weight: 900;
+    font-weight: 900;
+}
+
+.icon:before {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 400;
 }
 
 .icon.brands:before {
-  font-family: 'Font Awesome 6 Brands';
+    font-family: 'Font Awesome 6 Brands';
 }
+
 
 /* Code blocks */
 
 code {
-  background: rgb(245, 237, 216);
-  border-radius: 5px;
-  color: #000000;
-  font-family: "Source Code Pro", monospace;
-  font-size: 0.9em;
-  font-weight: 1.1em;
-  margin: 0 0.25em;
-  padding: 0.25em 0.65em;
+    background: rgb(245, 237, 216);
+    border-radius: 5px;
+    color: #000000;
+    font-family: "Source Code Pro", monospace;
+    font-size: 0.9em;
+    margin: 0 0.25em;
+    padding: 0.25em 0.65em;
 }
 
 pre {
-  font-family: "Source Code Pro", monospace;
-  font-size: 0.9em;
-  margin: 0 0 2.25em 0;
+    font-family: "Source Code Pro", monospace;
+    font-size: 0.9em;
+    margin: 0 0 2.25em 0;
 }
 
 pre code {
--webkit-overflow-scrolling: touch;
-display: block;
-line-height: 1.5em;
-overflow-x: auto;
-padding: 1em 1.5em;
+    -webkit-overflow-scrolling: touch;
+    display: block;
+    line-height: 1.5em;
+    overflow-x: auto;
+    padding: 1em 1.5em;
 }
 
 .align-left {
-  text-align: left;
+    text-align: left;
 }
 
 .align-center {
-  text-align: center;
+    text-align: center;
 }
 
 .align-right {
-  text-align: right;
+    text-align: right;
 }
 
 .youtube-video {
-  display: flex;
-  align-items: center;
-  aspect-ratio: 16 / 9;
-  width: 65%;
-  margin-inline: auto;
-}
-
-li {
-  margin-bottom:0.5em;
-}
-
-#cv {
-  strong {
-    color: #6d1541;
-  }
-}
-
-.controls {
     display: flex;
-    justify-content: center;
+    align-items: center;
+    aspect-ratio: 16 / 9;
+    width: 65%;
+    margin-inline: auto;
+}
+
+legend {
+    font-family: var(--header-font);
+    text-transform: uppercase;
+    color: var(--blue);
+}
+
+.controls5{
+    display: flex;
+    justify-content: left;
     flex-wrap: wrap;
     flex:1;
     column-gap:2rem;
+    line-height: 1.5em;
 }
 
 .centered-block{
     display:flex;
-    justify-content: center;
+    justify-content: left;
     flex-wrap: wrap;
     flex:1;
     column-gap:1rem;
@@ -232,39 +270,39 @@ canvas {
 }
 
 input[type=checkbox], input[type=radio] {
-  vertical-align: middle;
-  position: relative;
+    vertical-align: middle;
+    position: relative;
 }
 
 .fieldset {
-  display: flex;
-  flex: 1;
-  flex-wrap: wrap;
+    display: flex;
+    flex: 1;
+    flex-wrap: wrap;
 }
 
 .input-container {
-  flex: 1;
-  width: max(10vw, 220px);
+    flex: 1;
+    width: max(10vw, 300px);
 }
 
 .textarea{
-	width: 95%; /* extend the width of the grid item */
-	box-sizing: border-box; /* including padding / border in width */
+    width: 95%; /* extend the width of the grid item */
+    box-sizing: border-box; /* including padding / border in width */
 }
 
 .btn-group button {
-  padding: 10px 24px; /* Some padding */
-  cursor: pointer; /* Pointer/hand icon */
-  float: left; /* Float the buttons side by side */
+    padding: 10px 24px; /* Some padding */
+    cursor: pointer; /* Pointer/hand icon */
+    float: left; /* Float the buttons side by side */
 }
 
 .btn-group button:not(:last-child) {
-  border-right: none; /* Prevent double borders */
+    border-right: none; /* Prevent double borders */
 }
 
 /* Clear floats (clearfix hack) */
 .btn-group:after {
-  content: "";
-  clear: both;
-  display: table;
+    content: "";
+    clear: both;
+    display: table;
 }

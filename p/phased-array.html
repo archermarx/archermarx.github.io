@@ -26,10 +26,12 @@
 </head>
 <body>
 <div class="navbar">
-<p><a href="/index.html">Home</a> | <a
-href="/publications.html">Publications</a> | <a
-href="/archive.html">Posts</a> | <a
-href="/files/thomas_marks_cv_2024.pdf">Curriculum Vitae</a></p>
+<ul>
+<li><a  href="/index.html">Home</a></li>
+<li><a  href="/publications.html">Publications</a></li>
+<li><a class="active" href="/archive.html">Posts</a></li>
+<li style="float:right"><a href="/files/cv.pdf">Curriculum Vitae</a></li>
+</ul>
 </div>
 <h1 id="phased-array-simulation">Phased array simulation</h1>
 <p>The simulation below models the wave pattern created by several point
@@ -86,7 +88,7 @@ simulation</a> page.</p>
     </div>
 </fieldset>
 </div>
-<canvas id="canvas" width=1000 height=1200></canvas>
+<canvas id="canvas" width=800 height=1000></canvas>
 </div>
 <script src = "../scripts/webgl.js"></script>
 <script>
@@ -311,6 +313,8 @@ var program = compile(gl, vshader, fshader);
 // Send canvas size to shader
 var width = canvas.width;
 var height = canvas.height;
+console.log(width)
+console.log(height)
 var widthLoc = gl.getUniformLocation(program, 'width');
 var heightLoc = gl.getUniformLocation(program, 'height');
 var timeLoc = gl.getUniformLocation(program, 'time');
@@ -425,7 +429,7 @@ const interval = setInterval(() => {
 </script>
 <p> </p>
 <hr />
-<p><span class="footer"> *Last updated on Oct 15, 2024. Created using <a
+<p><span class="footer"> *Last updated on Feb 04, 2025. Created using <a
 href="http://pandoc.org/">pandoc</a>. </span></p>
 </body>
 </html>
