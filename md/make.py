@@ -38,15 +38,18 @@ favicon_path = "/favicon.ico"
 
 favicon_header = [
     "header-includes:\n",
-    f'    <link rel="icon" type="image/x-icon" href={favicon_path}/>\n',
+    f'    <link rel="icon" type="image/x-icon" href="{favicon_path}"/>\n',
 ]
 
 header = header[0 : title_ind + 1] + favicon_header + header[title_ind + 1 :]
 
 # add "last modified on" footer
 from datetime import datetime
+import time
 
-date = datetime.today().strftime("%b %d, %Y")
+date = datetime.strptime(time.ctime(os.path.getmtime(mdfile)), "%c")
+date = date.strftime("%b %d, %Y")
+
 footer = f"""\n\n\\ \n\n***\n
 <span class="footer">
 *Last updated on {date}. Created using [pandoc](http://pandoc.org/).
