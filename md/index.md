@@ -43,7 +43,7 @@ I did my Ph.D. work in the University of Michigan's
 where I focused on the development and evaluation of closure models for anomalous
 electron transport in Hall effect thrusters.
 
-Here's a short video I made about my research.
+Here's a short video I made about my Ph.D. research.
 
 <!-- Copy & Pasted from YouTube -->
 <iframe

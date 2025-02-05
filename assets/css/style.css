@@ -6,29 +6,43 @@
 :root {
     --black: #000000;
     --blue: #0074d9;
-    --dark-blue: #1D2B53;
+    --light-blue: #5cc0ff;
+    --dark-blue: #101b38;
     --dark-magenta: #7E2553;
+    --red: #FF004D;
     --yellow: #FFEC27;
     --white: #FFFFFF;
-    --orange: #FFA300;
+    --orange: #FFc400;
     --grey: #C2C3C7;
+    --light-green: #10c413;
+    --green: #15a31c;
     --line-height: 2px;
-    --line: 3px dotted var(--blue);
     --header-font: Lato;
     --body-font: EB Garamond;
     --width: 800px;
     --color-primary: var(--blue);
     --color-background: var(--white);
     --color-text: var(--black);
-    --color-highlight: var(--dark-magenta);
+    --color-highlight: var(--green);
     --color-inactive: var(--grey);
+    --color-inactive-text: var(--color-primary);
+    --color-active-text: var(--white);
+    --color-line: var(--color-highlight);
+    --line: 3px dotted var(--color-line);
 }
 
 @media (prefers-color-scheme: dark) {
-    --color-background: var(--dark-blue);
-    --color-highlight: var(--orange);
-    --color-text: var(--white)
+    :root {
+        --color-background: var(--dark-blue);
+        --color-highlight: var(--light-green);
+        --color-text: var(--white);
+        --color-primary: var(--light-blue);
+        --color-active-text: var(--dark-blue);
+        --color-inactive-text: var(--dark-blue);
+        --color-line: var(--color-highlight);
+    }
 }
+
 
 /* Color of name in CV */
 #cv {
@@ -71,6 +85,7 @@ h1 {
     text-transform: uppercase;
     line-height: 1em;
     font-size: 1.7em;
+    padding-bottom: 0.31em;
     margin-bottom: .31em;
     margin-top: 1.4em;
 }
@@ -149,7 +164,7 @@ a:visited{
     }
     li a {
         display: block;
-        color: var(--blue);
+        color: var(--color-primary);
         text-align: left;
         padding: 12px 16px;
         text-decoration: none;
@@ -157,10 +172,11 @@ a:visited{
     }
     li a:hover:not(.active) {
         background-color: var(--color-inactive);
+        color: var(--color-inactive-text)
     }
     .active {
         background-color: var(--color-primary);
-        color: var(--white);
+        color: var(--color-active-text);
     }
 }
 
@@ -246,7 +262,7 @@ pre code {
     display: flex;
     align-items: center;
     aspect-ratio: 16 / 9;
-    width: 65%;
+    width: 80%;
     margin-inline: auto;
 }
 
