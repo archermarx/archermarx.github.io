@@ -25,13 +25,13 @@
   <link rel="icon" type="image/x-icon" href="/favicon.ico"/>
 </head>
 <body>
-<div class="navbar">
-<ul>
-<li><a  href="/index.html">Home</a></li>
-<li><a  href="/publications.html">Publications</a></li>
-<li><a class="active" href="/archive.html">Posts</a></li>
-<li><a href="/files/cv.pdf">Curriculum Vitae</a></li>
-</ul>
+<div id="navigation_bar" class="navbar">
+<p><a  href="/index.html">Home</a>
+<a  href="/publications.html">Publications</a>
+<a class="active" href="/archive.html">Posts</a>
+<a href="/files/cv.pdf">Curriculum Vitae</a>
+<a href="javascript:void(0);" class="icon" onclick="responsive_navbar()">
+<i class="fa fa-bars"></i> </a></p>
 </div>
 <h1 id="quasi-random-sampling-widget">Quasi-random sampling widget</h1>
 <p>This widget allows you to play around with a few different
@@ -153,6 +153,16 @@ function drawPoints() {
 
 drawPoints();
 
+</script>
+<script>
+function responsive_navbar() {
+  var x = document.getElementById("navigation_bar");
+  if (x.className === "navbar") {
+    x.className += " responsive";
+  } else {
+    x.className = "navbar";
+  }
+}
 </script>
 <p> </p>
 <hr />

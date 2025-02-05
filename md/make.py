@@ -66,21 +66,37 @@ else:
 
 
 navbar = f"""
-<div class="navbar">
-<ul>
-<li><a {is_home} href="/index.html">Home</a></li>
-<li><a {is_pubs} href="/publications.html">Publications</a></li>
-<li><a {is_posts} href="/archive.html">Posts</a></li>
-<li><a href="/files/cv.pdf">Curriculum Vitae</a></li>
-</ul>
+<div class="navbar" id="navigation_bar">
+<a {is_home} href="/index.html">Home</a>
+<a {is_pubs} href="/publications.html">Publications</a>
+<a {is_posts} href="/archive.html">Posts</a>
+<a href="/files/cv.pdf">Curriculum Vitae</a>
+<a href="javascript:void(0);" class="icon" onclick="responsive_navbar()">
+    <i class="fa fa-bars"></i>
+</a>
 </div>
 """
+
+navbar_js = """
+<script>
+function responsive_navbar() {
+  var x = document.getElementById("navigation_bar");
+  if (x.className === "navbar") {
+    x.className += " responsive";
+  } else {
+    x.className = "navbar";
+  }
+}
+</script>
+"""
+
 
 # write to temporary file
 with open(tempfile, "w") as file:
     file.writelines(header)
     file.write(navbar)
     file.writelines(contents)
+    file.write(navbar_js)
     file.write(footer)
 
 print(htmlfile)

@@ -25,13 +25,13 @@
   <link rel="icon" type="image/x-icon" href="/favicon.ico"/>
 </head>
 <body>
-<div class="navbar">
-<ul>
-<li><a class="active" href="/index.html">Home</a></li>
-<li><a  href="/publications.html">Publications</a></li>
-<li><a  href="/archive.html">Posts</a></li>
-<li><a href="/files/cv.pdf">Curriculum Vitae</a></li>
-</ul>
+<div id="navigation_bar" class="navbar">
+<p><a class="active" href="/index.html">Home</a>
+<a  href="/publications.html">Publications</a>
+<a  href="/archive.html">Posts</a> <a href="/files/cv.pdf">Curriculum
+Vitae</a>
+<a href="javascript:void(0);" class="icon" onclick="responsive_navbar()">
+<i class="fa fa-bars"></i> </a></p>
 </div>
 <h1 id="thomas-marks">Thomas Marks</h1>
 <div class="centered-block">
@@ -82,6 +82,16 @@ effect thrusters.</p>
   frameborder="0"
   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
+<script>
+function responsive_navbar() {
+  var x = document.getElementById("navigation_bar");
+  if (x.className === "navbar") {
+    x.className += " responsive";
+  } else {
+    x.className = "navbar";
+  }
+}
+</script>
 <p> </p>
 <hr />
 <p><span class="footer"> *Last updated on Feb 04, 2025. Created using <a

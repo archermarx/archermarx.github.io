@@ -25,13 +25,13 @@
   <link rel="icon" type="image/x-icon" href="/favicon.ico"/>
 </head>
 <body>
-<div class="navbar">
-<ul>
-<li><a  href="/index.html">Home</a></li>
-<li><a class="active" href="/publications.html">Publications</a></li>
-<li><a  href="/archive.html">Posts</a></li>
-<li><a href="/files/cv.pdf">Curriculum Vitae</a></li>
-</ul>
+<div id="navigation_bar" class="navbar">
+<p><a  href="/index.html">Home</a>
+<a class="active" href="/publications.html">Publications</a>
+<a  href="/archive.html">Posts</a> <a href="/files/cv.pdf">Curriculum
+Vitae</a>
+<a href="javascript:void(0);" class="icon" onclick="responsive_navbar()">
+<i class="fa fa-bars"></i> </a></p>
 </div>
 <div id="cv">
 <h1 id="publications">Publications</h1>
@@ -220,6 +220,16 @@ href="https://doi.org/10.7302/22318">https://doi.org/10.7302/22318</a></span>
 </div>
 <p><br />
 </p>
+<script>
+function responsive_navbar() {
+  var x = document.getElementById("navigation_bar");
+  if (x.className === "navbar") {
+    x.className += " responsive";
+  } else {
+    x.className = "navbar";
+  }
+}
+</script>
 <p> </p>
 <hr />
 <p><span class="footer"> *Last updated on Feb 04, 2025. Created using <a

@@ -25,19 +25,29 @@
   <link rel="icon" type="image/x-icon" href="/favicon.ico"/>
 </head>
 <body>
-<div class="navbar">
-<ul>
-<li><a  href="/index.html">Home</a></li>
-<li><a  href="/publications.html">Publications</a></li>
-<li><a class="active" href="/archive.html">Posts</a></li>
-<li><a href="/files/cv.pdf">Curriculum Vitae</a></li>
-</ul>
+<div id="navigation_bar" class="navbar">
+<p><a  href="/index.html">Home</a>
+<a  href="/publications.html">Publications</a>
+<a class="active" href="/archive.html">Posts</a>
+<a href="/files/cv.pdf">Curriculum Vitae</a>
+<a href="javascript:void(0);" class="icon" onclick="responsive_navbar()">
+<i class="fa fa-bars"></i> </a></p>
 </div>
 <h1 id="post-archive">POST ARCHIVE</h1>
 <p>2024-10-11 - <a href="/p/advanced-diffraction-sim.html">Diffraction
 grating simulation</a></p>
 <p>2024-10-11 - <a href="/p/phased-array.html">Phased array
 simulation</a></p>
+<script>
+function responsive_navbar() {
+  var x = document.getElementById("navigation_bar");
+  if (x.className === "navbar") {
+    x.className += " responsive";
+  } else {
+    x.className = "navbar";
+  }
+}
+</script>
 <p> </p>
 <hr />
 <p><span class="footer"> *Last updated on Feb 04, 2025. Created using <a

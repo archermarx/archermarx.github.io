@@ -31,6 +31,7 @@
     --line: 3px dotted var(--color-line);
 }
 
+/* Dark mode */
 @media (prefers-color-scheme: dark) {
     :root {
         --color-background: var(--dark-blue);
@@ -43,28 +44,44 @@
     }
 }
 
-@media (min-width: 1000px) { 
-   :root{
-      --width: 800px;
-   }
-}
-
-@media (max-width: 845px) { 
-   :root{
-      --width: 95%;
-   }
+/* For screens below 800 px, use a percentage of the screen */
+@media screen and (max-width: 845px) { 
+    :root{
+        --width: 95%;
+    }
 }
 
 /* Use horizontal navbar when screen > 600px */
-@media (min-width: 600px) {
+@media screen and (min-width: 600px) {
+    .navbar a { 
+        float : left;
+    }
     .navbar {
-        li {
-            float: left;
-        }
-        ul {
-            position: fixed;
-        }
+        position: fixed;
         margin-bottom: 3.5em;
+    }
+    body {
+        top: 3.5em;
+        position: relative;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .navbar a:not(.active) {display: none;}
+    .navbar a.icon {
+        float: right;
+        display: block;
+    }
+    .navbar.responsive {position: relative;}
+    .navbar.responsive .icon {
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+    .navbar.responsive a {
+        float: none;
+        display: block;
+        text-align: left;
     }
 }
 
@@ -166,37 +183,77 @@ a:visited{
 }
 
 /* Style navbar, based on https://www.w3schools.com/css/css_navbar_horizontal.asp*/
+/*
 .navbar {
+background-color: var(--color-background);
+ul {
+background-color: inherit;
+list-style-type: none;
+margin: 0;
+padding: 0;
+overflow: hidden;
+width: var(--width);
+border-bottom: 1px solid var(--color-primary);
+top: 0;
+}
+li:last-child {
+border-right: none;
+}
+li a {
+display: block;
+color: var(--color-primary);
+text-align: left;
+padding: 12px 16px;
+text-decoration: none;
+font-family: var(--header-font);
+}
+li a:hover:not(.active) {
+background-color: var(--color-inactive);
+color: var(--color-inactive-text)
+}
+.active {
+background-color: var(--color-primary);
+color: var(--color-active-text);
+}
+}
+*/
+
+.navbar {
+    overflow: hidden;
     background-color: var(--color-background);
-    ul {
-        background-color: inherit;
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
-        width: var(--width);
-        border-bottom: 1px solid var(--color-primary);
-        top: 0;
-    }
-    li:last-child {
-        border-right: none;
-    }
-    li a {
-        display: block;
-        color: var(--color-primary);
-        text-align: left;
-        padding: 12px 16px;
-        text-decoration: none;
-        font-family: var(--header-font);
-    }
-    li a:hover:not(.active) {
-        background-color: var(--color-inactive);
-        color: var(--color-inactive-text)
-    }
-    .active {
-        background-color: var(--color-primary);
-        color: var(--color-active-text);
-    }
+    margin: 0;
+    padding: 0;
+    top: 0;
+    width: var(--width);
+    border-bottom: 1px solid var(--color-primary);
+}
+
+.navbar a {
+    float: left;
+    display: block;
+    color: var(--color-primary);
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-family: var(--header-font);
+}
+
+.navar a:last-child {
+    border-right: none;
+}
+
+.navbar a:hover {
+    background-color: var(--color-inactive);
+    color: var(--color-inactive-text);
+}
+
+.navbar a.active {
+    background-color: var(--color-primary);
+    color: var(--color-active-text);
+}
+
+.navbar .icon {
+    display: none;
 }
 
 #figure {
