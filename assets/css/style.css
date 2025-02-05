@@ -19,7 +19,7 @@
     --line-height: 2px;
     --header-font: Lato;
     --body-font: EB Garamond;
-    --width: 800px;
+    --width: 1000px;
     --color-primary: var(--blue);
     --color-background: var(--white);
     --color-text: var(--black);
@@ -50,7 +50,6 @@
         --width: 95%;
     }
 }
-
 
 /* Color of name in CV */
 #cv {
@@ -151,21 +150,6 @@ a:visited{
 
 /* Style navbar, based on https://www.w3schools.com/css/css_navbar_horizontal.asp*/
 
-/* Use horizontal navbar when screen > 600px */
-@media screen and (min-width: 600px) {
-    .navbar a { 
-        float : left;
-    }
-    .navbar {
-        position: fixed;
-        margin-bottom: 3.5em;
-    }
-    body {
-        top: 3.5em;
-        position: relative;
-    }
-}
-
 /* Use collapsible verical navbar when screen < 600 px */
 @media screen and (max-width: 600px) {
     .navbar a:not(.active) {display: none;}
@@ -185,6 +169,7 @@ a:visited{
         text-align: left;
     }
 }
+
 .navbar {
     overflow: hidden;
     background-color: var(--color-background);
@@ -315,7 +300,7 @@ legend {
     color: var(--color-primary);
 }
 
-.controls5{
+.controls{
     display: flex;
     justify-content: left;
     flex-wrap: wrap;
@@ -330,7 +315,7 @@ legend {
     flex-wrap: wrap;
     flex:1;
     column-gap:1rem;
-    width: 100%
+    width: 100%;
 }
 
 canvas {
@@ -352,7 +337,7 @@ input[type=checkbox], input[type=radio] {
 
 .input-container {
     flex: 1;
-    width: max(10vw, 300px);
+    width: max(10vw, 200px);
 }
 
 .textarea{

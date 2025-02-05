@@ -56,7 +56,7 @@ For a more accurate simulation of wave propagation through a diffraction grating
     </div>
 </fieldset>
 </div>
-<canvas id="canvas" width=800 height=1000></canvas>
+<canvas id="canvas" width=600 height=800></canvas>
 </div>
 <script src = "../scripts/webgl.js"></script>
 <script>

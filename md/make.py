@@ -2,6 +2,8 @@
 import sys
 import os
 from pathlib import Path
+from datetime import datetime
+import time
 
 htmlfile = sys.argv[1]
 mdfile = sys.argv[2]
@@ -44,8 +46,6 @@ favicon_header = [
 header = header[0 : title_ind + 1] + favicon_header + header[title_ind + 1 :]
 
 # add "last modified on" footer
-from datetime import datetime
-import time
 
 date = datetime.strptime(time.ctime(os.path.getmtime(mdfile)), "%c")
 date = date.strftime("%b %d, %Y")
@@ -67,9 +67,9 @@ else:
 
 navbar = f"""
 <div class="navbar" id="navigation_bar">
-<a {is_home} href="/index.html">Home</a>
-<a {is_pubs} href="/publications.html">Publications</a>
-<a {is_posts} href="/archive.html">Posts</a>
+<a {is_home} href="/">Home</a>
+<a {is_pubs} href="/publications">Publications</a>
+<a {is_posts} href="/archive">Posts</a>
 <a href="/files/cv.pdf">Curriculum Vitae</a>
 <a href="javascript:void(0);" class="icon" onclick="responsive_navbar()">
     <i class="fa fa-bars"></i>

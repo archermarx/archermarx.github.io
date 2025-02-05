@@ -25,8 +25,8 @@ You can vary several parameters to see how the interference pattern on the other
         <input type="range" id="source_y_input" min="-10" max="-0.1" value="-3" step="0.1" autocomplete="off"/>
     </div>
     <div class = "input-container">
-        <label for="wavenumber_input">Wavenumber: <output id="wavenumber_output"/></label>
-        <input type="range" id="wavenumber_input" min="1" max="64" value="8" step="1" autocomplete="off"/>
+        <label for="wavenumber_input">Wavenumber: <output id="wavenumber_output"/></label></li>
+        <input type="range" id="wavenumber_input" min="1" max="64" value="8" step="1" autocomplete="off"/></li>
     </div>
 </fieldset>
 <fieldset>
@@ -71,7 +71,7 @@ You can vary several parameters to see how the interference pattern on the other
 </fieldset>
 </div>
 
-<canvas id="canvas" width=800 height=1000></canvas>
+<canvas id="canvas" width=600 height=800></canvas>
 </div>
 
 <script src = "../scripts/webgl.js"></script>
