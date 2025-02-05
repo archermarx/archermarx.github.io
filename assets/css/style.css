@@ -19,7 +19,7 @@
     --line-height: 2px;
     --header-font: Lato;
     --body-font: EB Garamond;
-    --width: 70%;
+    --width: 800px;
     --color-primary: var(--blue);
     --color-background: var(--white);
     --color-text: var(--black);
@@ -49,22 +49,22 @@
    }
 }
 
-@media (max-width: 1000px) { 
+@media (max-width: 845px) { 
    :root{
-      --width: 80%;
+      --width: 95%;
    }
 }
 
 /* Use horizontal navbar when screen > 600px */
 @media (min-width: 600px) {
     .navbar {
-        margin-bottom:2em;
         li {
             float: left;
         }
         ul {
             position: fixed;
         }
+        margin-bottom: 3.5em;
     }
 }
 
@@ -167,8 +167,7 @@ a:visited{
 
 /* Style navbar, based on https://www.w3schools.com/css/css_navbar_horizontal.asp*/
 .navbar {
-    background: var(--color-background);
-    margin-bottom:3.5em;
+    background-color: var(--color-background);
     ul {
         background-color: inherit;
         list-style-type: none;
