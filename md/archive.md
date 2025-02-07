@@ -9,8 +9,10 @@ citations-hover: true
 
 # POST ARCHIVE
 
-2024-10-11 - [Diffraction grating simulation](/p/advanced-diffraction-sim)
+2024-02-07 - [Notebook: Variance reduction techniques for Monte Carlo integration](/notebooks/variance_reduction.html)
 
-2024-10-11 - [Phased array simulation](/p/phased-array)
+2024-10-11 - [Simulation: Diffraction grating](/p/advanced-diffraction-sim)
 
-2024-06-28 - [IEPC 2024 - Hall thruster simulations in WarpX](/content/iepc-2024)
+2024-10-11 - [Simulation: Wave interference and phased arrays](/p/phased-array)
+
+2024-06-28 - [Paper: IEPC 2024 - Hall thruster simulations in WarpX](/content/iepc-2024)
