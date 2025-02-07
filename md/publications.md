@@ -9,7 +9,6 @@ citations-hover: true
 
 :::{#cv}
 
-
 # Publications
 
 ## Journal Articles
@@ -62,6 +61,4 @@ citations-hover: true
 
 - [@Marks_2023_Thesis] **[(pdf)](files/marks_phd_thesis.pdf)**
 
-
 :::
-\

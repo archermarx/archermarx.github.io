@@ -51,6 +51,3 @@ Here's a short video I made about my Ph.D. research.
   frameborder="0"
   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
-
-
-
