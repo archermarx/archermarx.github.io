@@ -9,7 +9,7 @@ citations-hover: true
 
 # POST ARCHIVE
 
-2024-02-07 - [Notebook: Variance reduction techniques for Monte Carlo integration](/notebooks/variance_reduction.html)
+2025-02-07 - [Notebook: Variance reduction techniques for Monte Carlo integration](/notebooks/variance_reduction.html)
 
 2024-10-11 - [Simulation: Diffraction grating](/p/advanced-diffraction-sim)
 
