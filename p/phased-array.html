@@ -38,14 +38,16 @@ override a similar rule in reveal.js */
         <link rel="icon" type="image/x-icon" href="/favicon.ico"/></p>
     </head>
     <body>
-        <!-- Add navbar -->
-        <div id="navigation_bar" class="navbar">
-            <a href="/index">Home</a> <a  href="/publications">Publications</a>
+        <div class="navbar" id="navigation_bar">
+            <a  href="/">Home</a>
+            <a  href="/publications">Publications</a>
             <a class="active" href="/archive">Posts</a>
             <a href="/files/cv.pdf">Curriculum Vitae</a>
             <a href="javascript:void(0);" class="icon" onclick="responsive_navbar()">
-            <i class="fa fa-bars"></i> </a>
+                <i class="fa fa-bars"></i>
+            </a>
         </div>
+        <h1 id="section"></h1>
         <h1 id="phased-array-simulation">Phased array simulation</h1>
         <p>The simulation below models the wave pattern created by
         several point sources next to each other. By increasing the
@@ -443,7 +445,6 @@ override a similar rule in reveal.js */
         }, 10);
 
         </script>
-        <hr>
         <p><span class="footer">
             *Last updated on Feb 06, 2025.
             Created using <a href="http://pandoc.org/">pandoc</a>.

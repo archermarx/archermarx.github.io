@@ -50,9 +50,36 @@ else:
 
 header = header[0 : title_ind + 1] + date_header + header[title_ind + 1 :]
 
+# ========= Write navbar ===================================================
+active = 'class="active"'
+is_home = active if mdfile == "index.md" else ""
+is_pubs = active if mdfile == "publications.md" else ""
+
+content_paths = {"p", "content"}
+
+if mdfile == "archive.md" or str(Path(mdfile).parent) in content_paths:
+    is_posts = active
+else:
+    is_posts = ""
+
+navbar = f"""
+```{{=html}}
+<div class="navbar" id="navigation_bar">
+    <a {is_home} href="/">Home</a>
+    <a {is_pubs} href="/publications">Publications</a>
+    <a {is_posts} href="/archive">Posts</a>
+    <a href="/files/cv.pdf">Curriculum Vitae</a>
+    <a href="javascript:void(0);" class="icon" onclick="responsive_navbar()">
+        <i class="fa fa-bars"></i>
+    </a>
+</div>
+```
+# """
+
 # ========= Write modified md/html to temporary file =======================
 with open(tempfile, "w") as file:
     file.writelines(header)
+    file.writelines(navbar)
     file.writelines(contents)
 
 # ========= Convert markdown to html using pandoc ==========================
