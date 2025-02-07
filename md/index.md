@@ -38,7 +38,7 @@ I also conduct predictive Hall thruster modelling efforts as part of the
 [Joint Advanced Propulsion Institute](https://januselectricpropulsion.com/) (JANUS).
 
 I did my Ph.D. work in the University of Michigan's
-[Plasmadynamics and Electric Propulsion Laboratory]("https://pepl.engin.umich.edu/) (PEPL)
+[Plasmadynamics and Electric Propulsion Laboratory](https://pepl.engin.umich.edu/) (PEPL)
 where I focused on the development and evaluation of closure models for anomalous
 electron transport in Hall effect thrusters.
 
