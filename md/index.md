@@ -30,12 +30,12 @@ family-name-pattern: Marks
 ## About
 
 Hi, I'm Thomas! I'm currently working on applying high performance computing to the simulation of non-equilibrium plasmas
-as a postdoctoral researcher in the <a href="https://www.alexgorodetsky.com/index.html">Computational Autonomy Group</a>
+as a postdoctoral researcher in the [Computational Autonomy Group](https://www.alexgorodetsky.com/index.html)
 at the University of Michigan.
 In particular, I am leveraging particle-based kinetic methods to investigate anomalous cross-field momentum and
 energy transport in low temperature magnetized plasmas for space propulsion and materials processing applications.
 I also conduct predictive Hall thruster modelling efforts as part of the
-[Joint Advanced Propulsion Institute]("https://januselectricpropulsion.com/") (JANUS).
+[Joint Advanced Propulsion Institute](https://januselectricpropulsion.com/) (JANUS).
 
 I did my Ph.D. work in the University of Michigan's
 [Plasmadynamics and Electric Propulsion Laboratory]("https://pepl.engin.umich.edu/) (PEPL)
