@@ -10,7 +10,7 @@ md-files := \
 
 html-files := $(md-files:%.md=$(TARGETDIR)/%.html)
 
-.PHONY: all clean debug
+.PHONY: all clean debug remake
 all: $(html-files)
 
 $(TARGETDIR)/%.html: %.md
@@ -18,6 +18,8 @@ $(TARGETDIR)/%.html: %.md
 
 clean: 
 	@ rm -rf ../*.html ../content ../p ../extras http.log pidfile
+
+remake: clean all
 
 debug:
 	@ echo $(html-files)
