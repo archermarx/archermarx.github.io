@@ -4,6 +4,7 @@ import os
 from pathlib import Path
 from datetime import datetime
 import time
+import subprocess
 
 htmlfile = sys.argv[1]
 mdfile = sys.argv[2]
@@ -45,25 +46,17 @@ favicon_header = [
 
 header = header[0 : title_ind + 1] + favicon_header + header[title_ind + 1 :]
 
-# add "last modified on" footer
-
-date = datetime.strptime(time.ctime(os.path.getmtime(mdfile)), "%c")
-date = date.strftime("%b %d, %Y")
-
-footer = f"""\n\n\\ \n\n***\n
-<span class="footer">
-*Last updated on {date}. Created using [pandoc](http://pandoc.org/).
-</span>"""
-
-# write navbar
+# ========= Write navbar ===================================================
 active = 'class="active"'
 is_home = active if mdfile == "index.md" else ""
 is_pubs = active if mdfile == "publications.md" else ""
-if mdfile == "archive.md" or Path(mdfile).parent == Path("p"):
+
+content_paths = {"p", "content"}
+
+if mdfile == "archive.md" or str(Path(mdfile).parent) in content_paths:
     is_posts = active
 else:
     is_posts = ""
-
 
 navbar = f"""
 <div class="navbar" id="navigation_bar">
@@ -90,8 +83,16 @@ function responsive_navbar() {
 </script>
 """
 
+# ========= Write footer with modification date  ===========================
+date = datetime.strptime(time.ctime(os.path.getmtime(mdfile)), "%c")
+date = date.strftime("%b %d, %Y")
 
-# write to temporary file
+footer = f"""\n\n\\ \n\n***\n
+<span class="footer">
+*Last updated on {date}. Created using [pandoc](http://pandoc.org/).
+</span>"""
+
+# ========= Write modified md/html to temporary file =======================
 with open(tempfile, "w") as file:
     file.writelines(header)
     file.write(navbar)
@@ -99,8 +100,8 @@ with open(tempfile, "w") as file:
     file.write(navbar_js)
     file.write(footer)
 
+# ========= Convert markdown to html using pandoc ==========================
 print(htmlfile)
-import subprocess
 
 args = [
     "pandoc",

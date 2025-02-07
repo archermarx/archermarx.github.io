@@ -29,6 +29,8 @@
     --color-active-text: var(--white);
     --color-line: var(--color-highlight);
     --line: 3px dotted var(--color-line);
+    --code-font: "Source Code Pro", monospace;
+    --code-background: rgb(245, 237, 216);
 }
 
 /* Dark mode */
@@ -210,7 +212,7 @@ a:visited{
 
 #figure {
     display: flex;
-    width: 75%;
+    width: 80%;
     img {
         align-items: center;
         display: block;
@@ -251,17 +253,21 @@ a:visited{
 /* Code blocks */
 
 code {
-    background: rgb(245, 237, 216);
+    background: var(--code-background);
     border-radius: 5px;
     color: #000000;
-    font-family: "Source Code Pro", monospace;
+    font-family: var(--code-font);
     font-size: 0.9em;
     margin: 0 0.25em;
     padding: 0.25em 0.65em;
+    /* these are needed to get the background to
+     * extend to the right when we scroll*/
+    float: left;
+    clear: left;
 }
 
 pre {
-    font-family: "Source Code Pro", monospace;
+    font-family: var(--code-font);
     font-size: 0.9em;
     margin: 0 0 2.25em 0;
 }

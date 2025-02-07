@@ -9,6 +9,8 @@ citations-hover: true
 
 # POST ARCHIVE
 
-2024-10-11 - [Diffraction grating simulation](/p/advanced-diffraction-sim.html)
+2024-10-11 - [Diffraction grating simulation](/p/advanced-diffraction-sim)
 
-2024-10-11 - [Phased array simulation](/p/phased-array.html)
+2024-10-11 - [Phased array simulation](/p/phased-array)
+
+2024-06-28 - [IEPC 2024 - Hall thruster simulations in WarpX](/content/iepc-2024)
