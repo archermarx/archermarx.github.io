@@ -21,7 +21,7 @@ using Distributions
 
 # ╔═╡ 5c4ccaf6-e4fc-45d3-83f0-5c208f0f060a
 md"""
-*Note*: This is a [Pluto.jl](https://plutojl.org/) notebook. The original notebook is available on my website at [thomasmarks.space/notebooks/variance_reduction.jl](thomasmarks.space/notebooks/variance_reduction.jl). A [PDF version](thomasmarks.space/notebooks/variance_reduction.pdf) is also available.
+*Note*: This is a [Pluto.jl](https://plutojl.org/) notebook. The original notebook is available [on my website](/notebooks/variance_reduction.jl). A [PDF version](/notebooks/variance_reduction.pdf) is also available.
 """
 
 # ╔═╡ 0b2b232f-3f73-42bb-a5d9-82bd8b32562f
