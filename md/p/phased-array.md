@@ -26,18 +26,22 @@ For a more accurate simulation of wave propagation through a diffraction grating
     <legend><b>Controls</b></legend>
     <div class="input-container">
         <label for="sources_input">Sources: <output id="sources_output"/></label>
+        <br>
         <input type="range" id="sources_input" min="1" max="16" value="2" step="1" autocomplete="off"/>
     </div>
     <div class="input-container">
         <label for="spacing_input">Spacing: <output id = "spacing_output"/></label>
+        <br>
         <input type="range" id="spacing_input" min="0" max="1" value="0.5" step="any" autocomplete="off"/>
     </div>
     <div class="input-container">
         <label for="wavenumber_input">Wavenumber: <output id="wavenumber_output"/></label>
+        <br>
         <input type="range" id="wavenumber_input" min="1" max="64" value="8" step="1" autocomplete="off"/>
     </div>
     <div class="input-container">
         <label for="phase_input">Phase delay: <output id="phase_output"/></label>
+        <br>
         <input type="range" id="phase_input" min="-180" max="180" value="0" step="2" autocomplete="off"/>
     </div>
 </fieldset>
@@ -45,6 +49,7 @@ For a more accurate simulation of wave propagation through a diffraction grating
     <legend><b>Display</b></legend>
     <div class = "input-container">
         <label for ="display_input">Field to display:</label>
+        <br>
         <select name="display_input" id="display_input" autocomplete = "off">
             <option value="display-power" selected>Power</option>
             <option value="display-amplitude">Amplitude</option>
@@ -52,6 +57,7 @@ For a more accurate simulation of wave propagation through a diffraction grating
     </div>
     <div class = "input-container">
         <label for="phase_average_input" style="float:left">Phase average:</label>
+        <br>
         <input type="checkbox" id="phase_average_input" value = "phase_average" autocomplete="off"/>
     </div>
 </fieldset>

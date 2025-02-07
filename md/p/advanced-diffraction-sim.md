@@ -18,14 +18,17 @@ You can vary several parameters to see how the interference pattern on the other
     <legend><b>Source</b></legend>
     <div class = "input-container">
         <label for="source_x_input">X position: <output id="source_x_output"/></label>
+        <br>
         <input type="range" id="source_x_input" min="-8" max="8" value="0" step="0.1" autocomplete="off"/>
     </div>
         <div class = "input-container">
         <label for="source_y_input">Y position: <output id="source_y_output"/></label>
+        <br>
         <input type="range" id="source_y_input" min="-10" max="-0.1" value="-3" step="0.1" autocomplete="off"/>
     </div>
     <div class = "input-container">
         <label for="wavenumber_input">Wavenumber: <output id="wavenumber_output"/></label></li>
+        <br>
         <input type="range" id="wavenumber_input" min="1" max="64" value="8" step="1" autocomplete="off"/></li>
     </div>
 </fieldset>
@@ -33,18 +36,22 @@ You can vary several parameters to see how the interference pattern on the other
     <legend><b>Grating</b></legend>
     <div class = "input-container">
         <label for="numslits_input">Slits: <output id="numslits_output"/></label>
+        <br>
         <input type="range" id="numslits_input" min="1" max="16" value="2" step="1" autocomplete="off"/>
     </div>
     <div class = "input-container">
         <label for="slitwidth_input">Slit width: <output id = "slitwidth_output"/></label>
+        <br>
         <input type="range" id="slitwidth_input" min="0.01" max="0.95" value="0.02" step="0.005" autocomplete="off"/>
     </div>
     <div class = "input-container">
         <label for="spacing_input">Spacing: <output id = "spacing_output"/></label>
+        <br>
         <input type="range" id="spacing_input" min="0" max="1" value="0.5" step="0.01" autocomplete="off"/>
     </div>
     <div class = "input-container">
         <label for="position_input">Y position: <output id="position_output"/></label>
+        <br>
         <input type="range" id="position_input" min="-0.5" max="0.0" value="-0.3" step="any" autocomplete="off"/>
     </div>
 </fieldset>
@@ -52,14 +59,17 @@ You can vary several parameters to see how the interference pattern on the other
     <legend><b>Display</b></legend>
     <div class = "input-container">
         <label for="gain_input">Gain: <output id="gain_output"/></label>
+        <br>
         <input type="range" id="gain_input" min="0.5" max="10" value="1" step="0.1" autocomplete="off"/>
     </div>
     <div class = "input-container">
         <label for="rays_input">Rays/slit/pixel: <output id="rays_output"/></label>
+        <br>
         <input type="range" id="rays_input" min="1" max="25" value="5" step="1" autocomplete="off"/>
     </div>
     <div class = "input-container">
         <label for ="display_input">Field to display: </label>
+        <br>
         <select name="display_input" id="display_input" autocomplete = "off">
             <option value="display-power" selected>Power</option>
             <option value="display-amplitude">Amplitude</option>
@@ -75,6 +85,7 @@ You can vary several parameters to see how the interference pattern on the other
 </div>
 
 <script src = "../scripts/webgl.js"></script>
+
 <script>
 // Get the webgl rendering context
 var gl = canvas.getContext('webgl');

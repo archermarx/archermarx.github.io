@@ -301,7 +301,7 @@ legend {
     flex-wrap: wrap;
     flex:1;
     column-gap:2rem;
-    line-height: 1.5em;
+    line-height: 1.2em;
 }
 
 .centered-block{
@@ -314,7 +314,7 @@ legend {
 }
 
 canvas {
-    width: max(35vw, 360px);
+    width: max(30vw, 360px);
     display: block;
     flex: 1;
 }
@@ -332,7 +332,7 @@ input[type=checkbox], input[type=radio] {
 
 .input-container {
     flex: 1;
-    width: max(10vw, 200px);
+    width: max(12vw, 250px);
 }
 
 .textarea{
