@@ -5,7 +5,7 @@
         <meta name="generator" content="pandoc" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
         <meta name="date" content=''>
-        <title>Archive</title>
+        <title>PICO-8 Perlin terrain generator</title>
         <style>
         code{white-space: pre-wrap;}
         span.smallcaps{font-variant: small-caps;}
@@ -48,19 +48,30 @@ override a similar rule in reveal.js */
             </a>
         </div>
         <h1 id="section"></h1>
-        <h1 id="post-archive">POST ARCHIVE</h1>
-        <p>2025-02-13 - <a href="/p/pico8-perlin.md">Terrain generation
-        on the PICO-8 using Perlin noise</a></p>
-        <p>2025-02-07 - <a
-        href="/notebooks/variance_reduction.html">Notebook: Variance
-        reduction techniques for Monte Carlo integration</a></p>
-        <p>2024-10-11 - <a
-        href="/p/advanced-diffraction-sim">Simulation: Diffraction
-        grating</a></p>
-        <p>2024-10-11 - <a href="/p/phased-array">Simulation: Wave
-        interference and phased arrays</a></p>
-        <p>2024-06-28 - <a href="/content/iepc-2024">Paper: IEPC 2024 -
-        Hall thruster simulations in WarpX</a></p>
+        <h1
+        id="terrain-generation-on-the-pico-8-using-perlin-noise">Terrain
+        generation on the PICO-8 using Perlin noise</h1>
+        <p>I recently discovered the lovely <a
+        href="https://www.lexaloffle.com/pico-8.php">PICO-8</a> fantasy
+        game console, and have been enjoying tinkering with it to make
+        small simulations and programs. This program uses <a
+        href="https://adrianb.io/2014/08/09/perlinnoise.html">Perlin
+        noise</a> to generate a 128x128 pixel terrain map. It’s pretty
+        bare-bones and runs fairly slowly, but it works! You can run it
+        by clicking the play button below.</p>
+        <h2 id="controls">Controls:</h2>
+        <ul>
+        <li><strong>z</strong>: Regenerate terrain</li>
+        <li><strong>Up-arrow</strong>: raise sea level</li>
+        <li><strong>Down-arrow</strong>: lower sea level</li>
+        </ul>
+        <iframe src="https://www.lexaloffle.com/bbs/widget.php?pid=perlin" allowfullscreen width="621" height="513" style="border:none; overflow:hidden">
+        </iframe>
+        <p>One of the things that makes PICO-8 games cool is how
+        shareable they are. The entire game, code and all, fits into
+        this PNG! If you download it, you can edit and run the code on
+        your own PICO-8 instance.</p>
+        <p><img src="/assets/pico8/perlin.p8.png" /></p>
         <hr>
         <p><span class="footer"><i>
             Last updated on Feb 13, 2025.
