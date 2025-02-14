@@ -9,9 +9,9 @@ citations-hover: true
 
 # POST ARCHIVE
 
-2025-02-13 - [Terrain generation on the PICO-8 using Perlin noise](/p/pico8-perlin.md)
+2025-02-13 - [Terrain generation on the PICO-8 using Perlin noise](/p/pico8-perlin)
 
-2025-02-07 - [Notebook: Variance reduction techniques for Monte Carlo integration](/notebooks/variance_reduction.html)
+2025-02-07 - [Notebook: Variance reduction techniques for Monte Carlo integration](/notebooks/variance_reduction)
 
 2024-10-11 - [Simulation: Diffraction grating](/p/advanced-diffraction-sim)
 
