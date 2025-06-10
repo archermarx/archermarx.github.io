@@ -13,6 +13,9 @@ citations-hover: true
 
 ## Journal Articles
 
+### 2025
+- [@Marks_2025_WarpX] **[(pdf)](files/marks_2025_warpx.pdf)**
+
 ### 2024
 
 - [@Eckels_2024_Multidisciplinary] **[(pdf)](files/eckels_2024_multidisciplinary.pdf)**
