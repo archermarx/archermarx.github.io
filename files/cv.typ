@@ -1,11 +1,11 @@
 #let body_size=11pt
 #set text(
     font: "EB Garamond", size: body_size,
-    historical-ligatures: true,
+    historical-ligatures: false,
     number-type: "old-style",
     kerning: true,
 )
-#let heading_font = "Futura"
+#let heading_font = "Lato"
 #let heading_weight = "semibold"
 #let heading_size = 14pt
 #let heading_color = blue
@@ -134,7 +134,7 @@
             [
             - Applying high-performance, GPU-accelerated computing to kinetic simulations of low-temperature plasma devices. 
             - Developing predictive engineering models of Hall thrusters as part of the NASA's Joint Advanced Propulsion Institute (JANUS). 
-            - Pursuing tensor-based data-compression methods for kinetic plasma simulations.
+            - Pursuing generative modeling techniques to accelerate closure modeling and to solve inverse problems for Hall thrusters.
             ],
             []
     ))
@@ -216,15 +216,15 @@
 
 == #setcase[Skills]
 #tightline()
-- *Numerical methods:* Particle and fluid methods for PDEs, Bayesian inference, and Monte Carlo methods.
+- *Numerical methods:* Particle and fluid methods for PDEs, Diffusion models, surrogate modeling, Bayesian inference, Monte Carlo methods.
 
 - *Experimental techniques:* Hall thruster operation, plasma probe construction, laser system setup and alignment. Analysis of common plasma diagnostics.
 
 - *Software:* Linux, MacOS, Windows. High-performance computing on SLURM clusters. LaTeX, Typst, Microsoft Office.
 
-- *Programming languages:* Julia, C, C++, CUDA, Python, Fortran, MATLAB, Javascript, various shader languages.
+- *Programming languages:* Julia, C, C++, CUDA, Python, Fortran, MATLAB, Javascript.
 
-- *Human languages:* English (native), German (intermediate).
+- *Human languages:* English (native), German (intermediate), Italian (intermediate).
 #vspace
 
 == #setcase[Honors and Awards]
@@ -258,6 +258,7 @@
 
 == #setcase[Journal Publications]
 #tightline()
+- *Marks, T.*\|*A.,* & Gorodetsky, A.\;A. (2025). _GPU-accelerated kinetic Hall thruster simulations in WarpX_. Journal of Electric Propulsion, 4(34).
 - Eckels, J.\;D., *Marks, T.*\|*A.,* Allen, M.\;G., Jorns, B.\;A., & Gorodetsky, A.\;A. (2024). _Hall thruster model improvement by multidisciplinary uncertainty quantification_. Journal of Electric Propulsion, 3(19).
 - Su, L.\;L., *Marks, T.*\|*A.,* & Jorns, B.\;A. (2024). _Trends in mass utilization of a magnetically shielded hall thruster operating on xenon and krypton_. Plasma Sources Science and Technology, 33(6), 065008.
 - Su, L.\;L., Roberts, P.\;J., Gill, T.\;M., Hurley, W.\;J., *Marks, T.*\|*A.,* Sercel, C.\;L, Allen, M.\;G., Whittaker, C.\;B., Viges, E. and Jorns, B. A. (2024). _High-current density performance of a magnetically shielded Hall thruster._ Journal of Propulsion and Power, 1-18.
