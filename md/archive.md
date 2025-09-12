@@ -9,6 +9,8 @@ citations-hover: true
 
 # POST ARCHIVE
 
+2025-09-12 - [Conference paper: IEPC 2025 - Towards kinetic axial-azimuthal Hall thruster simulations including ionization](/p/iepc2025)
+
 2025-02-13 - [Terrain generation on the PICO-8 using Perlin noise](/p/pico8-perlin)
 
 2025-02-07 - [Notebook: Variance reduction techniques for Monte Carlo integration](/notebooks/variance_reduction)
@@ -17,4 +19,4 @@ citations-hover: true
 
 2024-10-11 - [Simulation: Wave interference and phased arrays](/p/phased-array)
 
-2024-06-28 - [Paper: IEPC 2024 - Hall thruster simulations in WarpX](/content/iepc-2024)
+2024-06-28 - [Conference paper: IEPC 2024 - Hall thruster simulations in WarpX](/content/iepc-2024)

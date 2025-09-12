@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="generator" content="pandoc" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+        <meta name="date" content=''>
+        <title>List sortedness</title>
+        <style>
+        code{white-space: pre-wrap;}
+        span.smallcaps{font-variant: small-caps;}
+        div.columns{display: flex; gap: min(4vw, 1.5em);}
+        div.column{flex: auto; overflow-x: auto;}
+        div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+        /* The extra [class] is a hack that increases specificity enough to
+override a similar rule in reveal.js */
+        ul.task-list[class]{list-style: none;}
+        ul.task-list li input[type="checkbox"] {
+            font-size: inherit;
+            width: 0.8em;
+            margin: 0 0.8em 0.2em -1.6em;
+            vertical-align: middle;
+        }
+        </style>
+        <script>
+        function responsive_navbar() {
+            var x = document.getElementById("navigation_bar");
+            if (x.className === "navbar") {
+                x.className += " responsive";
+            } else {
+            x.className = "navbar";
+            }
+        }
+        </script>
+        <link rel="stylesheet" href="/assets/css/style.css" />
+        <link rel="stylesheet" href="/assets/css/syntax.css" />
+        <link rel="stylesheet" href="/assets/css/syntax.css" />
+        <link rel="icon" type="image/x-icon" href="/favicon.ico"/></p>
+    </head>
+    <body>
+        <div class="navbar" id="navigation_bar">
+            <a  href="/">Home</a>
+            <a  href="/publications">Publications</a>
+            <a class="active" href="/archive">Posts</a>
+            <a href="/files/cv.pdf">Curriculum Vitae</a>
+            <a href="javascript:void(0);" class="icon" onclick="responsive_navbar()">
+                <i class="fa fa-bars"></i>
+            </a>
+        </div>
+        <h1 id="section"></h1>
+        <h1
+        id="iepc-2025-towards-kinetic-axial-azimuthal-hall-thruster-simulations-including-ionization">IEPC
+        2025: Towards kinetic axial-azimuthal Hall thruster simulations
+        including ionization</h1>
+        <p><a href="https://www.thomasmarks.space">Thomas A. Marks</a>
+        and <a href="https://www.alexgorodetsky.com/index.html">Alex A.
+        Gorodetsky</a>
+        <a href="https://dx.doi.org/10.7302/23491" class="ai ai-doi"></a>
+        <a href="https://dx.doi.org/10.7302/23491">10.7302/23491</a></p>
+        <p><strong>IEPC paper 119</strong></p>
+        <p><em>Presented at the 39th International Electric Propulsion
+        at Imperial College London, London, United Kingdom on September
+        16, 2025.</em></p>
+        <p><a
+        href="https://www.thomasmarks.space/files/Marks_T_IEPC_2025_WarpX.pdf">Paper</a></p>
+        <h2 id="abstract">Abstract</h2>
+        <p>The open-source particle-in-cell code WarpX is used to
+        perform 2-D axial-azimuthal Hall thruster simulations including
+        a neutral population and self-consistent ionization using the
+        direct simulation Monte Carlo (DSMC) method. The results of
+        these simulations are assessed in comparison to similar
+        simulations which use a static particle source. The
+        time-averaged simulation outputs for the DSMC simulations differ
+        from those without; in particular, the electron temperature and
+        anomalous drag force are higher and the electric field is less
+        strongly-peaked. The time-dependent outputs show strong ion
+        density oscillations, consistent with the well-known Hall
+        thruster breathing mode. The relative phasing of this
+        oscillation with respect to other plasma properties is examined,
+        with inconclusive results. Ion recombination at the anode is
+        assessed and found to increase the amplitude of breathing mode
+        oscillations. Numerical challenges encountered in these
+        simulations are discussed, particularly the large fluctuations
+        in particle count during thruster startup and over the course of
+        the oscillations. The findings highlight the advantages of GPU
+        computing and semi-implicit schemes in enabling kinetic Hall
+        thruster simulations to reach new physical regimes, as well as
+        avenues for future improvement.</p>
+        <h2 id="citation">Citation</h2>
+        <p>Cite as <em>Marks, Thomas A. and Gorodetsky, Alex A. “Hall
+        thruster simulations in WarpX”. 38th International Electric
+        Propulsion Conference, Toulouse, France. June 23-28,
+        2024.</em></p>
+        <div class="sourceCode" id="cb1"><pre
+        class="sourceCode bibtex"><code class="sourceCode bibtex"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="va">@inproceedings</span>{<span class="ot">Marks_2025_IEPC_WarpX</span>,</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">title</span> = {Towards kinetic axial-azimuthal {Hall} thruster simulations including ionization},</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">booktitle</span> = {39th {{International Electric Propulsion Conference, London, United Kingdom}}},</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">author</span> = {Marks, Thomas A. and Gorodetsky, Alex A.},</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">year</span> = {2025}, <span class="st">month</span> = {jun}, <span class="st">notes</span> = {IEPC 119},</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+        <hr>
+        <p><span class="footer"><i>
+            Last updated on Sep 12, 2025.
+            Created using <a href="http://pandoc.org/">pandoc</a>.
+        </i></span></p>
+    </body>
+</html>
