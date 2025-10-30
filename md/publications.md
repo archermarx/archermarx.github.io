@@ -14,6 +14,7 @@ citations-hover: true
 ## Journal Articles
 
 ### 2025
+- [@Marks_2025_UncertaintyQuantification] **[(pdf)](files/marks_2025_uncertaintyquantification.pdf)**
 - [@Marks_2025_WarpX] **[(pdf)](files/marks_2025_warpx.pdf)**
 
 ### 2024
@@ -29,6 +30,9 @@ citations-hover: true
 - [@Marks_2023_HallThruster_jl] **[(pdf)](files/marks_schedler_jorns_2023_hallthruster_jl.pdf)**
 
 ## Conference Papers
+
+### 2025
+- [@Marks_2025_WarpX] **([webpage](p/iepc2025.html), [pdf](files/Marks_T_IEPC_2025_WarpX.pdf))**
 
 ### 2024
 
