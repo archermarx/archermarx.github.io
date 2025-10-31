@@ -32,7 +32,7 @@ citations-hover: true
 ## Conference Papers
 
 ### 2025
-- [@Marks_2025_WarpX] **([webpage](p/iepc2025.html), [pdf](files/Marks_T_IEPC_2025_WarpX.pdf))**
+- [@Marks_2025_IEPC_WarpX] **([webpage](p/iepc2025.html), [pdf](files/Marks_T_IEPC_2025_WarpX.pdf))**
 
 ### 2024
 
