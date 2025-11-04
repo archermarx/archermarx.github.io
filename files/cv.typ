@@ -5,7 +5,7 @@
     number-type: "old-style",
     kerning: true,
 )
-#let heading_font = "Lato"
+#let heading_font = "Futura"
 #let heading_weight = "semibold"
 #let heading_size = 14pt
 #let heading_color = blue
@@ -123,20 +123,34 @@
 
 == #setcase[Research Experience]
 #tightline()
+
+#cvblock(
+    title: [Assistant Research Scientist],
+    date: [November 2025--Present],
+    loc: [Department of Aerospace Engineering, University of Michigan],
+    extras: (
+		[_Computational Autonomy Group_],
+        grid(
+            columns: (3.3fr, 1fr),
+            [
+            - Pursuing generative modeling techniques to accelerate closure modeling and to solve inverse problems in low temperature plasmas.
+		  	- Modeling complex plasma chemistry in a Hall thruster as part of the Space Power and Propulsion for Agility, Responsiveness, and Resilience (SPAR) institute.
+            ],
+    ))
+)
+
 #cvblock(
     title: [Postdoctoral Research Fellow],
-    date: [October 2023--Present],
-    loc: [Department of Aerospace Engineering, University of Michigan (remote)],
+    date: [2023 -- 2025],
+    loc: [Department of Aerospace Engineering, University of Michigan],
     extras: (
         [_Supervisor:_ Professor Alex Gorodetsky],
         grid(
             columns: (3.3fr, 1fr),
             [
-            - Applying high-performance, GPU-accelerated computing to kinetic simulations of low-temperature plasma devices. 
-            - Developing predictive engineering models of Hall thrusters as part of the NASA's Joint Advanced Propulsion Institute (JANUS). 
-            - Pursuing generative modeling techniques to accelerate closure modeling and to solve inverse problems for Hall thrusters.
+            - Applied high-performance, GPU-accelerated computing to kinetic simulations of low-temperature plasma devices. 
+            - Developed predictive engineering models of Hall thrusters as part of the NASA's Joint Advanced Propulsion Institute (JANUS). 
             ],
-            []
     ))
 )
 
@@ -258,6 +272,7 @@
 
 == #setcase[Journal Publications]
 #tightline()
+- *Marks, T.*\|*A.,*, Eckels, J.\;D, Mora, G.\;A., & Gorodetsky, A.\;A. (2025). _Uncertainty quantification of a multi-component Hall thruster model at varying facility pressures_. Journal of Applied Physics, 138 (15).
 - *Marks, T.*\|*A.,* & Gorodetsky, A.\;A. (2025). _GPU-accelerated kinetic Hall thruster simulations in WarpX_. Journal of Electric Propulsion, 4(34).
 - Eckels, J.\;D., *Marks, T.*\|*A.,* Allen, M.\;G., Jorns, B.\;A., & Gorodetsky, A.\;A. (2024). _Hall thruster model improvement by multidisciplinary uncertainty quantification_. Journal of Electric Propulsion, 3(19).
 - Su, L.\;L., *Marks, T.*\|*A.,* & Jorns, B.\;A. (2024). _Trends in mass utilization of a magnetically shielded hall thruster operating on xenon and krypton_. Plasma Sources Science and Technology, 33(6), 065008.
@@ -269,7 +284,8 @@
 
 == #setcase[Conference Publications]
 #tightline()
-- *Marks, T.*\|*A.* & Gorodetsky, A.\;A. (2024). _HallThruster simulations in WarpX_. 38th International Electric Propulsion Conference, Toulouse, France. \#409. 
+- *Marks, T.*\|*A.* & Gorodetsky, A.\;A. (2025). _Towards kinetic axial-azimuthal Hall thruster simulations including ionization_. 39th International Electric Propulsion Conference, London, United Kingdom. \#129. 
+- *Marks, T.*\|*A.* & Gorodetsky, A.\;A. (2024). _Hall thruster simulations in WarpX_. 38th International Electric Propulsion Conference, Toulouse, France. \#409. 
 - Eckels, J.\;D., *Marks, T.*\|*A.*, Aksoy, D., Vutukury, S., & Gorodetsky, A.\;A. (2024). _Dynamic mode decomposition for particle-in-cell simulations of a Hall thruster and plume._ 38th International Electric Propulsion Conference, Toulouse, France. \#412.
 - Aksoy, D., Vutukury, S., *Marks, T.*\|*A.*, Eckels, J.\;D. & Gorodetsky, A.\;A. (2024). _Compressed analysis of electric propulsion simulations using low-rank tensor networks._ 38th international Electric Propulsion Conference, Toulouse, France. \# 795.
 - Lipscomb, C.\;P., Stasiukevicius, M.\;J., Boyd, I.\;D., Hansson, K.\;B., *Marks, T.*\|*A.*, Brick, D.\;G., & Jorns, B. A. (2024). _Evaluation of H9 Hall thruster plume simulations using coupled thruster and facility models._ 38th International Electric Propulsion Conference, Toulouse, France. \#483.
