@@ -10,7 +10,7 @@ family-name-pattern: Marks
 
 <div class="centered-block">
 <div class="column">
-| Postdoctoral Researcher, Department of Aerospace Engineering 
+| Assistant Research Scientist, Department of Aerospace Engineering 
 | University of Michigan
 | [Computational Autonomy Group](https://www.alexgorodetsky.com/index.html)
 <br>
@@ -29,7 +29,7 @@ family-name-pattern: Marks
 
 ## About
 
-Hi, I'm Thomas! I'm a postdoctoral researcher in the [Computational Autonomy Group](https://www.alexgorodetsky.com/index.html) at the University of Michigan.
+Hi, I'm Thomas! I'm an Assistant Research Scientist with the [Computational Autonomy Group](https://www.alexgorodetsky.com/index.html) at the University of Michigan.
 I combine low-fidelity fluid methods and high-fidelity particle-based kinetic methods with data driven techniques to improve our ability to simulate low-temperature partially-magnetized plasmas for space propulsion applications.
 I also conduct predictive Hall thruster modelling efforts as part of the
 [Joint Advanced Propulsion Institute](https://januselectricpropulsion.com/) (JANUS) and plasma chemistry modeling for the [SPAR institute](https://aero.engin.umich.edu/2025/03/17/spar-set-its-sights-on-the-future-of-the-institute-2/).
