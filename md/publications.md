@@ -44,7 +44,7 @@ citations-hover: true
 
 ### 2023
 
-- [@Marks_2023_Scitech_Evaluation] **[(pdf)](files/marks_2023_scitech_evalation.pdf)**
+- [@Marks_2023_Scitech_Evaluation] **[(pdf)](files/marks_2023_scitech_evaluation.pdf)**
 - [@Su_2023_Scitech_Ultrahigh] **[(pdf)](files/su_2023_scitech_ultrahigh.pdf)**
 - [@Hurley_2023_Scitech_AirCore] **[(pdf)](https://pepl.engin.umich.edu/pdf/SciTech_2023_Hurley.pdf)**
 
