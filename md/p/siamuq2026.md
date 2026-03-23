@@ -23,31 +23,17 @@ _Presented at SIAM Conference on Uncertainty Quantification, March 22--25, 2026.
 
 ## Abstract
 
-A common task across all fields of science and engineer-
-ing is to predict the inputs of a model or simulation given
-partial observations of the models outputs. These "inverse
-problems" are notoriously difficult to solve. Classical op-
-timization methods are commonly used but only provide
-one answer and thus cannot quantify the uncertainty in
-that answer. Bayesian inference methods, such as Markov
-chain Monte Carlo (MCMC), address this need by gener-
-ating samples from the posterior distribution of the inputs,
-specified by a likelihood function. The generated samples
-can be analyzed to quantify uncertainty in model predic-
-tions. Such methods are robust and widely used, but are
-difficult to parallelize and have challenges scaling to high
-dimensions. To this end, we propose and demonstrate the
-use of a diffusion model for solving inverse problems in the
-field of low temperature plasmas. These models have be-
-come extremely widely-used for generative modeling tasks,
-particularly image generation. They have also been applied
-more recently to text generation and the solution of inverse
-problems in science and engineering. Specifically, we apply
-a diffusion model to the task of learning unknown scalar
-input fields given partial observation of the results of a 1-
-D fluid simulation of a Hall thruster. We show that these
-methods provide a powerful, robust, and fast alternative
-to traditional Bayesian inference methods.
+A common task across all fields of science and engineering is to predict the inputs of a model or simulation given partial observations of the models outputs.
+These "inverse problems" are notoriously difficult to solve.
+Classical optimization methods are commonly used but only provide one answer and thus cannot quantify the uncertainty in that answer.
+Bayesian inference methods, such as Markov chain Monte Carlo (MCMC), address this need by generating samples from the posterior distribution of the inputs, specified by a likelihood function.
+The generated samples can be analyzed to quantify uncertainty in model predictions.
+Such methods are robust and widely used, but are difficult to parallelize and have challenges scaling to high dimensions.
+To this end, we propose and demonstrate the use of a diffusion model for solving inverse problems in the field of low temperature plasmas.
+These models have become extremely widely-used for generative modeling tasks, particularly image generation.
+They have also been applied more recently to text generation and the solution of inverse problems in science and engineering.
+Specifically, we apply a diffusion model to the task of learning unknown scalar input fields given partial observation of the results of a 1-D fluid simulation of a Hall thruster.
+We show that these methods provide a powerful, robust, and fast alternative to traditional Bayesian inference methods.
 
 ::: {#figure}
 ![_Figure 1: Comparison of diffusion model results to MCMC_](../assets/images/siamuq-2026-mcmc.png)
