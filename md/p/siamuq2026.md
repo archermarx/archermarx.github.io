@@ -19,7 +19,7 @@ citations-hover: true
 _Presented at SIAM Conference on Uncertainty Quantification, March 22--25, 2026._
 
 | <a href="https://www.alexgorodetsky.com/static/papers/marks_2026_generative_field_inversion_crossed_field_ion_source_v1.pdf"  class="icon fa-file-pdf"> Preprint (pdf) </a>
-| <a href="" class="icon fa-file-powerpoint"> Slides </a>
+| <a href="https://docs.google.com/presentation/d/13Srd1CYIrd9xRzXxrGyyeNUfr3_wI8zu/edit?usp=sharing&ouid=105276535149914518471&rtpof=true&sd=true" class="icon fa-file-powerpoint"> Slides </a>
 
 ## Abstract
 
@@ -36,5 +36,9 @@ Specifically, we apply a diffusion model to the task of learning unknown scalar 
 We show that these methods provide a powerful, robust, and fast alternative to traditional Bayesian inference methods.
 
 ::: {#figure}
-![_Figure 1: Comparison of diffusion model results to MCMC_](../assets/images/siamuq-2026-mcmc.png)
+![_Figure 1: Diffusion model architecture](../assets/images/siamuq-2026-model.png)
+:::
+
+::: {#figure}
+![_Figure 2: Comparison of diffusion model results to MCMC_](../assets/images/siamuq-2026-mcmc.png)
 :::
