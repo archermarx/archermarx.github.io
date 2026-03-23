@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="generator" content="pandoc" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+        <meta name="date" content=''>
+        <title>SIAM UQ 2026</title>
+        <style>
+        code{white-space: pre-wrap;}
+        span.smallcaps{font-variant: small-caps;}
+        div.columns{display: flex; gap: min(4vw, 1.5em);}
+        div.column{flex: auto; overflow-x: auto;}
+        div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+        /* The extra [class] is a hack that increases specificity enough to
+override a similar rule in reveal.js */
+        ul.task-list[class]{list-style: none;}
+        ul.task-list li input[type="checkbox"] {
+            font-size: inherit;
+            width: 0.8em;
+            margin: 0 0.8em 0.2em -1.6em;
+            vertical-align: middle;
+        }
+        </style>
+        <script>
+        function responsive_navbar() {
+            var x = document.getElementById("navigation_bar");
+            if (x.className === "navbar") {
+                x.className += " responsive";
+            } else {
+            x.className = "navbar";
+            }
+        }
+        </script>
+        <link rel="stylesheet" href="/assets/css/style.css" />
+        <link rel="stylesheet" href="/assets/css/syntax.css" />
+        <link rel="stylesheet" href="/assets/css/syntax.css" />
+        <link rel="icon" type="image/x-icon" href="/favicon.ico"/></p>
+    </head>
+    <body>
+        <div class="navbar" id="navigation_bar">
+            <a  href="/">Home</a>
+            <a  href="/publications">Publications</a>
+            <a class="active" href="/archive">Posts</a>
+            <a href="/files/cv.pdf">Curriculum Vitae</a>
+            <a href="javascript:void(0);" class="icon" onclick="responsive_navbar()">
+                <i class="fa fa-bars"></i>
+            </a>
+        </div>
+        <h1 id="section"></h1>
+        <h1 id="siam-uq-2026">SIAM UQ 2026</h1>
+        <h2
+        id="diffusion-models-for-inverse-problems-in-low-temperature-plasmas">Diffusion
+        models for inverse problems in low temperature plasmas</h2>
+        <p><a href="https://www.thomasmarks.space">Thomas A. Marks</a>
+        and <a href="https://www.alexgorodetsky.com/index.html">Alex A.
+        Gorodetsky</a>
+        <a href="https://dx.doi.org/10.7302/27333" class="ai ai-doi"></a>
+        <a href="https://dx.doi.org/10.7302/27333">10.7302/27333</a></p>
+        <hr />
+        <p><em>Presented at SIAM Conference on Uncertainty
+        Quantification, March 22–25, 2026.</em></p>
+        <div
+        class="line-block"><a href="https://www.alexgorodetsky.com/static/papers/marks_2026_generative_field_inversion_crossed_field_ion_source_v1.pdf"  class="icon fa-file-pdf">
+        Preprint (pdf) </a><br />
+        <a href="" class="icon fa-file-powerpoint"> Slides </a></div>
+        <h2 id="abstract">Abstract</h2>
+        <p>A common task across all fields of science and engineer- ing
+        is to predict the inputs of a model or simulation given partial
+        observations of the models outputs. These “inverse problems” are
+        notoriously difficult to solve. Classical op- timization methods
+        are commonly used but only provide one answer and thus cannot
+        quantify the uncertainty in that answer. Bayesian inference
+        methods, such as Markov chain Monte Carlo (MCMC), address this
+        need by gener- ating samples from the posterior distribution of
+        the inputs, specified by a likelihood function. The generated
+        samples can be analyzed to quantify uncertainty in model predic-
+        tions. Such methods are robust and widely used, but are
+        difficult to parallelize and have challenges scaling to high
+        dimensions. To this end, we propose and demonstrate the use of a
+        diffusion model for solving inverse problems in the field of low
+        temperature plasmas. These models have be- come extremely
+        widely-used for generative modeling tasks, particularly image
+        generation. They have also been applied more recently to text
+        generation and the solution of inverse problems in science and
+        engineering. Specifically, we apply a diffusion model to the
+        task of learning unknown scalar input fields given partial
+        observation of the results of a 1- D fluid simulation of a Hall
+        thruster. We show that these methods provide a powerful, robust,
+        and fast alternative to traditional Bayesian inference
+        methods.</p>
+        <div id="figure">
+        <figure>
+        <img src="../assets/images/siamuq-2026-mcmc.png"
+        alt="Figure 1: Comparison of diffusion model results to MCMC" />
+        <figcaption aria-hidden="true"><em>Figure 1: Comparison of
+        diffusion model results to MCMC</em></figcaption>
+        </figure>
+        </div>
+        <hr>
+        <p><span class="footer"><i>
+            Last updated on Mar 23, 2026.
+            Created using <a href="http://pandoc.org/">pandoc</a>.
+        </i></span></p>
+    </body>
+</html>
