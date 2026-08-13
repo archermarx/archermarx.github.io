@@ -14,7 +14,7 @@ citations-hover: true
 ## Journal Articles
 
 ### 2026
-- [@Marks_2026_Diffusion] **[(pdf)](files/marks_2026_diffusion.pdf)**
+- [@Marks_2026_Diffusion] **[(pdf)](files/marks_2026_psst_diffusion.pdf)**
 
 ### 2025
 - [@Marks_2025_UncertaintyQuantification] **[(pdf)](files/marks_2025_uncertaintyquantification.pdf)**
