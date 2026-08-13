@@ -13,6 +13,9 @@ citations-hover: true
 
 ## Journal Articles
 
+### 2026
+- [@Marks_2026_Diffusion] **[(pdf)](files/marks_2026_diffusion.pdf)**
+
 ### 2025
 - [@Marks_2025_UncertaintyQuantification] **[(pdf)](files/marks_2025_uncertaintyquantification.pdf)**
 - [@Marks_2025_WarpX] **[(pdf)](files/marks_2025_warpx.pdf)**
@@ -30,6 +33,10 @@ citations-hover: true
 - [@Marks_2023_HallThruster_jl] **[(pdf)](files/marks_schedler_jorns_2023_hallthruster_jl.pdf)**
 
 ## Conference Papers
+
+### 2026
+- [@Whittaker_AIAA_2026_SPT140] **[(pdf)](files/Whittaker_AIAA_2026_SPT140.pdf)**
+- [@Wentz_AIAA_2026_Transfer_Learning] **[(pdf)](files/Wentz_AIAA_2026_Transfer_Learning.pdf)**
 
 ### 2025
 - [@Marks_2025_IEPC_WarpX] **([webpage](p/iepc2025.html), [pdf](files/Marks_T_IEPC_2025_WarpX.pdf))**
