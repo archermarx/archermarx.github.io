@@ -324,7 +324,7 @@
 
 == #setcase[Invited talks]
 #tightline()
-- _Machine learning-based state estimation and active control in a Hall thruster_. University of Washington plasma science seminar series. Seattle, WA, December 8 2026 (upcoming).
-- _Data-driven modeling and machine learning for ExB plasma simulation: methods, challenges, and outlook_. APS Gaseous Electronics Conference. Chicago, IL, November 2 2026 (upcoming).
-- _Using diffusion models for rapid approximate process inversion_. NIST Frame Project seminar, Gaithersburg, MD, February 18 2026.
+- _Machine learning-based state estimation and active control in a Hall thruster_. University of Washington plasma science seminar series. Seattle, WA. December 8, 2026 (upcoming).
+- _Data-driven modeling and machine learning for ExB plasma simulation: methods, challenges, and outlook_. APS Gaseous Electronics Conference. Chicago, IL. November 2, 2026 (upcoming).
+- _Using diffusion models for rapid approximate process inversion_. NIST FRAME Project seminar, Gaithersburg, MD. February 18. 2026.
 
