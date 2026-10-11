@@ -1,4 +1,9 @@
+#let heading_font = "Futura"
+#let heading_weight = "semibold"
+#let heading_color = blue
+#let heading_size = 13pt
 #let body_size = 11pt
+
 #set text(
   font: "EB Garamond",
   size: body_size,
@@ -6,12 +11,28 @@
   number-type: "old-style",
   kerning: true,
 )
-#let heading_font = "Futura"
-#let heading_weight = "semibold"
-#let heading_size = 14pt
-#let heading_color = blue
+
+#set page(
+  paper: "us-letter",
+  number-align: center,
+  margin: 0.75in,
+  numbering: "1",
+  header: context {
+    if counter(page).get().first() > 1 [
+      #set text(
+        font: heading_font,
+        fill: heading_color,
+      )
+      Thomas Marks
+    ]
+  },
+)
+
 #let par_space = 9pt
-#let page_margin = 0.75in
+#set par(
+  spacing: par_space,
+)
+
 #set line(
   stroke: (
     paint: blue,
@@ -20,14 +41,12 @@
   ),
 )
 
+
 //#let setcase(text) = text
 #let setcase(text) = upper(text)
 
 #show ";": sym.space.hair
 #show "|": sym.space.thin
-
-#set page(margin: page_margin)
-#set par(spacing: par_space)
 
 #let tightline(factor: 1) = v(-0.5 * factor * body_size)
 #let vspace = v(0.5 * body_size)
@@ -52,7 +71,7 @@
     columns: (auto, 1fr),
     align: bottom,
     align(left, text(
-      1.3 * heading_size,
+      1.2 * heading_size,
       weight: heading_weight,
       font: heading_font,
       fill: heading_color,
@@ -104,9 +123,22 @@
   vspace
 }
 
+#let expblock(header: [], lines: []) = {
+  block(
+    breakable: false,
+    {
+      text(header)
+      grid(
+        columns: (4fr, 1fr),
+        lines,
+      )
+    },
+  )
+}
+
 #title
 
-== #setcase[Education]
+== Education
 #tightline()
 #cvblock(
   title: [Doctor of Philosophy in Aerospace Engineering and Scientific Computing],
@@ -125,7 +157,7 @@
   extras: ([_Magna cum laude_],),
 )
 
-== #setcase[Research Experience]
+== Research Experience
 #tightline()
 
 #cvblock(
@@ -133,10 +165,9 @@
   date: [November 2025--Present],
   loc: [Department of Aerospace Engineering, University of Michigan],
   extras: (
-    [_Computational Autonomy Group_],
-    grid(
-      columns: (3.3fr, 1fr),
-      [
+    expblock(
+      header: [_Computational Autonomy Group_],
+      lines: [
         - Serving as PI on DARPA grant for machine learning control of Hall thrusters.
         - Pursuing generative modeling techniques to accelerate closure modeling and to solve inverse problems in low temperature plasmas.
         - Modeling complex plasma chemistry in a Hall thruster as part of the Space Power and Propulsion for Agility, Responsiveness, and Resilience (SPAR) institute.
@@ -150,10 +181,9 @@
   date: [2023 -- 2025],
   loc: [Department of Aerospace Engineering, University of Michigan],
   extras: (
-    [_Supervisor:_ Professor Alex Gorodetsky],
-    grid(
-      columns: (3.3fr, 1fr),
-      [
+    expblock(
+      header: [_Supervisor:_ Professor Alex Gorodetsky],
+      lines: [
         - Applied high-performance, GPU-accelerated computing to kinetic simulations of low-temperature plasma devices.
         - Developed predictive engineering models of Hall thrusters as part of the NASA's Joint Advanced Propulsion Institute (JANUS).
       ],
@@ -166,13 +196,15 @@
   date: [2018--2023],
   loc: [Department of Aerospace Engineering, University of Michigan],
   extras: (
-    [_Advisor:_ Professor Benjamin Jorns],
-    [
-      - Simulated plasma expansion in magnetic nozzles.
-      - Assisted in high-power Hall thruster design and testing.
-      - Wrote one-dimensional open-source Hall thruster code _HallThruster.jl._
-      - Developed and tested models for Hall thruster anomalous electron transport.
-    ],
+    expblock(
+      header: [_Advisor:_ Professor Benjamin Jorns],
+      lines: [
+        - Simulated plasma expansion in magnetic nozzles.
+        - Assisted in high-power Hall thruster design and testing.
+        - Wrote one-dimensional open-source Hall thruster code _HallThruster.jl._
+        - Developed and tested models for Hall thruster anomalous electron transport.
+      ],
+    ),
   ),
 )
 
@@ -181,11 +213,13 @@
   date: [June--August 2020],
   loc: [Jet Propulsion Laboratory, Pasadena, California (remote)],
   extras: (
-    [_Supervisor:_ Dr. Alejandro Lopez Ortega],
-    [
-      - Modified Hall thruster code Hall2De to simulate magnetic nozzles.
-      - Assessed role of instability-induced transport in magnetic nozzle electron dynamics.
-    ],
+    expblock(
+      header: [_Supervisor:_ Dr. Alejandro Lopez Ortega],
+      lines: [
+        - Modified Hall thruster code Hall2De to simulate magnetic nozzles.
+        - Assessed role of instability-induced transport in magnetic nozzle electron dynamics.
+      ],
+    ),
   ),
 )
 
@@ -194,22 +228,26 @@
   date: [2017--2018],
   loc: [Department of Aerospace Engineering, Texas A&M University],
   extras: (
-    [_Advisor:_ Professor Christopher Limbach],
-    [
-      - Aligned Nd-YAG laser for use in laser-induced fluorescence (LIF) experiments.
-      - Assembled and aligned infrared dye laser for use in LIF experiments.
-      - Performed LIF of xenon-helium glow discharge to probe metastable Xe density.
-    ],
+    expblock(
+      header: [_Advisor:_ Professor Christopher Limbach],
+      lines: [
+        - Aligned Nd-YAG laser for use in laser-induced fluorescence (LIF) experiments.
+        - Assembled and aligned infrared dye laser for use in LIF experiments.
+        - Performed LIF of xenon-helium glow discharge to probe metastable Xe density.
+      ],
+    ),
     vspace,
-    [_Advisor:_ Professor Kentaro Hara],
-    [
-      - Wrote numerical model of electrostatic potential at plasma-liquid interface.
-      - Assessed depth of charge penetration into liquid to evaluate plasma medicine concept.
-    ],
+    expblock(
+      header: [_Advisor:_ Professor Kentaro Hara],
+      lines: [
+        - Wrote numerical model of electrostatic potential at plasma-liquid interface.
+        - Assessed depth of charge penetration into liquid to evaluate plasma medicine concept.
+      ],
+    ),
   ),
 )
 
-== #setcase[Teaching experience]
+== Teaching experience
 #tightline()
 #cvblock(
   title: [Graduate Student Instructor],
@@ -237,20 +275,20 @@
   ),
 )
 
-== #setcase[Skills]
+== Skills
 #tightline()
-- *Numerical methods:* Particle and fluid methods for PDEs, machine learning, surrogate modeling, Bayesian inference, Monte Carlo methods.
+- *Numerical methods:* Particle and fluid methods for PDEs, machine learning, Bayesian inference.
 
-- *Experimental techniques:* Hall thruster operation, analysis of common plasma diagnostics, laser system setup and alignment.
+- *Experimental techniques:* Hall thruster operation, plasma diagnostics.
 
-- *Software:* Linux, MacOS, Windows. High-performance computing on SLURM clusters. LaTeX, Typst, Microsoft Office.
+- *Software:* Linux, MacOS, Windows. High-performance computing. LaTeX, Typst, Microsoft Office.
 
 - *Programming languages:* Julia, C, C++, CUDA, Python, Fortran, MATLAB, Javascript.
 
 - *Human languages:* English (native), Italian (advanced), German (intermediate)
 #vspace
 
-== #setcase[Honors and Awards]
+== Honors and Awards
 #tightline()
 #cvblock(
   title: [Best Paper in Session],
@@ -279,7 +317,7 @@
   ),
 )
 
-== #setcase[Grants]
+== Grants
 #tightline()
 #cvblock(
   title: [DARPA Defense Sciences Office],
@@ -291,10 +329,10 @@
   ),
 )
 
-== #setcase[Journal Publications]
+== Journal Publications
 #tightline()
-- *Marks, T.*\|*A.,*, & Gorodetsky, A.\;A (2026). _Diffusion-based probabilistic field inversion in 1-D Hall thruster simulations_. Plasma Sources Science and Technology 35(8), 085011.
-- *Marks, T.*\|*A.,*, Eckels, J.\;D, Mora, G.\;A., & Gorodetsky, A.\;A. (2025). _Uncertainty quantification of a multi-component Hall thruster model at varying facility pressures_. Journal of Applied Physics, 138 (15).
+- *Marks, T.*\|*A.,* & Gorodetsky, A.\;A (2026). _Diffusion-based probabilistic field inversion in 1-D Hall thruster simulations_. Plasma Sources Science and Technology 35(8), 085011.
+- *Marks, T.*\|*A.,* Eckels, J.\;D, Mora, G.\;A., & Gorodetsky, A.\;A. (2025). _Uncertainty quantification of a multi-component Hall thruster model at varying facility pressures_. Journal of Applied Physics, 138 (15).
 - *Marks, T.*\|*A.,* & Gorodetsky, A.\;A. (2025). _GPU-accelerated kinetic Hall thruster simulations in WarpX_. Journal of Electric Propulsion, 4(34).
 - Eckels, J.\;D., *Marks, T.*\|*A.,* Allen, M.\;G., Jorns, B.\;A., & Gorodetsky, A.\;A. (2024). _Hall thruster model improvement by multidisciplinary uncertainty quantification_. Journal of Electric Propulsion, 3(19).
 - Su, L.\;L., *Marks, T.*\|*A.,* & Jorns, B.\;A. (2024). _Trends in mass utilization of a magnetically shielded hall thruster operating on xenon and krypton_. Plasma Sources Science and Technology, 33(6), 065008.
@@ -304,7 +342,7 @@
 - *Marks, T.*\|*A.,* Schedler, P. & Jorns, B.\;A. (2023). _HallThruster.jl: A Julia package for 1D Hall thruster discharge simulation_. Journal of Open Source Software, 8 (86), 4672.
 #vspace
 
-== #setcase[Conference Publications]
+== Conference Publications
 #tightline()
 - *Marks, T.*\|*A.* & Gorodetsky, A.\;A. (2025). _Towards kinetic axial-azimuthal Hall thruster simulations including ionization_. 39th International Electric Propulsion Conference, London, United Kingdom. \#129.
 - *Marks, T.*\|*A.* & Gorodetsky, A.\;A. (2024). _Hall thruster simulations in WarpX_. 38th International Electric Propulsion Conference, Toulouse, France. \#409.
@@ -322,7 +360,7 @@
 - *Marks, T.*\|*A.*, Lopez Ortega, A., Mikellides, I.\;G., & Jorns, B.\;A. (2020). _Hall2De simulations of a magnetic nozzle._ AIAA Propulsion and Energy 2020 Forum, Remote. \#3642.
 - Jorns, B.\;A., *Marks, T.*\|*A.*, & Dale, E.\;T. (2020). _A predictive Hall thruster model enabled by data-driven closure._ AIAA Propulsion and Energy 2020 Forum, Remote. \#3622.
 
-== #setcase[Invited talks]
+== Invited talks
 #tightline()
 - _Machine learning-based state estimation and active control in a Hall thruster_. University of Washington plasma science seminar series. Seattle, WA. December 8, 2026 (upcoming).
 - _Data-driven modeling and machine learning for ExB plasma simulation: methods, challenges, and outlook_. APS Gaseous Electronics Conference. Chicago, IL. November 2, 2026 (upcoming).
